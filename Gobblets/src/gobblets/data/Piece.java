@@ -18,4 +18,8 @@ public class Piece {
     public void setCouleur(Couleur c) {
         couleur = c;
     }
+
+    public String toString() {
+        return "Piece(taille="+taille+", couleur="+couleur+")";
+    }
 }
