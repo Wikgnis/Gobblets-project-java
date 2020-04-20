@@ -1,10 +1,12 @@
 package gobblets.data;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Plateau {
     private Case[][] cases = new Case[3][3];
     private ArrayList<Piece> maisonJ1, maisonJ2;
+
     private Plateau() {
         // init cases
         for (int i = 0; i < cases.length; i++) {
@@ -49,10 +51,13 @@ public class Plateau {
         try {
             Couleur winner = null;
             for (Case c : getLigne(n)) {
-                if (c == null) return null;
+                if (c == null)
+                    return null;
                 else {
-                    if (winner == null) winner=c.plusGrandePiece().getCouleur();
-                    else if (winner != c.plusGrandePiece().getCouleur()) return null;
+                    if (winner == null)
+                        winner = c.plusGrandePiece().getCouleur();
+                    else if (winner != c.plusGrandePiece().getCouleur())
+                        return null;
                 }
             }
             return winner;
@@ -62,7 +67,7 @@ public class Plateau {
     }
 
     private Case[] getLigne(int n) throws Exception {
-        if (n >= 0 && n<3) {
+        if (n >= 0 && n < 3) {
             return cases[n];
         }
         throw new Exception("Numéro ligne invalide.");
@@ -72,10 +77,13 @@ public class Plateau {
         try {
             Couleur winner = null;
             for (Case c : getColonne(n)) {
-                if (c == null) return null;
+                if (c == null)
+                    return null;
                 else {
-                    if (winner == null) winner=c.plusGrandePiece().getCouleur();
-                    else if (winner != c.plusGrandePiece().getCouleur()) return null;
+                    if (winner == null)
+                        winner = c.plusGrandePiece().getCouleur();
+                    else if (winner != c.plusGrandePiece().getCouleur())
+                        return null;
                 }
             }
             return winner;
@@ -85,14 +93,14 @@ public class Plateau {
     }
 
     private Case[] getColonne(int n) throws Exception {
-        if (n>=0 && n<3) {
+        if (n >= 0 && n < 3) {
             Case[] colonne = new Case[3];
             for (int i = 0; i < colonne.length; i++) {
                 colonne[i] = cases[i][n];
             }
             return colonne;
-        }
-        else throw new Exception("Numéro colonne invalide");
+        } else
+            throw new Exception("Numéro colonne invalide");
     }
 
     public Couleur verifierDiagonale(char ch) throws Exception {
@@ -121,12 +129,16 @@ public class Plateau {
         return winner;
     }
 
-
     private Case[] getDiagonalePrincipale() {
         return null;
     }
 
     private Case[] getDiagonaleSecondaire() {
         return null;
+    }
+
+    @Override
+    public String toString() {
+        return "Plateau(cases=[" + Arrays.toString(cases[0]) + Arrays.toString(cases[1]) + Arrays.toString(cases[2]) + "], maisonJ1=" + maisonJ1 + ", maisonJ2=" + maisonJ2 + ")";
     }
 }
