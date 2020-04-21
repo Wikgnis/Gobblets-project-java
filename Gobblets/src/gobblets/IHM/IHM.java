@@ -7,4 +7,5 @@ public abstract class IHM {
     public abstract Taille saisirTaille();
     public abstract int[] saisirCoordonnees();
     public abstract void display(Plateau p, Joueur j);
+    public abstract ActionType saisirAction(Joueur j);
 }

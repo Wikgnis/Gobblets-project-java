@@ -17,6 +17,5 @@ public class App {
         System.out.println("Jeu initialisé :\n"+ gobblets);
         IHM ihm = new SaisieConsole();
         ihm.display(gobblets.getPlateau(), gobblets.getJoueurActif());
-        System.out.println(Arrays.toString(ihm.saisirCoordonnees()));
     }
 }

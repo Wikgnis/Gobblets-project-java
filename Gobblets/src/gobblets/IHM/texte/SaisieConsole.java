@@ -63,7 +63,13 @@ public class SaisieConsole extends IHM {
 
     @Override
     public Taille saisirTaille() {
-        return null;
+        System.out.println("Quelle Taille?\n 1 : Grande | 2 : Moyenne | 3 : Petite | * : annuler");
+        switch (sc.nextLine()) {
+            case "1": return Taille.GRANDE;
+            case "2": return Taille.MOYENNE;
+            case "3": return Taille.PETITE;
+            default: return null;
+        }
     }
 
     @Override
@@ -103,11 +109,22 @@ public class SaisieConsole extends IHM {
     @Override
     public void display(gobblets.data.Plateau p, Joueur j) {
         try {
-            System.out.println(generateColoredBGString(j.getNom(), j.getCouleur()));
+            System.out.println(generateColoredBGString(" "+j.getNom()+" ", j.getCouleur()));
             Plateau pl = new Plateau(p);
             System.out.print(pl.getRepresentationTextuelle());;
         } catch (Exception e) {
             System.out.println(e);
+        }
+    }
+
+    @Override
+    public ActionType saisirAction(Joueur j) {
+        System.out.println("Que voulez vous faire ?\n 1 : Placer | 2 : Deplacer | 3 : Quitter | * : annuler");
+        switch (sc.nextLine()) {
+            case "1": return ActionType.PLACER;
+            case "2": return ActionType.DEPLACER;
+            case "3": return ActionType.QUITTER;
+            default: return null;
         }
     }
 }
