@@ -63,14 +63,27 @@ public class SaisieConsole extends IHM {
 
     @Override
     public Taille saisirTaille() {
-        // TODO Auto-generated method stub
         return null;
     }
 
     @Override
     public int[] saisirCoordonnees() {
-        // TODO Auto-generated method stub
-        return null;
+        int[] coord = new int[2];
+        System.out.println("Saisissez les coordonnées : ");
+        Integer in = null;
+        for (int i = 0; i < coord.length; i++) {
+            do {
+                System.out.println("entrez " + (i==0 ? "la premiere":"la seconde") + " coordonnee");
+                String s = sc.nextLine();
+                try {
+                    in = Integer.parseInt(s);
+                } catch (Exception e) {
+                    System.out.println("Erreur : " + e + " Veuillez entrer un valuer correcte.");
+                }
+            } while (in == null);
+            coord[i] = in;
+        }
+        return coord;
     }
 
     public static String generateColoredBGString(String s, Couleur c) throws Exception {
