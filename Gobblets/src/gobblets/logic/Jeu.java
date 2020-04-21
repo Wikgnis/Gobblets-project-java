@@ -1,5 +1,9 @@
 package gobblets.logic;
 
+import java.util.Random;
+
+import gobblets.IHM.IHM;
+import gobblets.IHM.texte.SaisieConsole;
 import gobblets.data.*;
 
 public class Jeu {
@@ -9,8 +13,15 @@ public class Jeu {
     public Jeu() {
         plateau = Plateau.initPlateau();
         /* temp */
-        j1 = new JoueurHumain("J1", Couleur.BLEU);
-        j2 = new JoueurHumain("J2", Couleur.ROUGE);
+        IHM saisie = new SaisieConsole();
+        do {
+            j1 = saisie.saisirJoueur(1);
+        } while (j1 == null);
+        do {
+            j2 = saisie.saisirJoueur(2);
+        } while (j2 == null);
+        Random r = new Random();
+        joueurActif = r.nextBoolean() ? j1 : j2;
         /* temp */
     }
 
