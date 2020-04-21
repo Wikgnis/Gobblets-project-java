@@ -1,12 +1,15 @@
 package app;
 
-import java.util.ArrayList;
-
 import gobblets.data.*;
+import gobblets.logic.Jeu;
 
 public class App {
     public static void main(String[] args) throws Exception {
-        Plateau p = Plateau.initPlateau();
-        System.out.println(p);
+        new App();
+    }
+
+    public App() {
+        Jeu gobblets = new Jeu();
+        System.out.println(gobblets);
     }
 }

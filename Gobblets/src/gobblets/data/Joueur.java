@@ -2,6 +2,8 @@ package gobblets.data;
 
 import java.util.ArrayList;
 
+import gobblets.interaction.Action;
+
 public abstract class Joueur {
     private final String nom;
     private final Couleur couleur;
@@ -58,4 +60,6 @@ public abstract class Joueur {
     public String toString() {
         return "Joueur(nom="+nom+",couleur="+couleur+",pieces+"+pieces+")";
     }
+
+    public abstract Action choisirAction(Plateau p);
 }
