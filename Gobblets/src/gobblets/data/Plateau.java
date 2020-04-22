@@ -16,7 +16,18 @@ public class Plateau {
         }
         // init maisons
         maisonJ1 = new ArrayList<Piece>();
+        
+        for (Taille taille : Taille.values()) {
+            for (int i = 0; i < 2; i++) {
+                maisonJ1.add(new Piece(taille));
+            }
+        }
         maisonJ2 = new ArrayList<Piece>();
+        for (Taille taille : Taille.values()) {
+            for (int i = 0; i < 2; i++) {
+                maisonJ2.add(new Piece(taille));
+            }
+        }
     }
 
     public static Plateau initPlateau() {
@@ -51,7 +62,7 @@ public class Plateau {
         try {
             Couleur winner = null;
             for (Case c : getLigne(n)) {
-                if (c == null)
+                if (c == null || c.plusGrandePiece() == null)
                     return null;
                 else {
                     if (winner == null)
@@ -77,7 +88,7 @@ public class Plateau {
         try {
             Couleur winner = null;
             for (Case c : getColonne(n)) {
-                if (c == null)
+                if (c == null || c.plusGrandePiece() == null)
                     return null;
                 else {
                     if (winner == null)
@@ -117,7 +128,7 @@ public class Plateau {
         }
         Couleur winner = null;
         for (Case c : diagonale) {
-            if (c == null)
+            if (c == null || c.plusGrandePiece() == null)
                 return null;
             else {
                 if (winner == null)
@@ -130,11 +141,19 @@ public class Plateau {
     }
 
     private Case[] getDiagonalePrincipale() {
-        return null;
+        Case[] d = new Case[3];
+        for (int i = 0; i < d.length; i++) {
+            d[i] = cases[i][i];
+        }
+        return d;
     }
 
     private Case[] getDiagonaleSecondaire() {
-        return null;
+        Case[] d = new Case[3];
+        for (int i = 0; i < d.length; i++) {
+            d[i] = cases[2-i][2-i];
+        }
+        return d;
     }
 
     @Override

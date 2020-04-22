@@ -11,14 +11,15 @@ public class Placement extends Action {
 
     @Override
     public boolean verifier(Joueur j) {
-        // TODO Auto-generated method stub
+        if (j.aPieceDeTaille(taille) && destination.acceptePiece(taille)) {
+            return true;
+        }
         return false;
     }
 
     @Override
-    public boolean appliquer(Joueur j) {
-        // TODO Auto-generated method stub
-        return false;
+    public void appliquer(Joueur j) {
+        destination.placePiece(j.enlevePiece(taille));
     }
 
     @Override

@@ -2,10 +2,7 @@ package gobblets.data;
 
 import gobblets.IHM.IHM;
 import gobblets.IHM.texte.SaisieConsole;
-import gobblets.interaction.Action;
-import gobblets.interaction.Deplacement;
-import gobblets.interaction.Placement;
-import gobblets.interaction.Termination;
+import gobblets.interaction.*;
 
 public class JoueurHumain extends Joueur {
     public JoueurHumain(String nom, Couleur couleur) {
@@ -25,19 +22,29 @@ public class JoueurHumain extends Joueur {
     }
 
     private Action creerActionPlacer(IHM i, Plateau p) {
-        int[] coord = i.saisirCoordonnees();
-        Taille t = i.saisirTaille();
-        Case destination = p.getPlateau()[coord[0]][coord[1]];
-        return new Placement(t, destination);
+        try {
+            int[] coord = i.saisirCoordonnees();
+            Taille t = i.saisirTaille();
+            Case destination = p.getPlateau()[coord[0]][coord[1]];
+            return new Placement(t, destination);
+        } catch (Exception e) {
+            System.out.println(e);
+            return null;
+        }
     }
 
     private Action creerActionDeplacer(IHM i, Plateau p) {
-        int[] coord;
-        coord = i.saisirCoordonnees();
-        Case origin = p.getPlateau()[coord[0]][coord[1]];
-        coord = i.saisirCoordonnees();
-        Case destination = p.getPlateau()[coord[0]][coord[1]];
-        return new Deplacement(origin, destination);
+        try {
+            int[] coord;
+            coord = i.saisirCoordonnees();
+            Case origin = p.getPlateau()[coord[0]][coord[1]];
+            coord = i.saisirCoordonnees();
+            Case destination = p.getPlateau()[coord[0]][coord[1]];
+            return new Deplacement(origin, destination);
+        } catch (Exception e) {
+            System.out.println(e);
+            return null;
+        }
     }
 
     private Action creerActionQuitter(IHM i, Plateau p) {

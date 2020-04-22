@@ -7,14 +7,12 @@ public class Termination extends Action {
 
     @Override
     public boolean verifier(Joueur j) {
-        // TODO Auto-generated method stub
-        return false;
+        return true;
     }
 
     @Override
-    public boolean appliquer(Joueur j) {
-        // TODO Auto-generated method stub
-        return false;
+    public void appliquer(Joueur j) {
+        
     }
 
     @Override

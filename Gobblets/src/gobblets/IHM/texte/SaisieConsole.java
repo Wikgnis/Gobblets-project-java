@@ -106,10 +106,21 @@ public class SaisieConsole extends IHM {
         return color + s + "\u001B[m";
     }
 
+    private String displayHouse(Joueur j) {
+        String houseDis = "";
+        Piece pTxt;
+        for (Object o : j.getPieces().toArray()) {
+            pTxt = new Piece((gobblets.data.Piece)o);
+            houseDis += " " + pTxt.getRepresentationTextuelle();
+        }
+        return houseDis;
+    }
+
     @Override
     public void display(gobblets.data.Plateau p, Joueur j) {
         try {
             System.out.println(generateColoredBGString(" "+j.getNom()+" ", j.getCouleur()));
+            System.out.println("House : " + displayHouse(j));
             Plateau pl = new Plateau(p);
             System.out.print(pl.getRepresentationTextuelle());;
         } catch (Exception e) {

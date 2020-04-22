@@ -16,6 +16,14 @@ public class App {
         Jeu gobblets = new Jeu();
         System.out.println("Jeu initialisé :\n"+ gobblets);
         IHM ihm = new SaisieConsole();
-        ihm.display(gobblets.getPlateau(), gobblets.getJoueurActif());
+        jouer(gobblets, ihm);
+    }
+
+    private void jouer(Jeu gobblets, IHM ihm) {
+        while (gobblets.getEtat() == Etat.JEUENCOURS) {
+            System.out.println("Etat jeu : " + gobblets.getEtat());
+            ihm.display(gobblets.getPlateau(), gobblets.getJoueurActif());
+            gobblets.setEtat(gobblets.play());
+        }
     }
 }

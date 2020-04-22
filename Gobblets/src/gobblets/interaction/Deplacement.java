@@ -8,16 +8,21 @@ public class Deplacement extends Action {
         this.origin = origin; this.destination = destination;
     }
 
+    private boolean estCouleurJoueur(Joueur j) {
+        return origin.plusGrandePiece().getCouleur() == j.getCouleur();
+    }
+
     @Override
     public boolean verifier(Joueur j) {
-        // TODO Auto-generated method stub
+        if (origin.plusGrandePiece() != null && destination.acceptePiece(origin.plusGrandePiece().getTaille())) {
+            return true;
+        }
         return false;
     }
 
     @Override
-    public boolean appliquer(Joueur j) {
-        // TODO Auto-generated method stub
-        return false;
+    public void appliquer(Joueur j) {
+        destination.placePiece(origin.enlevePiece());
     }
 
     @Override
