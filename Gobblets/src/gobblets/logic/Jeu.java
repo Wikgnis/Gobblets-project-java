@@ -67,9 +67,13 @@ public class Jeu {
             /* detection termination */
             if (a instanceof Termination) return Etat.JEUQUITTE;
             /* autres */
-            if (a.verifier(joueurActif)) {
-                a.appliquer(joueurActif);
-                changeJoueur();
+            try {
+                if (a.verifier(joueurActif)) {
+                    a.appliquer(joueurActif);
+                    changeJoueur();
+                }
+            } catch (Exception e) {
+                System.out.println(e);
             }
         }
         /* detection victoire */

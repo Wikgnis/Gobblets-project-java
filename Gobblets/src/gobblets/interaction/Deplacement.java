@@ -1,6 +1,9 @@
 package gobblets.interaction;
 
+import gobblets.IHM.Erreur;
 import gobblets.data.*;
+import gobblets.logic.CaseBloqueeException;
+import gobblets.logic.PiecePasdisponibleException;
 
 public class Deplacement extends Action {
     private Case origin, destination;
@@ -13,11 +16,12 @@ public class Deplacement extends Action {
     }
 
     @Override
-    public boolean verifier(Joueur j) {
-        if (origin.plusGrandePiece() != null && destination.acceptePiece(origin.plusGrandePiece().getTaille())) {
-            return true;
-        }
-        return false;
+    public boolean verifier(Joueur j) throws PiecePasdisponibleException, CaseBloqueeException {
+        if (origin == null || destination == null || j == null) throw new PiecePasdisponibleException(Erreur.ARGUMENTINCORECT);
+        if (origin.plusGrandePiece() == null) throw new CaseBloqueeException(Erreur.ORIGINVIDE);
+        if (origin.plusGrandePiece().getCouleur() != j.getCouleur()) throw new PiecePasdisponibleException(Erreur.PASTAPIECE);
+        if (!destination.acceptePiece(origin.plusGrandePiece().getTaille())) throw new CaseBloqueeException(Erreur.CASEBLOQUE);
+        return true;
     }
 
     @Override

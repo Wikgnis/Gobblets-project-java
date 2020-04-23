@@ -2,7 +2,9 @@ package gobblets.data;
 
 import java.util.ArrayList;
 
+import gobblets.IHM.Erreur;
 import gobblets.interaction.Action;
+import gobblets.logic.PiecePasdisponibleException;
 
 public abstract class Joueur {
     private final String nom;
@@ -28,33 +30,40 @@ public abstract class Joueur {
         this.pieces = pieces;
     }
 
-    public void ajoutPiece(Piece p) {
+    public void ajoutPiece(Piece p) throws PiecePasdisponibleException {
         if (p != null) {
             pieces.add(p);
         }
+        else throw new PiecePasdisponibleException(Erreur.ARGUMENTINCORECT);
     }
 
     public boolean aPiece(Piece p) {
         return pieces.contains(p);
     }
 
-    public Piece enlevePiece(Taille t) {
-        if (aPieceDeTaille(t)) {
-            for (Object o : pieces.toArray()) {
-                if (((Piece)o).getTaille() == t) return pieces.remove(pieces.indexOf(o));
+    public Piece enlevePiece(Taille t) throws Exception {
+        try {
+            if (aPieceDeTaille(t)) {
+                for (Object o : pieces.toArray()) {
+                    if (((Piece) o).getTaille() == t)
+                        return pieces.remove(pieces.indexOf(o));
+                }
             }
+        } catch (Exception e) {
+            throw e;
         }
         return null;
     }
 
-    public boolean aPieceDeTaille(Taille t) {
-        if (t != null && pieces != null && pieces.size() != 0) {
+    public boolean aPieceDeTaille(Taille t) throws PiecePasdisponibleException {
+        if (t == null || pieces == null) throw new PiecePasdisponibleException(Erreur.ARGUMENTINCORECT);
+        if (pieces.size() != 0) {
             for (Object o : pieces.toArray()) {
                 if (((Piece) o).getTaille() == t)
                     return true;
             }
         }
-        return false;
+        throw new PiecePasdisponibleException(Erreur.PASDEPIECEDISPONIBLE);
     }
 
     public String toString() {
