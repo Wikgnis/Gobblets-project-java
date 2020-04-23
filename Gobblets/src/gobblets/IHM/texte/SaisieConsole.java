@@ -9,7 +9,7 @@ public class SaisieConsole extends IHM {
     private final static Scanner sc = new Scanner(System.in);
 
     @Override
-    public Joueur saisirJoueur(int n){
+    public Joueur saisirJoueur(int n) throws Exception {
         System.out.println("Saisie Joueur"+n);
         Joueur j = null;
         System.out.println("Saisir type joueur :\n\t1 : JoueurHumain | * : annuler");
@@ -18,6 +18,7 @@ public class SaisieConsole extends IHM {
             choice = Integer.parseInt(sc.nextLine());
         } catch (Exception e) {
             // Cancel Saisie joueur
+            throw new Exception("annulation saisie.");
         }
         try {
             switch (choice) {
@@ -30,6 +31,7 @@ public class SaisieConsole extends IHM {
             }
         } catch (Exception e) {
             System.out.println("Erreur : " + e + " ... Annulation saisie joueur");
+            throw new Exception("annulation saisie.");
         }
         return j;
     }
@@ -62,13 +64,13 @@ public class SaisieConsole extends IHM {
     }
 
     @Override
-    public Taille saisirTaille() {
+    public Taille saisirTaille() throws Exception {
         System.out.println("Quelle Taille?\n 1 : Grande | 2 : Moyenne | 3 : Petite | * : annuler");
         switch (sc.nextLine()) {
             case "1": return Taille.GRANDE;
             case "2": return Taille.MOYENNE;
             case "3": return Taille.PETITE;
-            default: return null;
+            default: throw new Exception("annulation action");
         }
     }
 
@@ -129,13 +131,13 @@ public class SaisieConsole extends IHM {
     }
 
     @Override
-    public ActionType saisirAction(Joueur j) {
+    public ActionType saisirAction(Joueur j) throws Exception {
         System.out.println("Que voulez vous faire ?\n 1 : Placer | 2 : Deplacer | 3 : Quitter | * : annuler");
         switch (sc.nextLine()) {
             case "1": return ActionType.PLACER;
             case "2": return ActionType.DEPLACER;
             case "3": return ActionType.QUITTER;
-            default: return null;
+            default: throw new Exception("annulation action");
         }
     }
 }

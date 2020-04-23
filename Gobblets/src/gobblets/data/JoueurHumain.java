@@ -12,7 +12,7 @@ public class JoueurHumain extends Joueur {
     }
 
     @Override
-    public Action choisirAction(Plateau p) {
+    public Action choisirAction(Plateau p) throws Exception {
         IHM i = new SaisieConsole();
         ActionType choix = i.saisirAction(this);
         switch (choix) {

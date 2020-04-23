@@ -70,5 +70,5 @@ public abstract class Joueur {
         return "Joueur(nom="+nom+",couleur="+couleur+",pieces+"+pieces+")";
     }
 
-    public abstract Action choisirAction(Plateau p);
+    public abstract Action choisirAction(Plateau p) throws Exception;
 }
