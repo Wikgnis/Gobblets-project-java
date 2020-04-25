@@ -1,5 +1,6 @@
 package gobblets.data;
 
+import gobblets.IHM.Avertissement;
 import gobblets.IHM.Erreur;
 import gobblets.IHM.IHM;
 import gobblets.IHM.texte.SaisieConsole;
@@ -25,6 +26,7 @@ public class JoueurHumain extends Joueur {
 
     private Action creerActionPlacer(IHM i, Plateau p) {
         try {
+            System.out.println(i.getLanguage().avertissement(Avertissement.CHOIXDESTINATION));
             int[] coord = i.saisirCoordonnees();
             if (checkCoord(coord)) throw new PiecePasdisponibleException(Erreur.ARGUMENTINCORECT);
             Taille t = i.saisirTaille();
@@ -39,9 +41,11 @@ public class JoueurHumain extends Joueur {
     private Action creerActionDeplacer(IHM i, Plateau p) {
         try {
             int[] coord;
+            System.out.println(i.getLanguage().avertissement(Avertissement.CHOIXORIGIN));
             coord = i.saisirCoordonnees();
             if (checkCoord(coord)) throw new PiecePasdisponibleException(Erreur.ARGUMENTINCORECT);
             Case origin = p.getPlateau()[coord[0]][coord[1]];
+            System.out.println(i.getLanguage().avertissement(Avertissement.CHOIXDESTINATION));
             coord = i.saisirCoordonnees();
             if (checkCoord(coord)) throw new PiecePasdisponibleException(Erreur.ARGUMENTINCORECT);
             Case destination = p.getPlateau()[coord[0]][coord[1]];

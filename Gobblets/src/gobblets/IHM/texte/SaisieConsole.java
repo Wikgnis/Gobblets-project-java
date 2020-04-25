@@ -14,7 +14,7 @@ public class SaisieConsole extends IHM {
 
     @Override
     public Joueur saisirJoueur(int n) throws Exception {
-        System.out.println("Saisie Joueur"+n);
+        System.out.println("Saisie Joueur" + n);
         Joueur j = null;
         System.out.println(getLanguage().avertissement(Avertissement.CHOIXTYPEJOUEUR));
         System.out.println("1 : JoueurHumain | * : annuler");
@@ -154,8 +154,8 @@ public class SaisieConsole extends IHM {
     @Override
     public void display(gobblets.data.Plateau p, Joueur j) {
         try {
-            System.out.println(getLanguage().avertissement(Avertissement.NOMJOUEUR) + generateColoredBGString(" "+j.getNom()+" ", j.getCouleur()));
-            System.out.println(getLanguage().avertissement(Avertissement.MAISON)+ displayHouse(j));
+            System.out.println(getLanguage().avertissement(Avertissement.NOMJOUEUR) + " : " + generateColoredBGString(" "+j.getNom()+" ", j.getCouleur()));
+            System.out.println(getLanguage().avertissement(Avertissement.MAISON) + " : " + displayHouse(j));
             Plateau pl = new Plateau(p);
             System.out.print(pl.getRepresentationTextuelle());;
         } catch (Exception e) {
