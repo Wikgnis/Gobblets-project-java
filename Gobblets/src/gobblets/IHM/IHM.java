@@ -52,5 +52,7 @@ public abstract class IHM {
         return language.erreur(e);
     }
 
-
+    public String avertissement(Avertissement a) {
+        return language.avertissement(a);
+    }
 }

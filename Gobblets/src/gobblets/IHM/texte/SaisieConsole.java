@@ -2,6 +2,7 @@ package gobblets.IHM.texte;
 
 import java.util.Scanner;
 
+import gobblets.IHM.Avertissement;
 import gobblets.IHM.IHM;
 import gobblets.IHM.langues.Francais;
 import gobblets.data.*;
@@ -15,7 +16,8 @@ public class SaisieConsole extends IHM {
     public Joueur saisirJoueur(int n) throws Exception {
         System.out.println("Saisie Joueur"+n);
         Joueur j = null;
-        System.out.println("Saisir type joueur :\n\t1 : JoueurHumain | * : annuler");
+        System.out.println(getLanguage().avertissement(Avertissement.CHOIXTYPEJOUEUR));
+        System.out.println("1 : JoueurHumain | * : annuler");
         int choice = 0;
         try {
             choice = Integer.parseInt(sc.nextLine());
@@ -40,11 +42,11 @@ public class SaisieConsole extends IHM {
     }
 
     private JoueurHumain saisieJoueurHumain() throws Exception {
-        System.out.println("Saisir nom joueur :");
+        System.out.println(getLanguage().avertissement(Avertissement.NOMJOUEUR) + " : ");
         String nom;
         nom = sc.nextLine();
         Couleur couleur;
-        System.out.println("Saisir couleur joueur:");
+        System.out.println(getLanguage().avertissement(Avertissement.COULEURJOUEUR) + " : ");
         String s = "";
         for (int i = 0; i < Couleur.values().length; i++) {
             s += i+1 + " : " + couleur(Couleur.values()[i]) + "   ";
@@ -89,7 +91,7 @@ public class SaisieConsole extends IHM {
 
     @Override
     public Taille saisirTaille() throws Exception {
-        System.out.println("Quelle Taille?");
+        System.out.println(getLanguage().avertissement(Avertissement.CHOIXTAILLE));
         String s = "";
         for (int i = 0; i < Taille.values().length; i++) {
             s += i+1 + " : " + super.getLanguage().taille(Taille.values()[i]) + "   ";
@@ -108,11 +110,11 @@ public class SaisieConsole extends IHM {
     @Override
     public int[] saisirCoordonnees() {
         int[] coord = new int[2];
-        System.out.println("Saisissez les coordonnées : ");
+        System.out.println(getLanguage().avertissement(Avertissement.SAISIECOORDONNEES) + "(0->2) : ");
         Integer in = null;
         for (int i = 0; i < coord.length; i++) {
             do {
-                System.out.println("entrez " + (i==0 ? "la premiere":"la seconde") + " coordonnee");
+                System.out.println((i==0 ? getLanguage().avertissement(Avertissement.SAISIECOORDONNEE1):getLanguage().avertissement(Avertissement.SAISIECOORDONNEE2)));
                 String s = sc.nextLine();
                 try {
                     in = Integer.parseInt(s);
@@ -152,8 +154,8 @@ public class SaisieConsole extends IHM {
     @Override
     public void display(gobblets.data.Plateau p, Joueur j) {
         try {
-            System.out.println(generateColoredBGString(" "+j.getNom()+" ", j.getCouleur()));
-            System.out.println("House : " + displayHouse(j));
+            System.out.println(getLanguage().avertissement(Avertissement.NOMJOUEUR) + generateColoredBGString(" "+j.getNom()+" ", j.getCouleur()));
+            System.out.println(getLanguage().avertissement(Avertissement.MAISON)+ displayHouse(j));
             Plateau pl = new Plateau(p);
             System.out.print(pl.getRepresentationTextuelle());;
         } catch (Exception e) {
@@ -163,7 +165,7 @@ public class SaisieConsole extends IHM {
 
     @Override
     public ActionType saisirAction(Joueur j) throws Exception {
-        System.out.println("Que voulez vous faire ?");
+        System.out.println(getLanguage().avertissement(Avertissement.CHOIXACTION));
         String s = "";
         for (int i = 0; i < ActionType.values().length; i++) {
             s += i+1 + " : " + action(ActionType.values()[i]) + "   ";

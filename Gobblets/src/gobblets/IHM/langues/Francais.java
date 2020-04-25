@@ -14,6 +14,7 @@ public class Francais implements Dictionnaire {
     private HashMap<Etat, String> etats;
     private HashMap<ActionType, String> actions;
     private HashMap<Erreur,String> erreurs;
+    private HashMap<Avertissement, String> avertissements;
 
     public Francais() {
         /* couleurs */
@@ -50,6 +51,20 @@ public class Francais implements Dictionnaire {
         erreurs.put(Erreur.ORIGINVIDE, "Origine vide");
         erreurs.put(Erreur.PASDEPIECEDISPONIBLE, "Pas de pièce disponible");
         erreurs.put(Erreur.PASTAPIECE, "Pas ta pièce");
+        /* avertissements */
+        avertissements = new HashMap<Avertissement, String>();
+        avertissements.put(Avertissement.CHOIXACTION, "Choisir votre action");
+        avertissements.put(Avertissement.CHOIXDESTINATION, "Destination ?");
+        avertissements.put(Avertissement.CHOIXORIGIN, "Origine ?");
+        avertissements.put(Avertissement.CHOIXTAILLE, "Taille ?");
+        avertissements.put(Avertissement.COULEURJOUEUR, "Couleur joueur");
+        avertissements.put(Avertissement.NOMJOUEUR, "Nom joueur");
+        avertissements.put(Avertissement.TONTOUR, "Tour de");
+        avertissements.put(Avertissement.SAISIECOORDONNEES, "Saisie coordonnées");
+        avertissements.put(Avertissement.SAISIECOORDONNEE1, "Première coordonnée");
+        avertissements.put(Avertissement.SAISIECOORDONNEE2, "Seconde coordonnée");
+        avertissements.put(Avertissement.MAISON, "Maison");
+        avertissements.put(Avertissement.CHOIXTYPEJOUEUR, "Quel type de joueur ?");
     }
 
     @Override
@@ -75,6 +90,11 @@ public class Francais implements Dictionnaire {
     @Override
     public String erreur(Erreur e) {
         return erreurs.get(e);
+    }
+
+    @Override
+    public String avertissement(Avertissement a) {
+        return avertissements.get(a);
     }
 
 }
