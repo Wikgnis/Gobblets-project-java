@@ -19,7 +19,6 @@ public class App {
         try {
             jouer(gobblets, ihm);
         } catch (Exception e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
     }
