@@ -1,10 +1,12 @@
 package gobblets.IHM.texte;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.Random;
 import java.util.Scanner;
 
 import gobblets.IHM.Avertissement;
 import gobblets.IHM.IHM;
-import gobblets.IHM.langues.Francais;
 import gobblets.data.*;
 
 public class SaisieConsole extends IHM {
@@ -17,7 +19,7 @@ public class SaisieConsole extends IHM {
         System.out.println("Saisie Joueur" + n);
         Joueur j = null;
         System.out.println(getLanguage().avertissement(Avertissement.CHOIXTYPEJOUEUR));
-        System.out.println("1 : JoueurHumain | * : annuler");
+        System.out.println("1 : JoueurHumain | 2 : JoueurIA | * : annuler");
         int choice = 0;
         try {
             choice = Integer.parseInt(sc.nextLine());
@@ -31,6 +33,10 @@ public class SaisieConsole extends IHM {
                     j = saisieJoueurHumain();
                     break;
 
+                case 2:
+                    j = saisieJoueurIA();
+                    break;
+
                 default:
                     throw new Exception("Pas de type joueur.");
             }
@@ -39,6 +45,55 @@ public class SaisieConsole extends IHM {
             throw new Exception("annulation saisie.");
         }
         return j;
+    }
+
+    private JoueurIA saisieJoueurIA() throws Exception {
+        String nom ;
+        List<String> listOfNames = Arrays.asList("ASTROBOY", "QRIO", "DANTE", "SPEEDY", "GENGHIS", "ALBERT HUBO", "R2-D2", "VAUCANSON", "THE IRON GIANT", "R.O.B.", "ROOMBA");
+        nom = listOfNames.get(new Random().nextInt(listOfNames.size()));
+        System.out.println(getLanguage().avertissement(Avertissement.NOMJOUEUR) + " : " + nom);
+        Couleur couleur;
+        System.out.println(getLanguage().avertissement(Avertissement.COULEURJOUEUR) + " : ");
+        String s = "";
+        for (int i = 0; i < Couleur.values().length; i++) {
+            s += i + 1 + " : " + couleur(Couleur.values()[i]) + "   ";
+        }
+        s += "* : annuler";
+        System.out.println(s);
+        String in = sc.nextLine();
+        switch (in) {
+            case "1":
+                couleur = Couleur.ROUGE;
+                break;
+
+            case "2":
+                couleur = Couleur.VERT;
+                break;
+
+            case "3":
+                couleur = Couleur.JAUNE;
+                break;
+
+            case "4":
+                couleur = Couleur.BLEU;
+                break;
+
+            case "5":
+                couleur = Couleur.BLANC;
+                break;
+
+            case "6":
+                couleur = Couleur.CYAN;
+                break;
+
+            case "7":
+                couleur = Couleur.VIOLET;
+                break;
+
+            default:
+                throw new Exception("Pas de couleur choisie.");
+        }
+        return new JoueurIA(nom, couleur);
     }
 
     private JoueurHumain saisieJoueurHumain() throws Exception {

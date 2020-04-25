@@ -9,7 +9,7 @@ public class JoueurIA extends Joueur {
 
     @Override
     public Action choisirAction(Plateau p) {
-        // TODO Auto-generated method stub
+        // TODO Auto-generated method stubytjhnhb
         return null;
     }
 }
