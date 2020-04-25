@@ -3,10 +3,13 @@ package gobblets.IHM.texte;
 import java.util.Scanner;
 
 import gobblets.IHM.IHM;
+import gobblets.IHM.langues.Francais;
 import gobblets.data.*;
 
 public class SaisieConsole extends IHM {
     private final static Scanner sc = new Scanner(System.in);
+
+    public SaisieConsole() {}
 
     @Override
     public Joueur saisirJoueur(int n) throws Exception {
@@ -41,20 +44,41 @@ public class SaisieConsole extends IHM {
         String nom;
         nom = sc.nextLine();
         Couleur couleur;
-        System.out.println("Saisir couleur joueur:\n\t1 : Rouge | 2 : Bleu | * : annuler");
-        int choice = 0;
-        try {
-            choice = Integer.parseInt(sc.nextLine());
-        } catch (Exception e) {
-            // Cancel Saisie couleur
+        System.out.println("Saisir couleur joueur:");
+        String s = "";
+        for (int i = 0; i < Couleur.values().length; i++) {
+            s += i+1 + " : " + couleur(Couleur.values()[i]) + "   ";
         }
-        switch (choice) {
-            case 1:
+        s += "* : annuler";
+        System.out.println(s);
+        String in = sc.nextLine();
+        switch (in) {
+            case "1":
                 couleur = Couleur.ROUGE;
                 break;
 
-            case 2:
+            case "2":
+                couleur = Couleur.VERT;
+                break;
+
+            case "3":
+                couleur = Couleur.JAUNE;
+                break;
+
+            case "4":
                 couleur = Couleur.BLEU;
+                break;
+
+            case "5":
+                couleur = Couleur.BLANC;
+                break;
+
+            case "6":
+                couleur = Couleur.CYAN;
+                break;
+
+            case "7":
+                couleur = Couleur.VIOLET;
                 break;
 
             default:
@@ -65,8 +89,15 @@ public class SaisieConsole extends IHM {
 
     @Override
     public Taille saisirTaille() throws Exception {
-        System.out.println("Quelle Taille?\n 1 : Grande | 2 : Moyenne | 3 : Petite | * : annuler");
-        switch (sc.nextLine()) {
+        System.out.println("Quelle Taille?");
+        String s = "";
+        for (int i = 0; i < Taille.values().length; i++) {
+            s += i+1 + " : " + super.getLanguage().taille(Taille.values()[i]) + "   ";
+        }
+        s += "* : annuler";
+        System.out.println(s);
+        String in = sc.nextLine();
+        switch (in) {
             case "1": return Taille.GRANDE;
             case "2": return Taille.MOYENNE;
             case "3": return Taille.PETITE;
@@ -132,8 +163,15 @@ public class SaisieConsole extends IHM {
 
     @Override
     public ActionType saisirAction(Joueur j) throws Exception {
-        System.out.println("Que voulez vous faire ?\n 1 : Placer | 2 : Deplacer | 3 : Quitter | * : annuler");
-        switch (sc.nextLine()) {
+        System.out.println("Que voulez vous faire ?");
+        String s = "";
+        for (int i = 0; i < ActionType.values().length; i++) {
+            s += i+1 + " : " + action(ActionType.values()[i]) + "   ";
+        }
+        s += "* : annuler";
+        System.out.println(s);
+        String in = sc.nextLine();
+        switch (in) {
             case "1": return ActionType.PLACER;
             case "2": return ActionType.DEPLACER;
             case "3": return ActionType.QUITTER;
