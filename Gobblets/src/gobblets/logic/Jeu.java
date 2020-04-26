@@ -53,18 +53,43 @@ public class Jeu {
         else joueurActif = j1;
     }
 
-    private Couleur aVictoire() {
-        try {
-            for (int i = 0; i < 3; i++) {
-                if (plateau.verifierLigne(i) != null) return plateau.verifierLigne(i);
-                if (plateau.verifierColonne(i) != null) return plateau.verifierColonne(i);
+    private void changeEtat(Etat current, Couleur winner) {
+        if (current != Etat.MATCHNUL && winner != null) { // si le jeu est deja match nul ou pas de gagnant rien a faire
+            if (current == Etat.JEUENCOURS) { // pas encore de gagnant
+                if (winner == j1.getCouleur()) { // j1 = gagnant
+                    current = Etat.JOUEUR1GAGNE;
+                }
+                else if (winner == j2.getCouleur()) { // j2 = gagnant
+                    current = Etat.JOUEUR2GAGNE;
+                }
             }
-            if (plateau.verifierDiagonale('a') != null) return plateau.verifierDiagonale('a');
-            if (plateau.verifierDiagonale('b') != null) return plateau.verifierDiagonale('b');
+            // deja un gagnant
+            else if ((current == Etat.JOUEUR1GAGNE && winner == j2.getCouleur()) || (current == Etat.JOUEUR2GAGNE && winner == j1.getCouleur())) current = Etat.MATCHNUL;
+        }
+    }
+
+    private Etat updateEtat(Etat current) {
+        try {
+            for (int i = 0; i < 3; i++) { // parcour ligne et colonnes
+                if (plateau.verifierLigne(i) != null){
+                    changeEtat(current, plateau.verifierLigne(i));
+                }
+                if (plateau.verifierColonne(i) != null) {
+                    changeEtat(current, plateau.verifierColonne(i));
+                }
+            }
+            // premiere diagonale
+            if (plateau.verifierDiagonale('a') != null) {
+                changeEtat(current, plateau.verifierDiagonale('a'));
+            }
+            // seconde diagonale
+            if (plateau.verifierDiagonale('b') != null) {
+                changeEtat(current, plateau.verifierDiagonale('b'));
+            }
         } catch (Exception e) {
             System.out.println(e);
         }
-        return null;
+        return current;
     }
 
     public Etat play() {
@@ -82,14 +107,11 @@ public class Jeu {
                     a.appliquer(joueurActif);
                     changeJoueur();
                 }
+                etatPlay = updateEtat(etatPlay);
             }
         } catch (Exception e) {
             System.out.println(e);
         }
-        /* detection victoire */
-        Couleur gagnant = aVictoire();
-        if ( gagnant != null) etatPlay = gagnant == j1.getCouleur() ? Etat.JOUEUR1GAGNE : Etat.JOUEUR2GAGNE;
-        /* changement de joueur et return de l'etat apres avoir joué */
         return etatPlay;
     }
 

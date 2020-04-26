@@ -30,6 +30,20 @@ public class Plateau {
         }
     }
 
+    public Plateau(Case[][] plateauCases, ArrayList<Piece> maisonJ1, ArrayList<Piece>maisonJ2) {
+        try {
+            for (int i = 0; i < cases.length; i++) {
+                for (int j = 0; j < cases[i].length; j++) {
+                    cases[i][j] = (Case) plateauCases[i][j].clone();
+                }
+            }
+            this.maisonJ1 = (ArrayList<Piece>) maisonJ1.clone();
+            this.maisonJ2 = (ArrayList<Piece>) maisonJ2.clone();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     public static Plateau initPlateau() {
         return new Plateau();
     }
@@ -159,5 +173,39 @@ public class Plateau {
     @Override
     public String toString() {
         return "Plateau(cases=[" + Arrays.toString(cases[0]) + Arrays.toString(cases[1]) + Arrays.toString(cases[2]) + "], maisonJ1=" + maisonJ1 + ", maisonJ2=" + maisonJ2 + ")";
+    }
+
+    public Object clone() {
+        Plateau p = null;
+        try {
+            p = new Plateau(getPlateau(), maisonJ1, maisonJ2);
+        } catch (Exception e) {
+            e.printStackTrace(System.err);
+        }
+        return p;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        Plateau other = (Plateau) obj;
+        if (cases.equals(other.getPlateau()))
+            return false;
+        if (maisonJ1 == null) {
+            if (other.getMaisonJ1() != null)
+                return false;
+        } else if (!maisonJ1.equals(other.getMaisonJ1()))
+            return false;
+        if (maisonJ2 == null) {
+            if (other.getMaisonJ2() != null)
+                return false;
+        } else if (!maisonJ2.equals(other.getMaisonJ2()))
+            return false;
+        return true;
     }
 }

@@ -22,4 +22,10 @@ public class Piece {
     public String toString() {
         return "Piece(taille="+taille+", couleur="+couleur+")";
     }
+
+    public Object clone() {
+        Piece p = new Piece(taille);
+        p.setCouleur(couleur);
+        return p;
+    }
 }

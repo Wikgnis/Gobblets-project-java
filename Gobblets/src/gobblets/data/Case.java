@@ -41,4 +41,17 @@ public class Case {
     public String toString() {
         return "Case(pieces=["+grande+","+moyenne+","+petite+"])";
     }
+
+    public Object clone() {
+        Case c = null;
+        try {
+            c = new Case();
+            if (petite != null) c.placePiece((Piece) petite.clone());
+            if (moyenne != null) c.placePiece((Piece) moyenne.clone());
+            if (grande != null) c.placePiece((Piece) grande.clone());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return c;
+    }
 }
