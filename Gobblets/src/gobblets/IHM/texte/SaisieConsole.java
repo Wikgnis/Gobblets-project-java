@@ -155,9 +155,9 @@ public class SaisieConsole extends IHM {
         System.out.println(s);
         String in = sc.nextLine();
         switch (in) {
-            case "1": return Taille.GRANDE;
+            case "1": return Taille.PETITE;
             case "2": return Taille.MOYENNE;
-            case "3": return Taille.PETITE;
+            case "3": return Taille.GRANDE;
             default: throw new Exception("annulation action");
         }
     }
