@@ -1,9 +1,6 @@
 package gobblets.data;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
 
 import gobblets.interaction.Action;
 import gobblets.interaction.Deplacement;
@@ -11,7 +8,7 @@ import gobblets.interaction.Placement;
 
 public class JoueurIA extends Joueur {
     private Joueur adversaire;
-    private static final int depthMax = 3;
+    private static final int depthMax = 5;
 
     public JoueurIA(String nom, Couleur couleur) {
         super(nom, couleur);
@@ -48,6 +45,36 @@ public class JoueurIA extends Joueur {
     }
 
     /** Algorythmes de choix */
+    private class JoueurSimplifie{
+        private ArrayList<Piece> pieces;
+        private Couleur couleur;
+
+        public JoueurSimplifie(ArrayList<Piece> pieces, Couleur couleur) {
+            this.pieces = pieces;
+            this.couleur = couleur;
+        }
+
+        public ArrayList<Piece> getPieces() {
+            return pieces;
+        }
+
+        public void setPieces(ArrayList<Piece> pieces) {
+            this.pieces = pieces;
+        }
+
+        public Couleur getCouleur() {
+            return couleur;
+        }
+
+        public void setCouleur(Couleur couleur) {
+            this.couleur = couleur;
+        }
+
+        @Override
+        public String toString() {
+            return "JoueurSimplifie [couleur=" + couleur + ", pieces=" + pieces + "]";
+        }
+    }
     /** Min Max */
     private Action minMAxAlgo(Plateau p) {
         /** Main elements used in algo */
@@ -60,7 +87,7 @@ public class JoueurIA extends Joueur {
                 for (Piece piece : getPiecesPossibles(getPieces())) {
                     if (p.getPlateau()[i][j].acceptePiece(piece.getTaille())) {
                         Case[][] pClone = clonePlateau(p.getPlateau());
-                        int score = minMax(pClone, 0);
+                        int score = minMax(pClone, new JoueurSimplifie((ArrayList<Piece>)getPieces().clone(), getCouleur()), new JoueurSimplifie((ArrayList<Piece>)getAdversaire().getPieces().clone(), getAdversaire().getCouleur()), 0);
                         if (bestScore == null || bestScore < score) {
                             bestScore = score;
                             a = new Placement(piece.getTaille(), p.getPlateau()[i][j]);
@@ -76,7 +103,7 @@ public class JoueurIA extends Joueur {
                             for (int j2 = 0; j2 < p.getPlateau()[0].length; j2++) {
                                 if (i2 != i && j2 != j) {
                                     Case[][] pClone = clonePlateau(p.getPlateau());
-                                    int score = minMax(pClone, 0);
+                                    int score = minMax(pClone, new JoueurSimplifie((ArrayList<Piece>)getPieces().clone(), getCouleur()), new JoueurSimplifie((ArrayList<Piece>)getAdversaire().getPieces().clone(), getAdversaire().getCouleur()), 0);
                                     if (bestScore == null || bestScore < score) {
                                         bestScore = score;
                                         a = new Deplacement(p.getPlateau()[i][j], p.getPlateau()[i2][j2]);
@@ -91,21 +118,43 @@ public class JoueurIA extends Joueur {
         return a;
     }
 
-    private int minMax(Case[][] p, int depth) {
+    private int minMax(Case[][] p, JoueurSimplifie joueur, JoueurSimplifie adversaire,int depth) {
+        /** temporary display */
+        /*
+        System.out.println(joueur + "\n" + adversaire);
+        for (int i = 0; i < p.length; i++) {
+            for (int j = 0; j < p[0].length; j++) {
+                System.out.print(new gobblets.IHM.texte.Case(p[i][j]).getRepresentationTextuelle());
+            }
+            System.out.print("\n");
+        }
+        */
         /** init variables */
         int bestScore = 0;
         /** detection fin de jeu */
+        Couleur winner = getVictoire(p);
+        if (winner == joueur.getCouleur()){
+            //System.out.println("vicoire " + winner + "-----------------------");
+            return 1;
+        }
+        else if (winner == adversaire.getCouleur()){
+            //System.out.println("vicoire " + winner + "-----------------------");
+            return -1;
+        }
         if (depth > depthMax) {
+            //System.out.println("Depth end" + "-----------------------");
             return 0;
         }
         /** parcours du plateau */
         for (int i = 0; i < p.length; i++) { // ligne
             for (int j = 0; j < p[i].length; j++) { // colonne
                 /** test Placement */
-                for (Piece piece : getPiecesPossibles(getPieces())) {
+                for (Piece piece : getPiecesPossibles(joueur.getPieces())) {
                     if (p[i][j].acceptePiece(piece.getTaille())) {
                         Case[][] pClone = clonePlateau(p);
-                        int score = minMax(pClone, depth+1);
+                        pClone[i][j].placePiece(joueur.getPieces().remove(joueur.getPieces().indexOf(piece)));
+                        int score = 0;
+                        score -= minMax(pClone, new JoueurSimplifie((ArrayList<Piece>)adversaire.getPieces().clone(), adversaire.getCouleur()), new JoueurSimplifie((ArrayList<Piece>)joueur.getPieces().clone(), joueur.getCouleur()), depth+1);
                         if (bestScore < score) {
                             bestScore = score;
                         }
@@ -118,9 +167,11 @@ public class JoueurIA extends Joueur {
                     ) {
                         for (int i2 = 0; i2 < p.length; i2++) {
                             for (int j2 = 0; j2 < p[0].length; j2++) {
-                                if (i2 != i && j2 != j) {
+                                if (i2 != i && j2 != j && p[i2][j2].acceptePiece(p[i][j].plusGrandePiece().getTaille())) {
                                     Case[][] pClone = clonePlateau(p);
-                                    int score = minMax(pClone, depth+1);
+                                    pClone[i2][j2].placePiece(pClone[i][j].enlevePiece());
+                                    int score = 0;
+                                    score -= minMax(pClone, new JoueurSimplifie((ArrayList<Piece>)adversaire.getPieces().clone(), adversaire.getCouleur()), new JoueurSimplifie((ArrayList<Piece>)joueur.getPieces().clone(), joueur.getCouleur()), depth+1);
                                     if (bestScore < score) {
                                         bestScore = score;
                                     }
@@ -132,6 +183,31 @@ public class JoueurIA extends Joueur {
         }
         /** return score */
         return bestScore;
+    }
+
+    private Couleur getVictoire(Case[][] p) {
+        Couleur winner = null;
+        /** ligne colonne */
+        for (int i = 0; i < p.length; i++) {
+            if (
+                p[i][0].plusGrandePiece() != null
+                && p[i][1].plusGrandePiece() != null
+                && p[i][2].plusGrandePiece() != null
+                && p[i][0].plusGrandePiece().getCouleur() == p[i][1].plusGrandePiece().getCouleur()
+                && p[i][1].plusGrandePiece().getCouleur() == p[i][2].plusGrandePiece().getCouleur()
+            )
+            return p[i][0].plusGrandePiece().getCouleur();
+            else if (
+                p[0][i].plusGrandePiece() != null
+                && p[1][i].plusGrandePiece() != null
+                && p[2][i].plusGrandePiece() != null
+                && p[0][i].plusGrandePiece().getCouleur() == p[1][i].plusGrandePiece().getCouleur()
+                && p[1][i].plusGrandePiece().getCouleur() == p[2][i].plusGrandePiece().getCouleur()
+            )
+            return p[0][i].plusGrandePiece().getCouleur();
+        }
+        /** diagonale */
+        return null;
     }
 
     private ArrayList<Piece> getPiecesPossibles(ArrayList<Piece> pieces) {

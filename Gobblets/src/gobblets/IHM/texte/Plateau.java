@@ -15,7 +15,7 @@ public class Plateau {
 
     public String getRepresentationTextuelle() {
         String s = "";
-        s += "  1  2  3\n";
+        s += "  0  1  2\n";
         for (int i = 0; i < plateauAffichable.length; i++) {
             s += i + " ";
             for (int j = 0; j < plateauAffichable[i].length; j++) {
