@@ -39,6 +39,14 @@ public class Jeu {
             }
         } while ((j2 == null || j2.getNom() == "" || j2.getCouleur() == null) || j2.getNom().equals(j1.getNom()) && j2.getCouleur() == j1.getCouleur());
         j2.setPieces(plateau.getMaisonJ2());
+        // IA Setup
+        if (j1 instanceof JoueurIA) {
+            ((JoueurIA)j1).setAdversaire(j2);
+        }
+        if (j2 instanceof JoueurIA) {
+            ((JoueurIA)j2).setAdversaire(j1);
+        }
+        // pieces setup
         for (Object o : j2.getPieces().toArray()) {
             ((Piece) o).setCouleur(j2.getCouleur());
         }

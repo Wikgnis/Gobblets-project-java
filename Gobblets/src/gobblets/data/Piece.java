@@ -28,4 +28,22 @@ public class Piece {
         p.setCouleur(couleur);
         return p;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        Piece other = (Piece) obj;
+        if (couleur != other.getCouleur())
+            return false;
+        if (taille != other.getTaille())
+            return false;
+        return true;
+    }
+    
+    
 }

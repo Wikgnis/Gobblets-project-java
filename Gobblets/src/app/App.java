@@ -7,6 +7,8 @@ import gobblets.IHM.texte.*;
 import gobblets.data.*;
 import gobblets.logic.Jeu;
 
+
+// jar cvfe {nomJAR} {main} {noms de ttes les classes}
 public class App {
     public static void main(String[] args) throws Exception {
         new App();
@@ -14,7 +16,7 @@ public class App {
 
     public App() {
         Jeu gobblets = new Jeu();
-        System.out.println("Jeu initialisé :\n"+ gobblets);
+        System.out.println("Jeu initialisÃ© :\n"+ gobblets);
         IHM ihm = new SaisieConsole();
         try {
             jouer(gobblets, ihm);

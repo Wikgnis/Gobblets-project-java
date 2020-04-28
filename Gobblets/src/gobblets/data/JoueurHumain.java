@@ -63,4 +63,10 @@ public class JoueurHumain extends Joueur {
     private Action creerActionQuitter(IHM i, Plateau p) {
         return new Termination();
     }
+
+    public Object clone() {
+        JoueurHumain cloneObject = new JoueurHumain(getNom(), getCouleur());
+        cloneObject.setPieces(getPieces());
+        return cloneObject;
+    }
 }

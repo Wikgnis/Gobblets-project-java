@@ -63,7 +63,7 @@ public abstract class Joueur {
                     return true;
             }
         }
-        throw new PiecePasdisponibleException(Erreur.PASDEPIECEDISPONIBLE);
+        return false;
     }
 
     public String toString() {
@@ -71,4 +71,5 @@ public abstract class Joueur {
     }
 
     public abstract Action choisirAction(Plateau p) throws Exception;
+    public abstract Object clone();
 }
