@@ -6,14 +6,10 @@ public class Termination extends Action {
     public Termination() {}
 
     @Override
-    public boolean verifier(Joueur j) {
-        return true;
-    }
+    public boolean verifier(Joueur j) { return true; }
 
     @Override
-    public void appliquer(Joueur j) {
-        
-    }
+    public void appliquer(Joueur j) {}
 
     @Override
     public String toString() {

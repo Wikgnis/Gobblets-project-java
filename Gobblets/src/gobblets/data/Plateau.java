@@ -45,7 +45,7 @@ public class Plateau {
                 }
             }
             /** clone maisons */
-            Object MaisonJ1Clone = maisonJ1.clone(), MaisonJ2Clone = maisonJ2.clone()
+            Object MaisonJ1Clone = maisonJ1.clone(), MaisonJ2Clone = maisonJ2.clone();
             this.maisonJ1 = (ArrayList<Piece>)MaisonJ1Clone;
             this.maisonJ2 = (ArrayList<Piece>)MaisonJ2Clone;
         } catch (Exception e) {
