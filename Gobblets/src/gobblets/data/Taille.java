@@ -14,5 +14,5 @@ public enum Taille {
      */
     public char getSymbole() { return symbole; }
     public boolean recouvre(Taille t) { return t == null || getSymbole()<t.getSymbole(); }
-    public boolean reouvre(Piece p) { return p == null || recouvre(p.getTaille()); }
+    public boolean recouvre(Piece p) { return p == null || recouvre(p.getTaille()); }
 }

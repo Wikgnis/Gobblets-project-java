@@ -3,6 +3,7 @@ package gobblets.data;
 public class Piece {
     private Couleur couleur;
     private final Taille taille;
+
     public Piece(Taille t) {
         taille = t;
     }
@@ -19,10 +20,12 @@ public class Piece {
         couleur = c;
     }
 
+    @Override
     public String toString() {
         return "Piece(taille="+taille+", couleur="+couleur+")";
     }
 
+    @Override
     public Object clone() {
         Piece p = new Piece(taille);
         p.setCouleur(couleur);
@@ -44,6 +47,4 @@ public class Piece {
             return false;
         return true;
     }
-    
-    
 }

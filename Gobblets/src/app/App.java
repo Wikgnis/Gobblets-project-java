@@ -1,9 +1,7 @@
 package app;
 
-import java.util.Arrays;
-
 import gobblets.IHM.*;
-import gobblets.IHM.texte.*;
+import gobblets.IHM.texte.SaisieConsole;
 import gobblets.data.*;
 import gobblets.logic.Jeu;
 

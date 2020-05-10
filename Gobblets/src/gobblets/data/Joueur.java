@@ -10,6 +10,7 @@ public abstract class Joueur {
     private final String nom;
     private final Couleur couleur;
     private ArrayList<Piece> pieces;
+
     public Joueur(String nom, Couleur couleur) {
         this.nom = nom; this.couleur=couleur;
     }
@@ -30,11 +31,10 @@ public abstract class Joueur {
         this.pieces = pieces;
     }
 
-    public void ajoutPiece(Piece p) throws PiecePasdisponibleException {
-        if (p != null) {
-            pieces.add(p);
-        }
-        else throw new PiecePasdisponibleException(Erreur.ARGUMENTINCORECT);
+    public void ajoutPiece(Piece p) throws Exception {
+        if (p == null) throw new Exception("error : null value");
+        if (p.getCouleur() != getCouleur()) throw new PiecePasdisponibleException(Erreur.PASTAPIECE);
+        pieces.add(p);
     }
 
     public boolean aPiece(Piece p) {
@@ -42,21 +42,19 @@ public abstract class Joueur {
     }
 
     public Piece enlevePiece(Taille t) throws Exception {
-        try {
-            if (aPieceDeTaille(t)) {
-                for (Object o : pieces.toArray()) {
-                    if (((Piece) o).getTaille() == t)
-                        return pieces.remove(pieces.indexOf(o));
-                }
+        if (pieces == null) throw new Exception("error : pieces Joueur null");
+        if (aPieceDeTaille(t)) {
+            for (Object o : pieces.toArray()) { // parcour des pieces du joueur
+                if (((Piece) o).getTaille() == t) // si même taille
+                    return pieces.remove(pieces.indexOf(o)); // enleve et retourne piece
             }
-        } catch (Exception e) {
-            throw e;
         }
         return null;
     }
 
-    public boolean aPieceDeTaille(Taille t) throws PiecePasdisponibleException {
-        if (t == null || pieces == null) throw new PiecePasdisponibleException(Erreur.ARGUMENTINCORECT);
+    public boolean aPieceDeTaille(Taille t) throws Exception {
+        if (pieces == null) throw new Exception("error : pieces Joueur null");
+        if (t == null) throw new Exception("error : taille is null");
         if (pieces.size() != 0) {
             for (Object o : pieces.toArray()) {
                 if (((Piece) o).getTaille() == t)
