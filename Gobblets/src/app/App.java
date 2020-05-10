@@ -21,6 +21,7 @@ public class App {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        ihm.finalize();
     }
 
     private void jouer(Jeu gobblets, IHM ihm) throws Exception {

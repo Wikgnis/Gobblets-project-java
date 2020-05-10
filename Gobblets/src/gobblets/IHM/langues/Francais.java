@@ -19,13 +19,14 @@ public class Francais implements Dictionnaire {
     public Francais() {
         /* couleurs */
         couleurs = new HashMap<Couleur, String>();
-        couleurs.put(Couleur.ROUGE, "Rouge");
-        couleurs.put(Couleur.VERT, "Vert");
-        couleurs.put(Couleur.JAUNE, "Jaune");
-        couleurs.put(Couleur.BLEU, "Bleu");
-        couleurs.put(Couleur.BLANC, "Blanc");
-        couleurs.put(Couleur.CYAN, "Cyan");
-        couleurs.put(Couleur.VIOLET, "Violet");
+        couleurs.put(Couleur.NOIR, "noir");
+        couleurs.put(Couleur.BLEU, "bleu");
+        couleurs.put(Couleur.CYAN, "cyan");
+        couleurs.put(Couleur.VERT, "vert");
+        couleurs.put(Couleur.MAGENTA, "magenta");
+        couleurs.put(Couleur.ROUGE, "rouge");
+        couleurs.put(Couleur.BLANC, "blanc");
+        couleurs.put(Couleur.JAUNE, "jaune");
         /* tailles */
         tailles = new HashMap<Taille, String>();
         tailles.put(Taille.GRANDE, "Grande");

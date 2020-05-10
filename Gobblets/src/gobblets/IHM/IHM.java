@@ -15,6 +15,7 @@ public abstract class IHM {
     public abstract int[] saisirCoordonnees() throws Exception;
     public abstract void display(Plateau p, Joueur j) throws Exception;
     public abstract ActionType saisirAction(Joueur j) throws Exception;
+    public abstract void finalize();
 
     public Dictionnaire getLanguage() {
         return language;

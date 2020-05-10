@@ -9,10 +9,17 @@ import gobblets.IHM.Avertissement;
 import gobblets.IHM.IHM;
 import gobblets.data.*;
 
+import org.fusesource.jansi.AnsiConsole;
+import org.fusesource.jansi.AnsiRenderer;
+
+import static org.fusesource.jansi.Ansi.*;
+
 public class SaisieConsole extends IHM {
     private final static Scanner sc = new Scanner(System.in);
 
-    public SaisieConsole() {}
+    public SaisieConsole() {
+        AnsiConsole.systemInstall();
+    }
 
     @Override
     public Joueur saisirJoueur(int n) throws Exception {
@@ -48,46 +55,57 @@ public class SaisieConsole extends IHM {
     }
 
     private JoueurIA saisieJoueurIA() throws Exception {
+        /** choix nom joueur ia */
         String nom ;
         List<String> listOfNames = Arrays.asList("ASTROBOY", "QRIO", "DANTE", "SPEEDY", "GENGHIS", "ALBERT HUBO", "R2-D2", "VAUCANSON", "THE IRON GIANT", "R.O.B.", "ROOMBA");
         nom = listOfNames.get(new Random().nextInt(listOfNames.size()));
+        /** display nom */
         System.out.println(getLanguage().avertissement(Avertissement.NOMJOUEUR) + " : " + nom);
+        /** choix couleur */
         Couleur couleur;
         System.out.println(getLanguage().avertissement(Avertissement.COULEURJOUEUR) + " : ");
         String s = "";
+        // display colors
         for (int i = 0; i < Couleur.values().length; i++) {
-            s += i + 1 + " : " + couleur(Couleur.values()[i]) + "   ";
+            s += i + 1 + " : ";
+            s += AnsiRenderer.render(couleur(Couleur.values()[i]), Couleur.values()[i].getAnsiColor().name());
+            s += "   ";
         }
         s += "* : annuler";
         System.out.println(s);
+        /** choix */
         String in = sc.nextLine();
         switch (in) {
             case "1":
-                couleur = Couleur.ROUGE;
+                couleur = Couleur.NOIR;
                 break;
 
             case "2":
-                couleur = Couleur.VERT;
-                break;
-
-            case "3":
-                couleur = Couleur.JAUNE;
-                break;
-
-            case "4":
                 couleur = Couleur.BLEU;
                 break;
 
-            case "5":
-                couleur = Couleur.BLANC;
-                break;
-
-            case "6":
+            case "3":
                 couleur = Couleur.CYAN;
                 break;
 
+            case "4":
+                couleur = Couleur.VERT;
+                break;
+
+            case "5":
+                couleur = Couleur.MAGENTA;
+                break;
+
+            case "6":
+                couleur = Couleur.ROUGE;
+                break;
+
             case "7":
-                couleur = Couleur.VIOLET;
+                couleur = Couleur.BLANC;
+                break;
+            
+            case "8":
+                couleur = Couleur.JAUNE;
                 break;
 
             default:
@@ -97,45 +115,55 @@ public class SaisieConsole extends IHM {
     }
 
     private JoueurHumain saisieJoueurHumain() throws Exception {
+        /** choix nom */
         System.out.println(getLanguage().avertissement(Avertissement.NOMJOUEUR) + " : ");
         String nom;
         nom = sc.nextLine();
+        /** choix couleur */
         Couleur couleur;
         System.out.println(getLanguage().avertissement(Avertissement.COULEURJOUEUR) + " : ");
+        // display colors
         String s = "";
         for (int i = 0; i < Couleur.values().length; i++) {
-            s += i+1 + " : " + couleur(Couleur.values()[i]) + "   ";
+            s += i+1 + " : ";
+            s += AnsiRenderer.render(couleur(Couleur.values()[i]), Couleur.values()[i].getAnsiColor().name());
+            s += "   ";
         }
         s += "* : annuler";
         System.out.println(s);
+        /** choix */
         String in = sc.nextLine();
         switch (in) {
             case "1":
-                couleur = Couleur.ROUGE;
+                couleur = Couleur.NOIR;
                 break;
 
             case "2":
-                couleur = Couleur.VERT;
-                break;
-
-            case "3":
-                couleur = Couleur.JAUNE;
-                break;
-
-            case "4":
                 couleur = Couleur.BLEU;
                 break;
 
-            case "5":
-                couleur = Couleur.BLANC;
-                break;
-
-            case "6":
+            case "3":
                 couleur = Couleur.CYAN;
                 break;
 
+            case "4":
+                couleur = Couleur.VERT;
+                break;
+
+            case "5":
+                couleur = Couleur.MAGENTA;
+                break;
+
+            case "6":
+                couleur = Couleur.ROUGE;
+                break;
+
             case "7":
-                couleur = Couleur.VIOLET;
+                couleur = Couleur.BLANC;
+                break;
+
+            case "8":
+                couleur = Couleur.JAUNE;
                 break;
 
             default:
@@ -185,15 +213,14 @@ public class SaisieConsole extends IHM {
     public static String generateColoredBGString(String s, Couleur c) throws Exception {
         if (s == null) throw new Exception("No string to operate on.");
         if (c == null) throw new Exception("No color for the String");
-        String color = "\u001B[48;2;"+c.getR()+";"+c.getG()+";"+c.getB()+"m";
-        return color + s + "\u001B[m";
+        // "@|red Hello|@ @|green World|@"
+        return AnsiRenderer.render("@|BG_"+c.getAnsiColor().name() +" "+ s + "|@");
     }
 
     public static String generateColoredFGString(String s, Couleur c) throws Exception {
         if (s == null) throw new Exception("No string to operate on.");
         if (c == null) throw new Exception("No color for the String");
-        String color = "\u001B[38;2;"+c.getR()+";"+c.getG()+";"+c.getB()+"m";
-        return color + s + "\u001B[m";
+        return AnsiRenderer.render("@|FG_" + c.getAnsiColor().name() + " " + s + "|@");
     }
 
     private String displayHouse(Joueur j) {
@@ -209,6 +236,7 @@ public class SaisieConsole extends IHM {
     @Override
     public void display(gobblets.data.Plateau p, Joueur j) {
         try {
+            System.out.println(ansi().eraseScreen());
             System.out.println(getLanguage().avertissement(Avertissement.NOMJOUEUR) + " : " + generateColoredBGString(" "+j.getNom()+" ", j.getCouleur()));
             System.out.println(getLanguage().avertissement(Avertissement.MAISON) + " : " + displayHouse(j));
             Plateau pl = new Plateau(p);
@@ -234,5 +262,10 @@ public class SaisieConsole extends IHM {
             case "3": return ActionType.QUITTER;
             default: throw new Exception("annulation action");
         }
+    }
+
+    @Override
+    public void finalize() {
+        AnsiConsole.systemUninstall();
     }
 }
