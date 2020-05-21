@@ -67,7 +67,7 @@ public class Francais implements Dictionnaire {
         avertissements.put(Avertissement.MAISON, "Maison");
         avertissements.put(Avertissement.CHOIXTYPEJOUEUR, "Quel type de joueur ?");
         avertissements.put(Avertissement.ANNULATIONSAISIE, "Annulation saisie");
-        avertissements.put(Avertissement.SAISIEJOUEUR, "Saisie Joeur");
+        avertissements.put(Avertissement.SAISIEJOUEUR, "Saisie Joueur");
     }
 
     @Override

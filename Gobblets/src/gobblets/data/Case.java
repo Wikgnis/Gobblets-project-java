@@ -3,6 +3,7 @@ package gobblets.data;
 import java.util.ArrayList;
 
 import gobblets.IHM.Erreur;
+import gobblets.IHM.IHM;
 import gobblets.logic.CaseBloqueeException;
 import gobblets.logic.PiecePasdisponibleException;
 
@@ -60,7 +61,7 @@ public class Case {
             if (grande != null) c.placePiece((Piece) grande.clone());
             return c;
         } catch (Exception e) {
-            e.printStackTrace();
+            IHM.getIHM().display(e);
             return null;
         }
     }

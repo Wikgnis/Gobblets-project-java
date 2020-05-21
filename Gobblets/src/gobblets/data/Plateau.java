@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 import gobblets.IHM.Erreur;
+import gobblets.IHM.IHM;
 import gobblets.logic.PiecePasdisponibleException;
 
 public class Plateau {
@@ -49,7 +50,7 @@ public class Plateau {
             this.maisonJ1 = (ArrayList<Piece>)MaisonJ1Clone;
             this.maisonJ2 = (ArrayList<Piece>)MaisonJ2Clone;
         } catch (Exception e) {
-            e.printStackTrace();
+            IHM.getIHM().display(e);
         }
     }
 
@@ -188,7 +189,7 @@ public class Plateau {
         try {
             p = new Plateau(getPlateau(), maisonJ1, maisonJ2);
         } catch (Exception e) {
-            e.printStackTrace(System.err);
+            IHM.getIHM().display(e);
         }
         return p;
     }

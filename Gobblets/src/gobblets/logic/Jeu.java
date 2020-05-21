@@ -2,8 +2,8 @@ package gobblets.logic;
 
 import java.util.Random;
 
+import gobblets.IHM.Erreur;
 import gobblets.IHM.IHM;
-import gobblets.IHM.texte.SaisieConsole;
 import gobblets.data.*;
 import gobblets.interaction.*;
 
@@ -15,23 +15,16 @@ public class Jeu {
     public Jeu() {
         plateau = Plateau.initPlateau();
         /* choix IHM */
-        IHM saisie = new SaisieConsole();
         etat = Etat.JEUENCOURS;
         /* init j1 */
         // saisie j1
-        do {
+        while (j1 == null) {
             try {
-                j1 = saisie.saisirJoueur(1);
+                j1 = IHM.getIHM().saisirJoueur(1);
             } catch (Exception e) {
-                e.printStackTrace();
-                j1 = null;
+                IHM.getIHM().display(e);
             }
-        } while
-            (
-                j1 == null
-                || j1.getNom() == ""
-                || j1.getCouleur() == null
-            );
+        }
         // set Pieces J1
         j1.setPieces(plateau.getMaisonJ1());
         // set color Pieces
@@ -40,20 +33,17 @@ public class Jeu {
         }
         /* init j2 */
         // saisie j2
-        do {
+        while (j2 == null) {
             try {
-                j2 = saisie.saisirJoueur(2);
+                j2 = IHM.getIHM().saisirJoueur(2);
+                if (j2.getNom().equals(j1.getNom()) && j2.getCouleur() == j1.getCouleur()){
+                    j2 = null;
+                    throw new Exception(IHM.getIHM().getLanguage().erreur(Erreur.ARGUMENTINCORECT) + " j1 == j2");
+                }
             } catch (Exception e) {
-                e.printStackTrace();
-                j2 = null;
+                IHM.getIHM().display(e);
             }
-        } while
-            (
-                (j2 == null || j2.getNom() == ""
-                || j2.getCouleur() == null)
-                || j2.getNom().equals(j1.getNom())
-                && j2.getCouleur() == j1.getCouleur()
-            );
+        }
         // set maison J2
         j2.setPieces(plateau.getMaisonJ2());
         // set color pieces
@@ -106,6 +96,7 @@ public class Jeu {
      * @return Etat which will be the current etat of the game at the end of the round
      */
     private Etat updateEtat(Etat current) {
+        // TODO
         try {
             for (int i = 0; i < 3; i++) { // parcour ligne et colonnes
                 if (plateau.verifierLigne(i) != null) {
@@ -124,7 +115,7 @@ public class Jeu {
                 changeEtat(current, plateau.verifierDiagonale('b'));
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            IHM.getIHM().display(e);
         }
         return current;
     }
@@ -134,6 +125,7 @@ public class Jeu {
      * @param winner winner of the game
      */
     private void changeEtat(Etat current, Couleur winner) {
+        // TODO
         if (current != Etat.MATCHNUL && winner != null) { // si le jeu est deja match nul ou pas de gagnant rien a faire
             if (current == Etat.JEUENCOURS) { // pas encore de gagnant
                 if (winner == j1.getCouleur()) { // j1 = gagnant
@@ -171,7 +163,7 @@ public class Jeu {
                 etatPlay = updateEtat(etatPlay);
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            IHM.getIHM().display(e);
         }
         return etatPlay;
     }

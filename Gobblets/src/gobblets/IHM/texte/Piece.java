@@ -11,6 +11,7 @@ public class Piece {
         try {
             return SaisieConsole.generateColoredFGString(contenu.getTaille().getSymbole() + "  ", contenu.getCouleur());
         } catch (Exception e) {
+            IHM.getIHM().display(e);
             return "   ";
         }
     }
