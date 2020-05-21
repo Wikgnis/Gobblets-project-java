@@ -2,6 +2,8 @@ package gobblets.data;
 
 import java.util.ArrayList;
 
+import gobblets.data.IA.JoueurSimplifie;
+import gobblets.data.IA.PlateauSimplifie;
 import gobblets.interaction.Action;
 import gobblets.interaction.Deplacement;
 import gobblets.interaction.Placement;
@@ -29,7 +31,15 @@ public class JoueurIA extends Joueur {
 
     /** Min Max */
     private Action minMAxAlgo(Plateau p) {
-        return null;
+        /** setup values */
+        Action choice = null;
+        /** setup simplified gameboard */
+        JoueurSimplifie IA = new JoueurSimplifie(this, 0);
+        JoueurSimplifie opponent = new JoueurSimplifie(adversaire, 1);
+        PlateauSimplifie plateau;
+        /** algorythm */
+        /** return */
+        return choice;
     }
 
     public Object clone() {

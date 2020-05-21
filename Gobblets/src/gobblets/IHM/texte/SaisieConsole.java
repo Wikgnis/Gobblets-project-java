@@ -6,13 +6,12 @@ import java.util.Random;
 import java.util.Scanner;
 
 import gobblets.IHM.Avertissement;
+import gobblets.IHM.Erreur;
 import gobblets.IHM.IHM;
 import gobblets.data.*;
 
 import org.fusesource.jansi.AnsiConsole;
 import org.fusesource.jansi.AnsiRenderer;
-
-import static org.fusesource.jansi.Ansi.*;
 
 public class SaisieConsole extends IHM {
     private final static Scanner sc = new Scanner(System.in);
@@ -23,33 +22,27 @@ public class SaisieConsole extends IHM {
 
     @Override
     public Joueur saisirJoueur(int n) throws Exception {
-        System.out.println("Saisie Joueur" + n);
+        System.out.println(getLanguage().avertissement(Avertissement.SAISIEJOUEUR) + " " + n);
         Joueur j = null;
         System.out.println(getLanguage().avertissement(Avertissement.CHOIXTYPEJOUEUR));
-        System.out.println("1 : JoueurHumain | 2 : JoueurIA | * : annuler");
-        int choice = 0;
+        // TODO
+        System.out.println("1 : JoueurHumain | 2 : JoueurIA");
+        String in = sc.nextLine();
         try {
-            choice = Integer.parseInt(sc.nextLine());
-        } catch (Exception e) {
-            // Cancel Saisie joueur
-            throw new Exception("annulation saisie.");
-        }
-        try {
-            switch (choice) {
-                case 1:
+            switch (in) {
+                case "1":
                     j = saisieJoueurHumain();
                     break;
 
-                case 2:
+                case "2":
                     j = saisieJoueurIA();
                     break;
 
                 default:
-                    throw new Exception("Pas de type joueur.");
+                    throw new Exception(getLanguage().erreur(Erreur.ARGUMENTINCORECT) + " " + in);
             }
         } catch (Exception e) {
-            System.out.println("Erreur : " + e + " ... Annulation saisie joueur");
-            throw new Exception("annulation saisie.");
+            throw new Exception(getLanguage().avertissement(Avertissement.ANNULATIONSAISIE) + ":" + e.getStackTrace());
         }
         return j;
     }
@@ -71,7 +64,6 @@ public class SaisieConsole extends IHM {
             s += AnsiRenderer.render(couleur(Couleur.values()[i]), Couleur.values()[i].getAnsiColor().name());
             s += "   ";
         }
-        s += "* : annuler";
         System.out.println(s);
         /** choix */
         String in = sc.nextLine();
@@ -109,7 +101,7 @@ public class SaisieConsole extends IHM {
                 break;
 
             default:
-                throw new Exception("Pas de couleur choisie.");
+                throw new Exception(getLanguage().erreur(Erreur.ARGUMENTINCORECT) + " " + in);
         }
         return new JoueurIA(nom, couleur);
     }
@@ -129,7 +121,6 @@ public class SaisieConsole extends IHM {
             s += AnsiRenderer.render(couleur(Couleur.values()[i]), Couleur.values()[i].getAnsiColor().name());
             s += "   ";
         }
-        s += "* : annuler";
         System.out.println(s);
         /** choix */
         String in = sc.nextLine();
@@ -167,7 +158,7 @@ public class SaisieConsole extends IHM {
                 break;
 
             default:
-                throw new Exception("Pas de couleur choisie.");
+                throw new Exception(getLanguage().erreur(Erreur.ARGUMENTINCORECT) + " " + in);
         }
         return new JoueurHumain(nom, couleur);
     }
@@ -179,30 +170,30 @@ public class SaisieConsole extends IHM {
         for (int i = 0; i < Taille.values().length; i++) {
             s += i+1 + " : " + super.getLanguage().taille(Taille.values()[i]) + "   ";
         }
-        s += "* : annuler";
         System.out.println(s);
         String in = sc.nextLine();
         switch (in) {
             case "1": return Taille.PETITE;
             case "2": return Taille.MOYENNE;
             case "3": return Taille.GRANDE;
-            default: throw new Exception("annulation action");
+            default: throw new Exception(getLanguage().erreur(Erreur.ARGUMENTINCORECT) + " " + in);
         }
     }
 
     @Override
-    public int[] saisirCoordonnees() {
+    public int[] saisirCoordonnees() throws Exception {
         int[] coord = new int[2];
-        System.out.println(getLanguage().avertissement(Avertissement.SAISIECOORDONNEES) + "(0->2) : ");
+        System.out.println(getLanguage().avertissement(Avertissement.SAISIECOORDONNEES) + " : ");
         Integer in = null;
         for (int i = 0; i < coord.length; i++) {
             do {
+                // display du type saisie ( saisie coordonnée 1 ou saisie coordonnée 2)
                 System.out.println((i==0 ? getLanguage().avertissement(Avertissement.SAISIECOORDONNEE1):getLanguage().avertissement(Avertissement.SAISIECOORDONNEE2)));
                 String s = sc.nextLine();
                 try {
                     in = Integer.parseInt(s);
                 } catch (Exception e) {
-                    System.out.println("Erreur : " + e + " Veuillez entrer un valuer correcte.");
+                    throw new Exception(AnsiRenderer.render(getLanguage().erreur(Erreur.ARGUMENTINCORECT) + e, "red, bold"));
                 }
             } while (in == null);
             coord[i] = in;
@@ -211,6 +202,7 @@ public class SaisieConsole extends IHM {
     }
 
     public static String generateColoredBGString(String s, Couleur c) throws Exception {
+        // TODO
         if (s == null) throw new Exception("No string to operate on.");
         if (c == null) throw new Exception("No color for the String");
         // "@|red Hello|@ @|green World|@"
@@ -236,13 +228,13 @@ public class SaisieConsole extends IHM {
     @Override
     public void display(gobblets.data.Plateau p, Joueur j) {
         try {
-            System.out.println(ansi().eraseScreen());
+            //System.out.println(ansi().eraseScreen());
             System.out.println(getLanguage().avertissement(Avertissement.NOMJOUEUR) + " : " + generateColoredBGString(" "+j.getNom()+" ", j.getCouleur()));
             System.out.println(getLanguage().avertissement(Avertissement.MAISON) + " : " + displayHouse(j));
             Plateau pl = new Plateau(p);
             System.out.print(pl.getRepresentationTextuelle());;
         } catch (Exception e) {
-            System.out.println(e);
+            e.printStackTrace();
         }
     }
 
@@ -260,7 +252,7 @@ public class SaisieConsole extends IHM {
             case "1": return ActionType.PLACER;
             case "2": return ActionType.DEPLACER;
             case "3": return ActionType.QUITTER;
-            default: throw new Exception("annulation action");
+            default: throw new Exception(getLanguage().erreur(Erreur.ARGUMENTINCORECT) + " " + in);
         }
     }
 

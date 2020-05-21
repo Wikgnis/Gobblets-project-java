@@ -1,5 +1,7 @@
 package gobblets.data;
 
+import java.util.ArrayList;
+
 import gobblets.IHM.Erreur;
 import gobblets.logic.CaseBloqueeException;
 import gobblets.logic.PiecePasdisponibleException;
@@ -61,6 +63,14 @@ public class Case {
             e.printStackTrace();
             return null;
         }
+    }
+
+    public Piece[] getPieces() {
+        ArrayList<Piece> pieces = new ArrayList<>();
+        if (petite != null) pieces.add(petite);
+        if (moyenne != null) pieces.add(moyenne);
+        if (grande != null) pieces.add(grande);
+        return pieces.toArray(new Piece[pieces.size()]);
     }
 
     public String toString() {

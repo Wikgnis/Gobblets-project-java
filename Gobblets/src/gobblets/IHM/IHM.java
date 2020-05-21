@@ -5,6 +5,7 @@ import gobblets.data.*;
 
 public abstract class IHM {
     private Dictionnaire language;
+    private IHM courante;
 
     public IHM() {
         language = new Francais();
@@ -23,14 +24,6 @@ public abstract class IHM {
 
     public void setLanguage(Dictionnaire language) {
         this.language = language;
-    }
-
-    public IHM getIHM() {
-        return this;
-    }
-
-    public void setIHM(IHM i) {
-        // todo
     }
 
     public String couleur(Couleur c) {
@@ -55,5 +48,13 @@ public abstract class IHM {
 
     public String avertissement(Avertissement a) {
         return language.avertissement(a);
+    }
+
+    public IHM getIHM() {
+        return courante;
+    }
+
+    public void setIHM(IHM courante) {
+        this.courante = courante;
     }
 }
