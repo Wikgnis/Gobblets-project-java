@@ -100,4 +100,10 @@ public class Francais implements Dictionnaire {
         return avertissements.get(a);
     }
 
+    @Override
+    public String menu(Menu m) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
 }

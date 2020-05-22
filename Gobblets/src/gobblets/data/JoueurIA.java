@@ -1,12 +1,8 @@
 package gobblets.data;
 
-import java.util.ArrayList;
-
 import gobblets.data.IA.JoueurSimplifie;
 import gobblets.data.IA.PlateauSimplifie;
 import gobblets.interaction.Action;
-import gobblets.interaction.Deplacement;
-import gobblets.interaction.Placement;
 
 public class JoueurIA extends Joueur {
     private Joueur adversaire;

@@ -9,4 +9,5 @@ public interface Dictionnaire {
     public String action(ActionType a);
     public String erreur(Erreur e);
     public String avertissement(Avertissement a);
+    public String menu(Menu m);
 }

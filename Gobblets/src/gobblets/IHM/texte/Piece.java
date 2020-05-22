@@ -1,5 +1,7 @@
 package gobblets.IHM.texte;
 
+import gobblets.IHM.IHM;
+
 public class Piece {
     private gobblets.data.Piece contenu;
 
