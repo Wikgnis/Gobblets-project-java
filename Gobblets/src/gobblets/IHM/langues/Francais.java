@@ -15,6 +15,7 @@ public class Francais implements Dictionnaire {
     private HashMap<ActionType, String> actions;
     private HashMap<Erreur,String> erreurs;
     private HashMap<Avertissement, String> avertissements;
+    private HashMap<Menu, String> menus;
 
     public Francais() {
         /* couleurs */
@@ -68,6 +69,17 @@ public class Francais implements Dictionnaire {
         avertissements.put(Avertissement.CHOIXTYPEJOUEUR, "Quel type de joueur ?");
         avertissements.put(Avertissement.ANNULATIONSAISIE, "Annulation saisie");
         avertissements.put(Avertissement.SAISIEJOUEUR, "Saisie Joueur");
+        /** menus */
+        menus = new HashMap<Menu, String>();
+        menus.put(Menu.MENU_AIDE, "Menu d'aide");
+        menus.put(Menu.MENU_APROPOS, "A propos");
+        menus.put(Menu.MENU_ENREGISTRER, "Enregistrer");
+        menus.put(Menu.MENU_FICHIER, "Fichiers");
+        menus.put(Menu.MENU_LANGUE, "Choix langue");
+        menus.put(Menu.MENU_NOUVEAU, "Nouvelle partie");
+        menus.put(Menu.MENU_OUVRIR, "Ouvrir une partie");
+        menus.put(Menu.MENU_QUITTER, "Quitter ?");
+        menus.put(Menu.MENU_ACCEUIL, "Acceuil");
     }
 
     @Override
@@ -102,8 +114,7 @@ public class Francais implements Dictionnaire {
 
     @Override
     public String menu(Menu m) {
-        // TODO Auto-generated method stub
-        return null;
+        return menus.get(m);
     }
 
 }

@@ -292,66 +292,93 @@ public class SaisieConsole extends IHM {
     }
 
     @Override
-    public void display(Menu m) {
+    public Menu display(Menu m) {
+        try {
+            System.out.println(generateColoredBGString(getLanguage().menu(m), Couleur.MAGENTA));
+        } catch (Exception e) {
+            display(e);
+        }
         switch (m) {
+            case MENU_ACCEUIL:
+                return displayMenuAcceuil();
             case MENU_AIDE:
-                displatMenuAide();
-                break;
+                return displatMenuAide();
             case MENU_APROPOS:
-                displayMenuAPropos();
-                break;
+                return displayMenuAPropos();
             case MENU_ENREGISTRER:
-                displayMenuEnregistrer();
-                break;
+                return displayMenuEnregistrer();
             case MENU_FICHIER:
-                displayMenuFichier();
-                break;
+                return displayMenuFichier();
             case MENU_LANGUE:
-                displayMenuLangue();
-                break;
+                return displayMenuLangue();
             case MENU_NOUVEAU:
-                displayMenuNouveau();
-                break;
+                return displayMenuNouveau();
             case MENU_OUVRIR:
-                displayMenuOuvrir();
-                break;
+                return displayMenuOuvrir();
             case MENU_QUITTER:
-                displayMenuQuitter();
-                break;
+                return displayMenuQuitter();
             default:
-                break;
+                return null;
         }
     }
 
-    private void displayMenuFichier() {
-        // TODO
+    private Menu displayMenuAcceuil() {
+        Menu choice = null;
+        Menu[] choices = {Menu.MENU_NOUVEAU, Menu.MENU_OUVRIR ,Menu.MENU_AIDE, Menu.MENU_APROPOS, Menu.MENU_QUITTER};
+        for (int i = 0; i < choices.length; i++) {
+            System.out.println( i+1 + " > " + getLanguage().menu(choices[i]));
+        }
+        String in = sc.nextLine();
+        try {
+            Integer inValue = Integer.parseInt(in);
+            if (inValue >= 1 && inValue <= choices.length + 1) {
+                choice = choices[inValue+1];
+            }
+            else throw new Exception();
+        } catch (Exception e) {
+            IHM.getIHM().display(new Exception(getLanguage().erreur(Erreur.ARGUMENTINCORECT) + " " + in));
+            choice = Menu.MENU_ACCEUIL;
+        }
+        return choice;
     }
 
-    private void displayMenuOuvrir() {
+    private Menu displayMenuFichier() {
         // TODO
+        return null;
     }
 
-    private void displayMenuEnregistrer() {
+    private Menu displayMenuOuvrir() {
         // TODO
+        return null;
     }
 
-    private void displayMenuNouveau() {
+    private Menu displayMenuEnregistrer() {
         // TODO
+        return null;
     }
 
-    private void displayMenuQuitter() {
+    private Menu displayMenuNouveau() {
         // TODO
+        return null;
     }
 
-    private void displatMenuAide() {
+    private Menu displayMenuQuitter() {
         // TODO
+        return null;
     }
 
-    private void displayMenuAPropos() {
+    private Menu displatMenuAide() {
         // TODO
+        return null;
     }
 
-    private void displayMenuLangue() {
+    private Menu displayMenuAPropos() {
         // TODO
+        return null;
+    }
+
+    private Menu displayMenuLangue() {
+        // TODO
+        return null;
     }
 }

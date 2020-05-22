@@ -16,7 +16,7 @@ public abstract class IHM {
     public abstract int[] saisirCoordonnees() throws Exception;
     public abstract void display(Plateau p, Joueur j);
     public abstract void display(Exception e);
-    public abstract void display(Menu m);
+    public abstract Menu display(Menu m);
     // TODO menu display
     public abstract ActionType saisirAction(Joueur j) throws Exception;
     public abstract void finalize();
