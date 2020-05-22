@@ -24,7 +24,7 @@ public class App {
             current = IHM.getIHM().display(current);
             switch (current) {
                 case MENU_NOUVEAU:
-                    lancerPartie();
+                    current = lancerPartie();
                     break;
             
                 default:
@@ -38,23 +38,25 @@ public class App {
         if (IHM.getIHM() instanceof SaisieConsole) IHM.getIHM().finalize();
     }
 
-    private void lancerPartie() {
+    private Menu lancerPartie() {
         Jeu gobblets = new Jeu();
-        lancerPartie(gobblets);
+        return lancerPartie(gobblets);
     }
 
-    private void lancerPartie(Jeu gobblets) {
+    private Menu lancerPartie(Jeu gobblets) {
         try {
-            partie(gobblets);
+            return partie(gobblets);
         } catch (Exception e) {
             IHM.getIHM().display(e);
+            return null;
         }
     }
 
-    private void partie(Jeu gobblets) {
+    private Menu partie(Jeu gobblets) {
         while (gobblets.getEtat() == Etat.JEUENCOURS) {
             IHM.getIHM().display(gobblets.getPlateau(), gobblets.getJoueurActif());
             gobblets.setEtat(gobblets.play());
         }
+        return Menu.MENU_ACCEUIL;
     }
 }

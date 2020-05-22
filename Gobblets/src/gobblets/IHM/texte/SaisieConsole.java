@@ -9,6 +9,7 @@ import gobblets.IHM.Avertissement;
 import gobblets.IHM.Erreur;
 import gobblets.IHM.IHM;
 import gobblets.IHM.Menu;
+import gobblets.IHM.langues.Francais;
 import gobblets.data.*;
 import gobblets.logic.CaseBloqueeException;
 import gobblets.logic.PiecePasdisponibleException;
@@ -196,7 +197,7 @@ public class SaisieConsole extends IHM {
         System.out.println(getLanguage().avertissement(Avertissement.SAISIECOORDONNEES) + " : ");
         Integer in = null;
         for (int i = 0; i < coord.length; i++) {
-            // display du type saisie ( saisie coordonnée 1 ou saisie coordonnée 2)
+            // display du type saisie ( saisie coordonnï¿½e 1 ou saisie coordonnï¿½e 2)
             System.out.println((i == 0 ? getLanguage().avertissement(Avertissement.SAISIECOORDONNEE1)
                     : getLanguage().avertissement(Avertissement.SAISIECOORDONNEE2)));
             // saisie
@@ -324,7 +325,7 @@ public class SaisieConsole extends IHM {
 
     private Menu displayMenuAcceuil() {
         Menu choice = null;
-        Menu[] choices = {Menu.MENU_NOUVEAU, Menu.MENU_OUVRIR ,Menu.MENU_AIDE, Menu.MENU_APROPOS, Menu.MENU_QUITTER};
+        Menu[] choices = {Menu.MENU_NOUVEAU, Menu.MENU_OUVRIR, Menu.MENU_LANGUE ,Menu.MENU_AIDE, Menu.MENU_APROPOS, Menu.MENU_QUITTER};
         for (int i = 0; i < choices.length; i++) {
             System.out.println( i+1 + " > " + getLanguage().menu(choices[i]));
         }
@@ -332,7 +333,7 @@ public class SaisieConsole extends IHM {
         try {
             Integer inValue = Integer.parseInt(in);
             if (inValue >= 1 && inValue <= choices.length + 1) {
-                choice = choices[inValue+1];
+                choice = choices[inValue-1];
             }
             else throw new Exception();
         } catch (Exception e) {
@@ -368,17 +369,33 @@ public class SaisieConsole extends IHM {
     }
 
     private Menu displatMenuAide() {
-        // TODO
-        return null;
+        // TODO texte
+        System.out.println("temporary");
+        System.out.println("OK (entrez n'importe quelle valeur)");
+        sc.nextLine();
+        return Menu.MENU_ACCEUIL;
     }
 
     private Menu displayMenuAPropos() {
-        // TODO
-        return null;
+        // TODO texte
+        System.out.println("temporary");
+        System.out.println("OK (entrez n'importe quelle valeur)");
+        sc.nextLine();
+        return Menu.MENU_ACCEUIL;
     }
 
     private Menu displayMenuLangue() {
-        // TODO
-        return null;
+        // TODO implementation langage
+        System.out.println("Choisissez une langue");
+        System.out.println("     1 - FranÃ§ais " + AnsiRenderer.render((getLanguage() instanceof Francais ? "@|bold <actual>|@" : "")));
+        System.out.println("     2 - English <Pas disponible>");
+        System.out.println("     3 - Deutsche <Pas disponible>");
+        System.out.println("autres - Quitter");
+        String in = sc.nextLine();
+        if (in.equals("1")) {
+            if (!(getLanguage() instanceof Francais)) setLanguage(new Francais());
+            return Menu.MENU_LANGUE;
+        }
+        else return Menu.MENU_ACCEUIL;
     }
 }
