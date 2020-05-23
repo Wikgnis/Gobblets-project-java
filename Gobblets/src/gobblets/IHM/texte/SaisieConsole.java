@@ -1,9 +1,5 @@
 package gobblets.IHM.texte;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectInputStream;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
@@ -13,10 +9,8 @@ import gobblets.IHM.Avertissement;
 import gobblets.IHM.Erreur;
 import gobblets.IHM.IHM;
 import gobblets.IHM.Menu;
-import gobblets.IHM.langues.Francais;
 import gobblets.data.*;
 import gobblets.logic.CaseBloqueeException;
-import gobblets.logic.Jeu;
 import gobblets.logic.PiecePasdisponibleException;
 
 import org.fusesource.jansi.AnsiConsole;
