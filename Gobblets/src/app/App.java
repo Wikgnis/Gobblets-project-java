@@ -1,5 +1,7 @@
 package app;
 
+import java.io.File;
+
 import gobblets.IHM.*;
 import gobblets.IHM.texte.SaisieConsole;
 import gobblets.data.*;
@@ -22,9 +24,14 @@ public class App {
         /** Menus */
         Menu current = Menu.MENU_ACCEUIL;
         while (current != Menu.MENU_QUITTER) {
-            current = IHM.getIHM().display(current);
-            if (current == Menu.MENU_NOUVEAU) {
-                lancerPartie();
+            if (current == null) { // pas de nouveau menu donc retour au jeu
+                current = partie(gobblets);
+            }
+            else {
+                current = IHM.getIHM().display(current);
+                if (current == Menu.MENU_NOUVEAU) {
+                    lancerPartie();
+                }
             }
         }
         /** end */
@@ -54,5 +61,13 @@ public class App {
             gobblets.setEtat(gobblets.play());
         }
         return Menu.MENU_ACCEUIL;
+    }
+
+    public static void sauvegarder(File destination) {
+
+    }
+
+    public static void charger(File sauvegarde) {
+
     }
 }

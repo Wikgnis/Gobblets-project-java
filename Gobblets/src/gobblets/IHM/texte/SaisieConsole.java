@@ -1,5 +1,6 @@
 package gobblets.IHM.texte;
 
+import java.io.File;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
@@ -9,12 +10,16 @@ import gobblets.IHM.Avertissement;
 import gobblets.IHM.Erreur;
 import gobblets.IHM.IHM;
 import gobblets.IHM.Menu;
+import gobblets.IHM.langues.Francais;
 import gobblets.data.*;
 import gobblets.logic.CaseBloqueeException;
 import gobblets.logic.PiecePasdisponibleException;
 
+import org.fusesource.jansi.Ansi;
 import org.fusesource.jansi.AnsiConsole;
 import org.fusesource.jansi.AnsiRenderer;
+
+import app.App;
 
 public class SaisieConsole extends IHM {
     private final static Scanner sc = new Scanner(System.in);
@@ -274,6 +279,23 @@ public class SaisieConsole extends IHM {
         }
     }
 
+    public boolean valider() {
+        // TODO language
+        System.out.println("y / n");
+        String in = "";
+        do {
+            in = sc.nextLine();
+            if (in.equals("y")) {
+                return true;
+            }
+            else if (in.equals("n")) {
+                return false;
+            }
+            // TODO language
+            display(new Exception("Veuillez renter une valeur"));
+        } while (true);
+    }
+
     @Override
     public void finalize() {
         AnsiConsole.systemUninstall();
@@ -323,8 +345,18 @@ public class SaisieConsole extends IHM {
     }
 
     private Menu displayMenuAcceuil() {
-        // TODO
-        return null;
+        Menu[] choices = {Menu.MENU_NOUVEAU, Menu.MENU_OUVRIR, Menu.MENU_QUITTER};
+        for (int i = 0; i < choices.length; i++) {
+            System.out.println(i+1 + " - " + getLanguage().menu(choices[i]));
+        }
+        String in = sc.nextLine();
+        try {
+            Integer inValue = Integer.parseInt(in);
+            if (inValue > 0 && inValue <= choices.length) {
+                return choices[inValue-1];
+            }
+        } catch (Exception e) {}
+        return Menu.MENU_ACCEUIL;
     }
 
     private Menu displayMenuFichier() {
@@ -333,18 +365,60 @@ public class SaisieConsole extends IHM {
     }
 
     private Menu displayMenuOuvrir() {
-        // TODO
-        return null;
+        File saveFolder = new File("ressources");
+        File[] saves = saveFolder.listFiles();
+        for (int i = 0; i < saves.length; i++) {
+            System.out.println(i+1 + " - " + saves[i].getName());
+        }
+        System.out.println(saves.length + " - Quitter");
+        String in = sc.nextLine();
+        try {
+            Integer inValue = Integer.parseInt(in) - 1;
+            if (inValue == saves.length) {
+                return Menu.MENU_ACCEUIL;
+            }
+            else if (inValue >= 0 && inValue < saves.length) {
+                App.charger(saves[inValue]);
+                return null;
+            }
+        } catch (Exception e) {}
+        System.out.println(Ansi.ansi().eraseScreen());
+        return displayMenuOuvrir();
     }
 
     private Menu displayMenuEnregistrer() {
-        // TODO
+        // TODO language
+        System.out.println("Sûr ?");
+        try {
+            if (valider()) {
+                File saveFolder = new File("ressources" + File.pathSeparator + sc.nextLine() + ".save");
+                if (saveFolder.createNewFile()) {
+                    App.sauvegarder(saveFolder);
+                    System.out.println("continuer ?");
+                    if (!valider()) {
+                        return Menu.MENU_ACCEUIL;
+                    }
+                } else {
+                    // TODO language
+                    System.out.println("Un fichier existe deja voulez vous le supprimer ?");
+                    if (valider()) {
+                        App.sauvegarder(saveFolder);
+                        System.out.println("continuer ?");
+                        if (!valider()) {
+                            return Menu.MENU_ACCEUIL;
+                        }
+                    }
+                }
+            }
+        } catch (Exception e) {
+            display(e);
+        }
         return null;
     }
 
     private Menu displayMenuNouveau() {
-        // TODO
-        return null;
+        // TODO langage
+        return Menu.MENU_ACCEUIL;
     }
 
     private Menu displayMenuQuitter() {
@@ -353,17 +427,42 @@ public class SaisieConsole extends IHM {
     }
 
     private Menu displatMenuAide() {
-        // TODO
-        return null;
+        // TODO texte
+        System.out.println("need text here");
+        System.out.println("<*>" + " - " + getLanguage().menu(Menu.MENU_ACCEUIL));
+        sc.nextLine();
+        return Menu.MENU_ACCEUIL;
     }
 
     private Menu displayMenuAPropos() {
-        // TODO
-        return null;
+        // TODO texte
+        System.out.println("need text here");
+        System.out.println("<*>" + " - " + getLanguage().menu(Menu.MENU_ACCEUIL));
+        sc.nextLine();
+        return Menu.MENU_ACCEUIL;
     }
 
     private Menu displayMenuLangue() {
-        // TODO
-        return null;
+        // TODO show enabled language + text quitter
+        String[] textMenu = {"Français", "Quitter"};
+        for (int i = 0; i < textMenu.length; i++) {
+            System.out.println(i + 1 + " - " + textMenu[i]);
+        }
+        String in = sc.nextLine();
+        try {
+            Integer inValue = Integer.parseInt(in) - 1;
+            switch (inValue) {
+                case 0:
+                    if (!(getLanguage() instanceof Francais)) {
+                        setLanguage(new Francais());
+                    }
+                    break;
+                default:
+                    if (inValue == textMenu.length)
+                        return Menu.MENU_ACCEUIL;
+                    break;
+            }
+        } catch (Exception e) {}
+        return Menu.MENU_LANGUE;
     }
 }
