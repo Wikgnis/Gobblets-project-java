@@ -1,6 +1,12 @@
 package gobblets.data;
 
-public class Piece {
+import java.io.Serializable;
+
+public class Piece implements Serializable{
+    /**
+     *
+     */
+    private static final long serialVersionUID = 1L;
     private Couleur couleur;
     private final Taille taille;
 

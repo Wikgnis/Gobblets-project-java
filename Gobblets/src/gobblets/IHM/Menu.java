@@ -11,5 +11,14 @@ MENU_APROPOS,
 MENU_LANGUE,
 MENU_ACCEUIL;
 
+private Object dataLink;
 Menu() {}
+
+public Object getDataLink() {
+    return dataLink;
+}
+
+public void setDataLink(Object dataLink) {
+    this.dataLink = dataLink;
+}
 }

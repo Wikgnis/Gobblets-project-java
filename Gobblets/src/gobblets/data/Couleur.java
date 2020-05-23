@@ -2,7 +2,7 @@ package gobblets.data;
 
 import org.fusesource.jansi.Ansi.Color;
 
-public enum Couleur {
+public enum Couleur{
     /**
      * BLACK BLUE CYAN DEFAULT GREEN MAGENTA RED WHITE YELLOW
      */

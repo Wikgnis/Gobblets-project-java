@@ -1,5 +1,6 @@
 package gobblets.data;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -7,7 +8,11 @@ import gobblets.IHM.Erreur;
 import gobblets.IHM.IHM;
 import gobblets.logic.PiecePasdisponibleException;
 
-public class Plateau {
+public class Plateau implements Serializable {
+    /**
+     *
+     */
+    private static final long serialVersionUID = 1L;
     private Case[][] cases = new Case[3][3];
     private ArrayList<Piece> maisonJ1, maisonJ2;
 

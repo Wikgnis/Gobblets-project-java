@@ -1,5 +1,11 @@
 package app;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+
 import gobblets.IHM.*;
 import gobblets.IHM.texte.SaisieConsole;
 import gobblets.data.*;
@@ -13,6 +19,7 @@ public class App {
     }
 
     private IHM current = null;
+    private Jeu gobblets = null;
 
     public App() {
         /** setup ihm */
@@ -22,13 +29,8 @@ public class App {
         Menu current = Menu.MENU_ACCEUIL;
         while (current != Menu.MENU_QUITTER) {
             current = IHM.getIHM().display(current);
-            switch (current) {
-                case MENU_NOUVEAU:
-                    current = lancerPartie();
-                    break;
-            
-                default:
-                    break;
+            if (current == Menu.MENU_NOUVEAU) {
+                lancerPartie();
             }
         }
         /** end */
@@ -39,7 +41,7 @@ public class App {
     }
 
     private Menu lancerPartie() {
-        Jeu gobblets = new Jeu();
+        gobblets = new Jeu();
         return lancerPartie(gobblets);
     }
 
@@ -58,5 +60,32 @@ public class App {
             gobblets.setEtat(gobblets.play());
         }
         return Menu.MENU_ACCEUIL;
+    }
+
+    private void sauvegarder(File fileSave) {
+        try {
+            /** create file */
+            fileSave.createNewFile();
+            /** save object in file */
+            FileOutputStream fileOut = new FileOutputStream(fileSave);
+            ObjectOutputStream objectOut = new ObjectOutputStream(fileOut);
+            objectOut.writeObject(gobblets);
+            objectOut.close();
+            // TODO dysplay action réalisée
+        } catch (Exception e) {
+            IHM.getIHM().display(e);
+        }
+    }
+
+    private void charger(File save) {
+        try {
+            FileInputStream is = new FileInputStream(save);
+            ObjectInputStream ois = new ObjectInputStream(is);
+            gobblets = (Jeu) ois.readObject();
+            ois.close();
+            is.close();
+        } catch (Exception e) {
+            IHM.getIHM().display(e);
+        }
     }
 }

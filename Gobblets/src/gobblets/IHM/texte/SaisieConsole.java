@@ -1,5 +1,9 @@
 package gobblets.IHM.texte;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectInputStream;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
@@ -12,6 +16,7 @@ import gobblets.IHM.Menu;
 import gobblets.IHM.langues.Francais;
 import gobblets.data.*;
 import gobblets.logic.CaseBloqueeException;
+import gobblets.logic.Jeu;
 import gobblets.logic.PiecePasdisponibleException;
 
 import org.fusesource.jansi.AnsiConsole;
@@ -324,23 +329,8 @@ public class SaisieConsole extends IHM {
     }
 
     private Menu displayMenuAcceuil() {
-        Menu choice = null;
-        Menu[] choices = {Menu.MENU_NOUVEAU, Menu.MENU_OUVRIR, Menu.MENU_LANGUE ,Menu.MENU_AIDE, Menu.MENU_APROPOS, Menu.MENU_QUITTER};
-        for (int i = 0; i < choices.length; i++) {
-            System.out.println( i+1 + " > " + getLanguage().menu(choices[i]));
-        }
-        String in = sc.nextLine();
-        try {
-            Integer inValue = Integer.parseInt(in);
-            if (inValue >= 1 && inValue <= choices.length + 1) {
-                choice = choices[inValue-1];
-            }
-            else throw new Exception();
-        } catch (Exception e) {
-            IHM.getIHM().display(new Exception(getLanguage().erreur(Erreur.ARGUMENTINCORECT) + " " + in));
-            choice = Menu.MENU_ACCEUIL;
-        }
-        return choice;
+        // TODO
+        return null;
     }
 
     private Menu displayMenuFichier() {
@@ -369,33 +359,17 @@ public class SaisieConsole extends IHM {
     }
 
     private Menu displatMenuAide() {
-        // TODO texte
-        System.out.println("temporary");
-        System.out.println("OK (entrez n'importe quelle valeur)");
-        sc.nextLine();
-        return Menu.MENU_ACCEUIL;
+        // TODO
+        return null;
     }
 
     private Menu displayMenuAPropos() {
-        // TODO texte
-        System.out.println("temporary");
-        System.out.println("OK (entrez n'importe quelle valeur)");
-        sc.nextLine();
-        return Menu.MENU_ACCEUIL;
+        // TODO
+        return null;
     }
 
     private Menu displayMenuLangue() {
-        // TODO implementation langage
-        System.out.println("Choisissez une langue");
-        System.out.println("     1 - Français " + AnsiRenderer.render((getLanguage() instanceof Francais ? "@|bold <actual>|@" : "")));
-        System.out.println("     2 - English <Pas disponible>");
-        System.out.println("     3 - Deutsche <Pas disponible>");
-        System.out.println("autres - Quitter");
-        String in = sc.nextLine();
-        if (in.equals("1")) {
-            if (!(getLanguage() instanceof Francais)) setLanguage(new Francais());
-            return Menu.MENU_LANGUE;
-        }
-        else return Menu.MENU_ACCEUIL;
+        // TODO
+        return null;
     }
 }

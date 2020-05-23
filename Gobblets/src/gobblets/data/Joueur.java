@@ -1,12 +1,18 @@
 package gobblets.data;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import gobblets.IHM.Erreur;
 import gobblets.interaction.Action;
 import gobblets.logic.PiecePasdisponibleException;
 
-public abstract class Joueur {
+public abstract class Joueur implements Serializable{
+    /**
+     *
+     */
+    private static final long serialVersionUID = 1L;
+    
     private final String nom;
     private final Couleur couleur;
     private ArrayList<Piece> pieces;

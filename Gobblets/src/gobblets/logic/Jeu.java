@@ -1,5 +1,6 @@
 package gobblets.logic;
 
+import java.io.Serializable;
 import java.util.Random;
 
 import gobblets.IHM.Erreur;
@@ -7,7 +8,12 @@ import gobblets.IHM.IHM;
 import gobblets.data.*;
 import gobblets.interaction.*;
 
-public class Jeu {
+public class Jeu implements Serializable{
+    /**
+     *
+     */
+    private static final long serialVersionUID = 1L;
+
     private Plateau plateau;
     private Joueur j1 = null, j2 = null, joueurActif = null;
     private Etat etat;

@@ -1,5 +1,6 @@
 package gobblets.data;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import gobblets.IHM.Erreur;
@@ -7,7 +8,11 @@ import gobblets.IHM.IHM;
 import gobblets.logic.CaseBloqueeException;
 import gobblets.logic.PiecePasdisponibleException;
 
-public class Case {
+public class Case implements Serializable {
+    /**
+     *
+     */
+    private static final long serialVersionUID = 1L;
     private Piece petite, moyenne, grande;
     public Case() {}
 
