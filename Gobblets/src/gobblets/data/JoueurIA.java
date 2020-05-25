@@ -30,10 +30,6 @@ public class JoueurIA extends Joueur {
         /** setup values */
         Action choice = null;
         /** setup simplified gameboard */
-        JoueurSimplifie IA = new JoueurSimplifie(this, 0);
-        JoueurSimplifie opponent = new JoueurSimplifie(adversaire, 1);
-        PlateauSimplifie plateau;
-        /** algorythm */
         /** return */
         return choice;
     }

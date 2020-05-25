@@ -33,7 +33,7 @@ public class SaisieConsole extends IHM {
         System.out.println(getLanguage().avertissement(Avertissement.SAISIEJOUEUR) + " " + n);
         Joueur j = null;
         System.out.println(getLanguage().avertissement(Avertissement.CHOIXTYPEJOUEUR));
-        // TODO
+        // TODO language
         System.out.println("1 : JoueurHumain | 2 : JoueurIA");
         String in = sc.nextLine();
         try {
@@ -360,11 +360,12 @@ public class SaisieConsole extends IHM {
     }
 
     private Menu displayMenuFichier() {
-        // TODO
+        // TODO rennomer / supprimer
         return null;
     }
 
     private Menu displayMenuOuvrir() {
+        // TODO edit => to MENU_FICHIER
         File saveFolder = new File("ressources");
         File[] saves = saveFolder.listFiles();
         for (int i = 0; i < saves.length; i++) {
@@ -388,10 +389,11 @@ public class SaisieConsole extends IHM {
 
     private Menu displayMenuEnregistrer() {
         // TODO language
-        System.out.println("Sûr ?");
+        System.out.println("Sur ?");
         try {
             if (valider()) {
-                File saveFolder = new File("ressources" + File.pathSeparator + sc.nextLine() + ".save");
+                // TODO enlever .save
+                File saveFolder = new File("ressources" + File.separatorChar + "" + sc.nextLine() + ".save");
                 if (saveFolder.createNewFile()) {
                     App.sauvegarder(saveFolder);
                     System.out.println("continuer ?");
@@ -422,8 +424,25 @@ public class SaisieConsole extends IHM {
     }
 
     private Menu displayMenuQuitter() {
-        // TODO
-        return null;
+        Menu next = Menu.MENU_QUITTER;
+        while (next == Menu.MENU_QUITTER) {
+            System.out.println("1 - " + "reprendre"); //TODO language
+            System.out.println("2 - " + getLanguage().menu(Menu.MENU_ENREGISTRER));
+            System.out.println("3 - " + getLanguage().menu(Menu.MENU_QUITTER) + "(" + getLanguage().menu(Menu.MENU_ACCEUIL) + ")");
+            String in = sc.nextLine();
+            try {
+                Integer inValue = Integer.parseInt(in);
+                switch (inValue) {
+                    case 1: return null;
+                    case 2: return Menu.MENU_ENREGISTRER;
+                    case 3: return Menu.MENU_ACCEUIL;
+                    default: break;
+                }
+            } catch (Exception e) {
+                display(new Exception(getLanguage().erreur(Erreur.ARGUMENTINCORECT) + " " + in));
+            }
+        }
+        return next;
     }
 
     private Menu displatMenuAide() {
@@ -444,7 +463,7 @@ public class SaisieConsole extends IHM {
 
     private Menu displayMenuLangue() {
         // TODO show enabled language + text quitter
-        String[] textMenu = {"Français", "Quitter"};
+        String[] textMenu = {"Franï¿½ais", "Quitter"};
         for (int i = 0; i < textMenu.length; i++) {
             System.out.println(i + 1 + " - " + textMenu[i]);
         }
