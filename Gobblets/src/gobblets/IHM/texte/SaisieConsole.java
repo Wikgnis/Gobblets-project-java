@@ -10,6 +10,7 @@ import gobblets.IHM.Avertissement;
 import gobblets.IHM.Erreur;
 import gobblets.IHM.IHM;
 import gobblets.IHM.Menu;
+import gobblets.IHM.langues.Anglais;
 import gobblets.IHM.langues.Francais;
 import gobblets.data.*;
 import gobblets.logic.CaseBloqueeException;
@@ -330,7 +331,7 @@ public class SaisieConsole extends IHM {
     }
 
     private Menu displayMenuAcceuil() {
-        Menu[] choices = {Menu.MENU_NOUVEAU, Menu.MENU_OUVRIR, Menu.MENU_QUITTER};
+        Menu[] choices = {Menu.MENU_NOUVEAU, Menu.MENU_OUVRIR, Menu.MENU_LANGUE, Menu.MENU_APROPOS, Menu.MENU_AIDE, Menu.MENU_QUITTER};
         for (int i = 0; i < choices.length; i++) {
             System.out.println(i+1 + " - " + getLanguage().menu(choices[i]));
         }
@@ -448,23 +449,25 @@ public class SaisieConsole extends IHM {
     }
 
     private Menu displayMenuLangue() {
-        String[] textMenu = {"Français", getLanguage().menu(Menu.MENU_QUITTER)};
+        String[] textMenu = {"Français", "English", getLanguage().menu(Menu.MENU_QUITTER)};
         for (int i = 0; i < textMenu.length; i++) {
             System.out.print(i + 1 + " - " + textMenu[i]);
-            if (i == 0 && getLanguage() instanceof Francais) System.out.println(" <Actuellement utilisée>");
+            if (i == 0 && getLanguage() instanceof Francais) System.out.print(" <Actuellement utilisée>");
+            if (i == 1 && getLanguage() instanceof Anglais) System.out.print(" <Used Currently>");
+            System.out.println();
         }
         String in = sc.nextLine();
         try {
             Integer inValue = Integer.parseInt(in) - 1;
             switch (inValue) {
                 case 0:
-                    if (!(getLanguage() instanceof Francais)) {
-                        setLanguage(new Francais());
-                    }
+                    if (!(getLanguage() instanceof Francais)) setLanguage(new Francais());
+                    break;
+                case 1:
+                    if (!(getLanguage() instanceof Anglais)) setLanguage(new Anglais());
                     break;
                 default:
-                    if (inValue == textMenu.length)
-                        return Menu.MENU_ACCEUIL;
+                    if (inValue == textMenu.length - 1) return Menu.MENU_ACCEUIL;
                     break;
             }
         } catch (Exception e) {}
