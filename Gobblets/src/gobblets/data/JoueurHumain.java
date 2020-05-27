@@ -3,11 +3,15 @@ package gobblets.data;
 import gobblets.IHM.Avertissement;
 import gobblets.IHM.Erreur;
 import gobblets.IHM.IHM;
-import gobblets.IHM.texte.SaisieConsole;
 import gobblets.interaction.*;
 import gobblets.logic.PiecePasdisponibleException;
 
 public class JoueurHumain extends Joueur {
+    /**
+     *
+     */
+    private static final long serialVersionUID = 1L;
+
     public JoueurHumain(String nom, Couleur couleur) {
         super(nom, couleur);
     }

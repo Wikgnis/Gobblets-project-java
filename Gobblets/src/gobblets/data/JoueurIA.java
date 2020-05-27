@@ -64,16 +64,8 @@ public class JoueurIA extends Joueur {
             return pieces;
         }
 
-        public void setPieces(ArrayList<Piece> pieces) {
-            this.pieces = pieces;
-        }
-
         public Couleur getCouleur() {
             return couleur;
-        }
-
-        public void setCouleur(Couleur couleur) {
-            this.couleur = couleur;
         }
 
         @Override
@@ -249,20 +241,5 @@ public class JoueurIA extends Joueur {
             last = o;
         }
         return possiblePieces;
-    }
-
-    private Case[][] clonePlateau(Plateau p) {
-        try {
-            Case[][] pClone = new Case[p.getPlateau().length][p.getPlateau()[0].length];
-            for (int i = 0; i < pClone.length; i++) {
-                for (int j = 0; j < pClone[i].length; j++) {
-                    pClone[i][j] = (Case) p.getPlateau()[i][j].clone();
-                }
-            }
-            return pClone;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
     }
 }

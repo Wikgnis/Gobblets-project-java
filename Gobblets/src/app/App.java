@@ -5,7 +5,6 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.io.OutputStream;
 
 import gobblets.IHM.*;
 import gobblets.IHM.texte.SaisieConsole;
@@ -14,7 +13,6 @@ import gobblets.logic.Jeu;
 
 
 // jar cvfe {nomJAR} {main} {noms de ttes les classes}
-// TODO affihage plateau modifié
 public class App {
     public static void main(String[] args) throws Exception {
         new App();
@@ -67,8 +65,12 @@ public class App {
             IHM.getIHM().display(gobblets.getPlateau(), gobblets.getJoueurActif());
             gobblets.setEtat(gobblets.play());
         }
-        Menu returnMenu = IHM.getIHM().display(Menu.MENU_QUITTER);
-        if (returnMenu == null) gobblets.setEtat(Etat.JEUENCOURS);
+        Menu returnMenu;
+        if (gobblets.getEtat() == Etat.JEUQUITTE) {
+            returnMenu = IHM.getIHM().display(Menu.MENU_QUITTER);
+            if (returnMenu == null) gobblets.setEtat(Etat.JEUENCOURS);
+        }
+        else returnMenu = Menu.MENU_ACCEUIL;
         return returnMenu;
     }
 
@@ -76,6 +78,7 @@ public class App {
         try {
             FileOutputStream out = new FileOutputStream(destination);
             ObjectOutputStream oos = new ObjectOutputStream(out);
+            gobblets.setEtat(Etat.JEUENCOURS);
             oos.writeObject(gobblets);
             oos.close();
             out.close();

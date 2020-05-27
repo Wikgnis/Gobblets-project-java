@@ -101,7 +101,7 @@ public class Jeu implements Serializable{
      * @param current state of the game
      * @return Etat which will be the current etat of the game at the end of the round
      */
-    private void updateEtat(Etat current) {
+    private Etat updateEtat(Etat current) {
         try {
             for (int i = 0; i < 3; i++) { // parcour ligne et colonnes
                 if ( plateau.verifierLigne(i) != null) {
@@ -147,8 +147,10 @@ public class Jeu implements Serializable{
                     current = Etat.MATCHNUL;
                 }
             }
+            return current;
         } catch (Exception e) {
             IHM.getIHM().display(e);
+            return null;
         }
     }
 
@@ -167,7 +169,7 @@ public class Jeu implements Serializable{
                     a.appliquer(joueurActif);
                     changeJoueur();
                 }
-                updateEtat(etatPlay);
+                etatPlay = updateEtat(etatPlay);
             }
         } catch (Exception e) {
             IHM.getIHM().display(e);

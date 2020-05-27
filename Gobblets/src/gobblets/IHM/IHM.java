@@ -11,14 +11,12 @@ public abstract class IHM {
         language = new Francais();
     }
 
-    // TODO valider => boolean ?
     public abstract Joueur saisirJoueur(int n) throws Exception;
     public abstract Taille saisirTaille() throws Exception;
     public abstract int[] saisirCoordonnees() throws Exception;
     public abstract void display(Plateau p, Joueur j);
     public abstract void display(Exception e);
     public abstract Menu display(Menu m);
-    // TODO menu display
     public abstract ActionType saisirAction(Joueur j) throws Exception;
     public abstract void finalize();
 

@@ -69,6 +69,13 @@ public class Francais implements Dictionnaire {
         avertissements.put(Avertissement.CHOIXTYPEJOUEUR, "Quel type de joueur ?");
         avertissements.put(Avertissement.ANNULATIONSAISIE, "Annulation saisie");
         avertissements.put(Avertissement.SAISIEJOUEUR, "Saisie Joueur");
+        avertissements.put(Avertissement.CONFIRMER, "Confirmer");
+        avertissements.put(Avertissement.AUCUNESAUVEGARDE, "Pas encore de sauvegarde désolé.");
+        avertissements.put(Avertissement.APPUYERSURENTREE, "Appuyez sur <Enter>");
+        avertissements.put(Avertissement.ENTRERLENOMDELASAUVEGARDE, "Nom de la sauvegarde");
+        avertissements.put(Avertissement.CONTINUER, "CONTINUER");
+        avertissements.put(Avertissement.FICHIERDEJAEXISTANT, "Le fichier existe deja");
+        avertissements.put(Avertissement.SUPPRIMER, "Supprimer");
         /** menus */
         menus = new HashMap<Menu, String>();
         menus.put(Menu.MENU_AIDE, "Menu d'aide");
@@ -78,8 +85,9 @@ public class Francais implements Dictionnaire {
         menus.put(Menu.MENU_LANGUE, "Choix langue");
         menus.put(Menu.MENU_NOUVEAU, "Nouvelle partie");
         menus.put(Menu.MENU_OUVRIR, "Ouvrir une partie");
-        menus.put(Menu.MENU_QUITTER, "Quitter ?");
+        menus.put(Menu.MENU_QUITTER, "Quitter");
         menus.put(Menu.MENU_ACCEUIL, "Acceuil");
+        menus.put(Menu.REPRENDRE, "Reprendre");
     }
 
     @Override
