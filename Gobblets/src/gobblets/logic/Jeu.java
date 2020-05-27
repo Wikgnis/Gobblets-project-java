@@ -101,53 +101,54 @@ public class Jeu implements Serializable{
      * @param current state of the game
      * @return Etat which will be the current etat of the game at the end of the round
      */
-    private Etat updateEtat(Etat current) {
-        // TODO
+    private void updateEtat(Etat current) {
         try {
             for (int i = 0; i < 3; i++) { // parcour ligne et colonnes
-                if (plateau.verifierLigne(i) != null) {
-                    changeEtat(current, plateau.verifierLigne(i));
+                if ( plateau.verifierLigne(i) != null) {
+                    if (current == Etat.JEUENCOURS) {
+                        Couleur winner = plateau.getPlateau()[i][0].plusGrandePiece().getCouleur();
+                        if (winner == j1.getCouleur()) current = Etat.JOUEUR1GAGNE;
+                        else current = Etat.JOUEUR2GAGNE;
+                    }
+                    else {
+                        current = Etat.MATCHNUL;
+                    }
                 }
                 if (plateau.verifierColonne(i) != null) {
-                    changeEtat(current, plateau.verifierColonne(i));
+                    if (current == Etat.JEUENCOURS) {
+                        Couleur winner = plateau.getPlateau()[0][i].plusGrandePiece().getCouleur();
+                        if (winner == j1.getCouleur()) current = Etat.JOUEUR1GAGNE;
+                        else current = Etat.JOUEUR2GAGNE;
+                    }
+                    else {
+                        current = Etat.MATCHNUL;
+                    }
                 }
             }
             // premiere diagonale
             if (plateau.verifierDiagonale('a') != null) {
-                changeEtat(current, plateau.verifierDiagonale('a'));
+                if (current == Etat.JEUENCOURS) {
+                    Couleur winner = plateau.getPlateau()[1][1].plusGrandePiece().getCouleur();
+                    if (winner == j1.getCouleur()) current = Etat.JOUEUR1GAGNE;
+                    else current = Etat.JOUEUR2GAGNE;
+                }
+                else {
+                    current = Etat.MATCHNUL;
+                }
             }
             // seconde diagonale
             if (plateau.verifierDiagonale('b') != null) {
-                changeEtat(current, plateau.verifierDiagonale('b'));
+                if (current == Etat.JEUENCOURS) {
+                    Couleur winner = plateau.getPlateau()[1][1].plusGrandePiece().getCouleur();
+                    if (winner == j1.getCouleur()) current = Etat.JOUEUR1GAGNE;
+                    else current = Etat.JOUEUR2GAGNE;
+                }
+                else {
+                    current = Etat.MATCHNUL;
+                }
             }
         } catch (Exception e) {
             IHM.getIHM().display(e);
-        }
-        return current;
-    }
-
-    /**
-     * @param current current state of the game which will be updated by the function
-     * @param winner winner of the game
-     */
-    private void changeEtat(Etat current, Couleur winner) {
-        // TODO
-        if (current != Etat.MATCHNUL && winner != null) { // si le jeu est deja match nul ou pas de gagnant rien a faire
-            if (current == Etat.JEUENCOURS) { // pas encore de gagnant
-                if (winner == j1.getCouleur()) { // j1 = gagnant
-                    current = Etat.JOUEUR1GAGNE;
-                }
-                else if (winner == j2.getCouleur()) { // j2 = gagnant
-                    current = Etat.JOUEUR2GAGNE;
-                }
-            }
-            // deja un gagnant
-            else if
-                (
-                    (current == Etat.JOUEUR1GAGNE && winner == j2.getCouleur())
-                    || (current == Etat.JOUEUR2GAGNE
-                    && winner == j1.getCouleur())
-                ) { current = Etat.MATCHNUL; }
         }
     }
 
@@ -166,7 +167,7 @@ public class Jeu implements Serializable{
                     a.appliquer(joueurActif);
                     changeJoueur();
                 }
-                etatPlay = updateEtat(etatPlay);
+                updateEtat(etatPlay);
             }
         } catch (Exception e) {
             IHM.getIHM().display(e);

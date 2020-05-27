@@ -40,7 +40,7 @@ public class Plateau implements Serializable {
         }
     }
 
-    public Plateau(Case[][] plateauCases, ArrayList<Piece> maisonJ1, ArrayList<Piece>maisonJ2) {
+    private Plateau(Case[][] plateauCases, ArrayList<Piece> maisonJ1, ArrayList<Piece>maisonJ2) {
         try {
             if (plateauCases == null || maisonJ1 == null || maisonJ2 == null) throw new Exception("error : invalid parameters");
             if (plateauCases.length != 3 || plateauCases[0].length != 3) throw new Exception("error : invalid array of case");

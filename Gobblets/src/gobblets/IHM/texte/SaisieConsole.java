@@ -292,7 +292,7 @@ public class SaisieConsole extends IHM {
                 return false;
             }
             // TODO language
-            display(new Exception("Veuillez renter une valeur"));
+            display(new Exception(getLanguage().erreur(Erreur.ARGUMENTINCORECT) + " " + in));
         } while (true);
     }
 
@@ -304,11 +304,9 @@ public class SaisieConsole extends IHM {
     @Override
     public void display(Exception e) {
         if (e instanceof CaseBloqueeException) {
-            System.out.println(AnsiRenderer
-                    .render("@|bold,red " + getLanguage().erreur(((CaseBloqueeException) e).getErreur()) + "|@"));
+            System.out.println(AnsiRenderer.render("@|bold,red " + getLanguage().erreur(((CaseBloqueeException) e).getErreur()) + "|@"));
         } else if (e instanceof PiecePasdisponibleException) {
-            System.out.println(AnsiRenderer.render(
-                    "@|bold,red " + getLanguage().erreur(((PiecePasdisponibleException) e).getErreur()) + "|@"));
+            System.out.println(AnsiRenderer.render("@|bold,red " + getLanguage().erreur(((PiecePasdisponibleException) e).getErreur()) + "|@"));
         } else
             System.out.println(AnsiRenderer.render("@|bold,red " + e.getMessage() + "|@"));
     }
@@ -367,24 +365,37 @@ public class SaisieConsole extends IHM {
     private Menu displayMenuOuvrir() {
         // TODO edit => to MENU_FICHIER
         File saveFolder = new File("ressources");
-        File[] saves = saveFolder.listFiles();
-        for (int i = 0; i < saves.length; i++) {
-            System.out.println(i+1 + " - " + saves[i].getName());
-        }
-        System.out.println(saves.length + " - Quitter");
-        String in = sc.nextLine();
         try {
-            Integer inValue = Integer.parseInt(in) - 1;
-            if (inValue == saves.length) {
-                return Menu.MENU_ACCEUIL;
+            saveFolder.mkdir();
+        } catch (Exception e) {
+            IHM.getIHM().display(e);
+        }
+        File[] saves = saveFolder.listFiles();
+        if (saves.length == 0) {
+            // TODO
+            System.out.println("Wow such empty !\nPress any key to go bak to the main menu.");
+            sc.nextLine();
+            return Menu.MENU_ACCEUIL;
+        }
+        else {
+            for (int i = 0; i < saves.length; i++) {
+                System.out.println(i + 1 + " - " + saves[i].getName());
             }
-            else if (inValue >= 0 && inValue < saves.length) {
-                App.charger(saves[inValue]);
-                return null;
+            System.out.println(saves.length + 1 + " - Quitter");
+            String in = sc.nextLine();
+            try {
+                Integer inValue = Integer.parseInt(in) - 1;
+                if (inValue == saves.length) {
+                    return Menu.MENU_ACCEUIL;
+                } else if (inValue >= 0 && inValue < saves.length) {
+                    App.charger(saves[inValue]);
+                    return null;
+                }
+            } catch (Exception e) {
             }
-        } catch (Exception e) {}
-        System.out.println(Ansi.ansi().eraseScreen());
-        return displayMenuOuvrir();
+            System.out.println(Ansi.ansi().eraseScreen());
+            return displayMenuOuvrir();
+        }
     }
 
     private Menu displayMenuEnregistrer() {
@@ -393,7 +404,9 @@ public class SaisieConsole extends IHM {
         try {
             if (valider()) {
                 // TODO enlever .save
-                File saveFolder = new File("ressources" + File.separatorChar + "" + sc.nextLine() + ".save");
+                String inputName = sc.nextLine();
+                inputName.replaceAll(" ", "_");
+                File saveFolder = new File("ressources" + File.separatorChar + "" + inputName + ".save");
                 if (saveFolder.createNewFile()) {
                     App.sauvegarder(saveFolder);
                     System.out.println("continuer ?");
