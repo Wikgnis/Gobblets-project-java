@@ -10,6 +10,7 @@ import gobblets.IHM.Avertissement;
 import gobblets.IHM.Erreur;
 import gobblets.IHM.IHM;
 import gobblets.IHM.Menu;
+import gobblets.IHM.langues.Allemand;
 import gobblets.IHM.langues.Anglais;
 import gobblets.IHM.langues.Francais;
 import gobblets.data.*;
@@ -51,6 +52,12 @@ public class SaisieConsole extends IHM {
         return j;
     }
 
+    /**
+     * Demande la saisie d'une IA
+     * 
+     * @return L'IA saisie
+     * @throws Exception si jamais il y une erreur lors de la saisie
+     */
     private JoueurIA saisieJoueurIA() throws Exception {
         /** choix nom joueur ia */
         String nom;
@@ -93,6 +100,12 @@ public class SaisieConsole extends IHM {
         return new JoueurIA(nom, couleur);
     }
 
+    /**
+     * Demande la saisie d'un Joueur Humain
+     * 
+     * @return Le joueur saisi
+     * @throws Exception si jamais il y une erreur lors de la saisie
+     */
     private JoueurHumain saisieJoueurHumain() throws Exception {
         /** choix nom */
         System.out.println(getLanguage().avertissement(Avertissement.NOMJOUEUR) + " : ");
@@ -175,6 +188,14 @@ public class SaisieConsole extends IHM {
         return coord;
     }
 
+    /**
+     * Sert a generer des String de couleur pour la console (ici le background)
+     * 
+     * @param s la chaine de charactere a coloré
+     * @param c la couleur a utiliser
+     * @return la chaine de couleur saisie
+     * @throws Exception si jamais les argument sont incorect ou qu'une erreur se produit
+     */
     public static String generateColoredBGString(String s, Couleur c) throws Exception {
         if (s == null)
             throw new Exception(getIHM().getLanguage().erreur(Erreur.ARGUMENTINCORECT) + " " + s);
@@ -183,6 +204,14 @@ public class SaisieConsole extends IHM {
         return AnsiRenderer.render("@|BG_" + c.getAnsiColor().name() + " " + s + "|@");
     }
 
+    /**
+     * Sert a generer des String de couleur pour la console (ici le foreground => la couleur de la chaine)
+     * 
+     * @param s la chaine de charactere a coloré
+     * @param c la couleur a utiliser
+     * @return la chaine de couleur saisie
+     * @throws Exception si jamais les argument sont incorect ou qu'une erreur se produit
+     */
     public static String generateColoredFGString(String s, Couleur c) throws Exception {
         if (s == null)
             throw new Exception("No string to operate on.");
@@ -191,6 +220,13 @@ public class SaisieConsole extends IHM {
         return AnsiRenderer.render("@|FG_" + c.getAnsiColor().name() + " " + s + "|@");
     }
 
+    /**
+     * Créé une chaine de charactere correspondant a la maison du joueur passé en
+     * parametre
+     * 
+     * @param j le joueur a partir duquel sera basé la maison
+     * @return une chaine de charactere permetant l'affichage de la maison
+     */
     private String displayHouse(Joueur j) {
         String houseDis = "";
         Piece pTxt;
@@ -236,6 +272,10 @@ public class SaisieConsole extends IHM {
         }
     }
 
+    /**
+     * va permettre d'effectuer une confirmation ou inversement
+     * @return le choix fait par l'utilisateur
+     */
     public boolean valider() {
         System.out.println(getLanguage().avertissement(Avertissement.CONFIRMER) + " ?");
         System.out.println("y | n");
@@ -295,6 +335,11 @@ public class SaisieConsole extends IHM {
         }
     }
 
+    /**
+     * affiche le menu acceuil
+     * 
+     * @return le menu qui va suivre celui-ci
+     */
     private Menu displayMenuAcceuil() {
         Menu[] choices = { Menu.MENU_NOUVEAU, Menu.MENU_OUVRIR, Menu.MENU_LANGUE, Menu.MENU_APROPOS, Menu.MENU_AIDE,
                 Menu.MENU_QUITTER };
@@ -312,6 +357,11 @@ public class SaisieConsole extends IHM {
         return Menu.MENU_ACCEUIL;
     }
 
+    /**
+     * affiche le menu ouvrir
+     * 
+     * @return le menu qui va suivre celui-ci
+     */
     private Menu displayMenuOuvrir() {
         File saveFolder = new File("ressources");
         try {
@@ -353,6 +403,11 @@ public class SaisieConsole extends IHM {
         }
     }
 
+    /**
+     * affiche le menu enregistrer
+     * 
+     * @return le menu qui va suivre celui-ci
+     */
     private Menu displayMenuEnregistrer() {
         try {
             if (valider()) {
@@ -381,6 +436,11 @@ public class SaisieConsole extends IHM {
         return null;
     }
 
+    /**
+     * affiche le menu quitter
+     * 
+     * @return le menu qui va suivre celui-ci
+     */
     private Menu displayMenuQuitter() {
         Menu next = Menu.MENU_QUITTER;
         while (next == Menu.MENU_QUITTER) {
@@ -402,6 +462,12 @@ public class SaisieConsole extends IHM {
         }
         return next;
     }
+    
+    /**
+     * affiche le menu aide
+     * 
+     * @return le menu qui va suivre celui-ci
+     */
 
     private Menu displayMenuAide() {
         // TODO texte
@@ -411,6 +477,11 @@ public class SaisieConsole extends IHM {
         return Menu.MENU_ACCEUIL;
     }
 
+    /**
+     * affiche le menu a prorpos
+     * 
+     * @return le menu qui va suivre celui-ci
+     */
     private Menu displayMenuAPropos() {
         // TODO texte
         System.out.println("need text here");
@@ -419,12 +490,18 @@ public class SaisieConsole extends IHM {
         return Menu.MENU_ACCEUIL;
     }
 
+    /**
+     * affiche le menu langue
+     * 
+     * @return le menu qui va suivre celui-ci
+     */
     private Menu displayMenuLangue() {
-        String[] textMenu = {"Français", "English", getLanguage().menu(Menu.MENU_QUITTER)};
+        String[] textMenu = {"Français", "English", "Deutsche", getLanguage().menu(Menu.MENU_QUITTER)};
         for (int i = 0; i < textMenu.length; i++) {
             System.out.print(i + 1 + " - " + textMenu[i]);
             if (i == 0 && getLanguage() instanceof Francais) System.out.print(" <Actuellement utilisée>");
             if (i == 1 && getLanguage() instanceof Anglais) System.out.print(" <Used Currently>");
+            if (i == 2 && getLanguage() instanceof Allemand) System.out.print(" <Aktuell in Verwendung>");
             System.out.println();
         }
         String in = sc.nextLine();
@@ -436,6 +513,9 @@ public class SaisieConsole extends IHM {
                     break;
                 case 1:
                     if (!(getLanguage() instanceof Anglais)) setLanguage(new Anglais());
+                    break;
+                case 2:
+                    if (!(getLanguage() instanceof Allemand)) setLanguage(new Allemand());
                     break;
                 default:
                     if (inValue == textMenu.length - 1) return Menu.MENU_ACCEUIL;

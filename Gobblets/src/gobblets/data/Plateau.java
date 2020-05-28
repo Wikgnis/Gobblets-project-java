@@ -10,7 +10,7 @@ import gobblets.logic.PiecePasdisponibleException;
 
 public class Plateau implements Serializable {
     /**
-     *
+     * utilisé pour la sauvegarde du plateau
      */
     private static final long serialVersionUID = 1L;
     private Case[][] cases = new Case[3][3];
@@ -40,6 +40,13 @@ public class Plateau implements Serializable {
         }
     }
 
+    /**
+     * construceur d'un plateau en fonction d'un autre
+     * 
+     * @param plateauCases le plteau d'origine
+     * @param maisonJ1     la maison du j1
+     * @param maisonJ2     la maison du j2
+     */
     private Plateau(Case[][] plateauCases, ArrayList<Piece> maisonJ1, ArrayList<Piece>maisonJ2) {
         try {
             if (plateauCases == null || maisonJ1 == null || maisonJ2 == null) throw new Exception("error : invalid parameters");

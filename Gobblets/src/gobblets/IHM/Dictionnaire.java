@@ -10,4 +10,8 @@ public interface Dictionnaire {
     public String erreur(Erreur e);
     public String avertissement(Avertissement a);
     public String menu(Menu m);
+    /**
+     * texte des menus
+     */
+    public String texteMenu(Menu m);
 }
