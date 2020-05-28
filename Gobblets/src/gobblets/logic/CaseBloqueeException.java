@@ -16,16 +16,12 @@ public class CaseBloqueeException extends Exception {
     public CaseBloqueeException(Throwable t) {}
     public CaseBloqueeException(String s, Throwable t) {}
     public CaseBloqueeException(String s, Throwable t, boolean a, boolean b) {}
-    public CaseBloqueeException(Erreur e) {
-        this.e = e;
-    }
+    public CaseBloqueeException(Erreur e) { this.e = e; }
 
     public static long getSerialversionuid() { return serialVersionUID; }
 
     public Erreur getErreur() { return e; }
 
     @Override
-    public String toString() {
-        return "CaseBloqueeException [e=" + e + "]";
-    }
+    public String toString() { return "CaseBloqueeException [e=" + e + "]"; }
 }

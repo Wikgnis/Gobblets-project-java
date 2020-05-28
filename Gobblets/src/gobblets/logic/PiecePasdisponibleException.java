@@ -16,16 +16,12 @@ public class PiecePasdisponibleException extends Exception{
     public PiecePasdisponibleException(Throwable t) {}
     public PiecePasdisponibleException(String s, Throwable t) {}
     public PiecePasdisponibleException(String s, Throwable t, boolean a, boolean b) {}
-    public PiecePasdisponibleException(Erreur e) {
-        this.e = e;
-    }
+    public PiecePasdisponibleException(Erreur e) { this.e = e; }
 
     public static long getSerialversionuid() { return serialVersionUID; }
 
     public Erreur getErreur() { return e; }
 
     @Override
-    public String toString() {
-        return "PiecePasdisponibleException [e=" + e + "]";
-    }
+    public String toString() { return "PiecePasdisponibleException [e=" + e + "]"; }
 }

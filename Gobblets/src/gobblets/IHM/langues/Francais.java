@@ -15,17 +15,19 @@ public class Francais implements Dictionnaire {
     private HashMap<ActionType, String> actions;
     private HashMap<Erreur,String> erreurs;
     private HashMap<Avertissement, String> avertissements;
+    private HashMap<Menu, String> menus;
 
     public Francais() {
         /* couleurs */
         couleurs = new HashMap<Couleur, String>();
-        couleurs.put(Couleur.ROUGE, "Rouge");
-        couleurs.put(Couleur.VERT, "Vert");
-        couleurs.put(Couleur.JAUNE, "Jaune");
-        couleurs.put(Couleur.BLEU, "Bleu");
-        couleurs.put(Couleur.BLANC, "Blanc");
-        couleurs.put(Couleur.CYAN, "Cyan");
-        couleurs.put(Couleur.VIOLET, "Violet");
+        couleurs.put(Couleur.NOIR, "noir");
+        couleurs.put(Couleur.BLEU, "bleu");
+        couleurs.put(Couleur.CYAN, "cyan");
+        couleurs.put(Couleur.VERT, "vert");
+        couleurs.put(Couleur.MAGENTA, "magenta");
+        couleurs.put(Couleur.ROUGE, "rouge");
+        couleurs.put(Couleur.BLANC, "blanc");
+        couleurs.put(Couleur.JAUNE, "jaune");
         /* tailles */
         tailles = new HashMap<Taille, String>();
         tailles.put(Taille.GRANDE, "Grande");
@@ -65,6 +67,27 @@ public class Francais implements Dictionnaire {
         avertissements.put(Avertissement.SAISIECOORDONNEE2, "Seconde coordonnée");
         avertissements.put(Avertissement.MAISON, "Maison");
         avertissements.put(Avertissement.CHOIXTYPEJOUEUR, "Quel type de joueur ?");
+        avertissements.put(Avertissement.ANNULATIONSAISIE, "Annulation saisie");
+        avertissements.put(Avertissement.SAISIEJOUEUR, "Saisie Joueur");
+        avertissements.put(Avertissement.CONFIRMER, "Confirmer");
+        avertissements.put(Avertissement.AUCUNESAUVEGARDE, "Pas encore de sauvegarde désolé.");
+        avertissements.put(Avertissement.APPUYERSURENTREE, "Appuyez sur <Enter>");
+        avertissements.put(Avertissement.ENTRERLENOMDELASAUVEGARDE, "Nom de la sauvegarde");
+        avertissements.put(Avertissement.CONTINUER, "CONTINUER");
+        avertissements.put(Avertissement.FICHIERDEJAEXISTANT, "Le fichier existe deja");
+        avertissements.put(Avertissement.SUPPRIMER, "Supprimer");
+        /** menus */
+        menus = new HashMap<Menu, String>();
+        menus.put(Menu.MENU_AIDE, "Menu d'aide");
+        menus.put(Menu.MENU_APROPOS, "A propos");
+        menus.put(Menu.MENU_ENREGISTRER, "Enregistrer");
+        menus.put(Menu.MENU_FICHIER, "Fichiers");
+        menus.put(Menu.MENU_LANGUE, "Choix langue");
+        menus.put(Menu.MENU_NOUVEAU, "Nouvelle partie");
+        menus.put(Menu.MENU_OUVRIR, "Ouvrir une partie");
+        menus.put(Menu.MENU_QUITTER, "Quitter");
+        menus.put(Menu.MENU_ACCEUIL, "Acceuil");
+        menus.put(Menu.REPRENDRE, "Reprendre");
     }
 
     @Override
@@ -95,6 +118,11 @@ public class Francais implements Dictionnaire {
     @Override
     public String avertissement(Avertissement a) {
         return avertissements.get(a);
+    }
+
+    @Override
+    public String menu(Menu m) {
+        return menus.get(m);
     }
 
 }

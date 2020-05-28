@@ -5,6 +5,7 @@ import gobblets.data.*;
 
 public abstract class IHM {
     private Dictionnaire language;
+    private static IHM courante = null;
 
     public IHM() {
         language = new Francais();
@@ -13,8 +14,11 @@ public abstract class IHM {
     public abstract Joueur saisirJoueur(int n) throws Exception;
     public abstract Taille saisirTaille() throws Exception;
     public abstract int[] saisirCoordonnees() throws Exception;
-    public abstract void display(Plateau p, Joueur j) throws Exception;
+    public abstract void display(Plateau p, Joueur j);
+    public abstract void display(Exception e);
+    public abstract Menu display(Menu m);
     public abstract ActionType saisirAction(Joueur j) throws Exception;
+    public abstract void finalize();
 
     public Dictionnaire getLanguage() {
         return language;
@@ -22,14 +26,6 @@ public abstract class IHM {
 
     public void setLanguage(Dictionnaire language) {
         this.language = language;
-    }
-
-    public IHM getIHM() {
-        return this;
-    }
-
-    public void setIHM(IHM i) {
-        // todo
     }
 
     public String couleur(Couleur c) {
@@ -54,5 +50,13 @@ public abstract class IHM {
 
     public String avertissement(Avertissement a) {
         return language.avertissement(a);
+    }
+
+    public static IHM getIHM() {
+        return courante;
+    }
+
+    public static void setIHM(IHM c) {
+        courante = c;
     }
 }

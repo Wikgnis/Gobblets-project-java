@@ -9,23 +9,25 @@ import gobblets.data.Etat;
 import gobblets.data.Taille;
 
 public class Allemand implements Dictionnaire {
-	private HashMap<Couleur, String> couleurs;
+    private HashMap<Couleur, String> couleurs;
     private HashMap<Taille, String> tailles;
     private HashMap<Etat, String> etats;
     private HashMap<ActionType, String> actions;
     private HashMap<Erreur,String> erreurs;
     private HashMap<Avertissement, String> avertissements;
+    private HashMap<Menu, String> menus;
 
     public Allemand() {
         /* couleurs */
         couleurs = new HashMap<Couleur, String>();
-        couleurs.put(Couleur.ROUGE, "Rot");
-        couleurs.put(Couleur.VERT, "Grün");
-        couleurs.put(Couleur.JAUNE, "Gelb");
+        couleurs.put(Couleur.NOIR, "Schwarz");
         couleurs.put(Couleur.BLEU, "Blau");
-        couleurs.put(Couleur.BLANC, "Weiß");
         couleurs.put(Couleur.CYAN, "Cyan");
-        couleurs.put(Couleur.VIOLET, "Lila");
+        couleurs.put(Couleur.VERT, "Grün");
+        couleurs.put(Couleur.MAGENTA, "Magenta");
+        couleurs.put(Couleur.ROUGE, "Rot");
+        couleurs.put(Couleur.BLANC, "Weiß");
+        couleurs.put(Couleur.JAUNE, "Gelb");
         /* tailles */
         tailles = new HashMap<Taille, String>();
         tailles.put(Taille.GRANDE, "Groß");
@@ -50,7 +52,7 @@ public class Allemand implements Dictionnaire {
         erreurs.put(Erreur.DIAGONALEINCORECTE, "Falsche Diagonale");
         erreurs.put(Erreur.ORIGINVIDE, "Leerer Ursprung");
         erreurs.put(Erreur.PASDEPIECEDISPONIBLE, "Kein Teil verfügbar");
-        erreurs.put(Erreur.PASTAPIECE, "Nicht dein teil");
+        erreurs.put(Erreur.PASTAPIECE, "Nicht dein Teil");
         /* avertissements */
         avertissements = new HashMap<Avertissement, String>();
         avertissements.put(Avertissement.CHOIXACTION, "Wählen Sie Ihre Aktion");
@@ -65,6 +67,27 @@ public class Allemand implements Dictionnaire {
         avertissements.put(Avertissement.SAISIECOORDONNEE2, "Zweite Koordinate");
         avertissements.put(Avertissement.MAISON, "Haus");
         avertissements.put(Avertissement.CHOIXTYPEJOUEUR, "Welche Art von Spieler ?");
+        avertissements.put(Avertissement.ANNULATIONSAISIE, "Stornierung eingegeben");
+        avertissements.put(Avertissement.SAISIEJOUEUR, "Spielereingabe");
+        avertissements.put(Avertissement.CONFIRMER, "Bestätigen");
+        avertissements.put(Avertissement.AUCUNESAUVEGARDE, "Noch kein Backup sorry.");
+        avertissements.put(Avertissement.APPUYERSURENTREE, "Drücken Sie auf <Enter>");
+        avertissements.put(Avertissement.ENTRERLENOMDELASAUVEGARDE, "Sicherungsname");
+        avertissements.put(Avertissement.CONTINUER, "FORTSETZEN");
+        avertissements.put(Avertissement.FICHIERDEJAEXISTANT, "Die Datei existiert bereits");
+        avertissements.put(Avertissement.SUPPRIMER, "Entfernen");
+        /** menus */
+        menus = new HashMap<Menu, String>();
+        menus.put(Menu.MENU_AIDE, "Hilfemenü");
+        menus.put(Menu.MENU_APROPOS, "Über");
+        menus.put(Menu.MENU_ENREGISTRER, "Aufzeichnung");
+        menus.put(Menu.MENU_FICHIER, "Dateien");
+        menus.put(Menu.MENU_LANGUE, "Sprachwahl");
+        menus.put(Menu.MENU_NOUVEAU, "Neuer Teil");
+        menus.put(Menu.MENU_OUVRIR, "Öffne ein Spiel");
+        menus.put(Menu.MENU_QUITTER, "Verlassen");
+        menus.put(Menu.MENU_ACCEUIL, "Zuhause");
+        menus.put(Menu.REPRENDRE, "Fortsetzen");
     }
 
     @Override
@@ -96,5 +119,10 @@ public class Allemand implements Dictionnaire {
     public String avertissement(Avertissement a) {
         return avertissements.get(a);
     }
-	
+
+    @Override
+    public String menu(Menu m) {
+        return menus.get(m);
+    }
+
 }

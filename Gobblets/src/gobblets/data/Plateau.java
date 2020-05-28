@@ -1,9 +1,18 @@
 package gobblets.data;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class Plateau {
+import gobblets.IHM.Erreur;
+import gobblets.IHM.IHM;
+import gobblets.logic.PiecePasdisponibleException;
+
+public class Plateau implements Serializable {
+    /**
+     *
+     */
+    private static final long serialVersionUID = 1L;
     private Case[][] cases = new Case[3][3];
     private ArrayList<Piece> maisonJ1, maisonJ2;
 
@@ -14,14 +23,15 @@ public class Plateau {
                 cases[i][j] = new Case();
             }
         }
-        // init maisons
+        /** initialisation maisons */
+        // j1
         maisonJ1 = new ArrayList<Piece>();
-        
         for (Taille taille : Taille.values()) {
             for (int i = 0; i < 2; i++) {
                 maisonJ1.add(new Piece(taille));
             }
         }
+        // j2
         maisonJ2 = new ArrayList<Piece>();
         for (Taille taille : Taille.values()) {
             for (int i = 0; i < 2; i++) {
@@ -30,17 +40,22 @@ public class Plateau {
         }
     }
 
-    public Plateau(Case[][] plateauCases, ArrayList<Piece> maisonJ1, ArrayList<Piece>maisonJ2) {
+    private Plateau(Case[][] plateauCases, ArrayList<Piece> maisonJ1, ArrayList<Piece>maisonJ2) {
         try {
+            if (plateauCases == null || maisonJ1 == null || maisonJ2 == null) throw new Exception("error : invalid parameters");
+            if (plateauCases.length != 3 || plateauCases[0].length != 3) throw new Exception("error : invalid array of case");
+            /** Clone array of case */
             for (int i = 0; i < cases.length; i++) {
                 for (int j = 0; j < cases[i].length; j++) {
                     cases[i][j] = (Case) plateauCases[i][j].clone();
                 }
             }
-            this.maisonJ1 = (ArrayList<Piece>) maisonJ1.clone();
-            this.maisonJ2 = (ArrayList<Piece>) maisonJ2.clone();
+            /** clone maisons */
+            Object MaisonJ1Clone = maisonJ1.clone(), MaisonJ2Clone = maisonJ2.clone();
+            this.maisonJ1 = (ArrayList<Piece>)MaisonJ1Clone;
+            this.maisonJ2 = (ArrayList<Piece>)MaisonJ2Clone;
         } catch (Exception e) {
-            e.printStackTrace();
+            IHM.getIHM().display(e);
         }
     }
 
@@ -60,35 +75,34 @@ public class Plateau {
         return maisonJ2;
     }
 
-    public void placePiece(Piece p, int l, int c) {
+    public void placePiece(Piece p, int l, int c) throws Exception {
+        if (l > 2 || l < 0 || c > 2 || c < 0) throw new PiecePasdisponibleException(Erreur.ARGUMENTINCORECT);
         cases[l][c].placePiece(p);
     }
 
-    public Piece enlevePiece(int l, int c) {
+    public Piece enlevePiece(int l, int c) throws Exception {
+        if (l > 2 || l < 0 || c > 2 || c < 0) throw new PiecePasdisponibleException(Erreur.ARGUMENTINCORECT);
         return cases[l][c].enlevePiece();
     }
 
-    public Piece plusGrandePiece(int l, int c) {
+    public Piece plusGrandePiece(int l, int c) throws Exception {
+        if (l > 2 || l < 0 || c > 2 || c < 0) throw new PiecePasdisponibleException(Erreur.ARGUMENTINCORECT);
         return cases[l][c].plusGrandePiece();
     }
 
     public Couleur verifierLigne(int n) throws Exception {
-        try {
-            Couleur winner = null;
-            for (Case c : getLigne(n)) {
-                if (c == null || c.plusGrandePiece() == null)
+        Couleur winner = null;
+        for (Case c : getLigne(n)) {
+            // il ne peut pas y avoir de gagnant si une case n'a pas de piece
+            if (c.plusGrandePiece() == null) return null;
+            else {
+                if (winner == null) // si pas de gagant encore set the color of the piece
+                    winner = c.plusGrandePiece().getCouleur();
+                else if (winner != c.plusGrandePiece().getCouleur()) // si couleur differente alors pas de gagnant
                     return null;
-                else {
-                    if (winner == null)
-                        winner = c.plusGrandePiece().getCouleur();
-                    else if (winner != c.plusGrandePiece().getCouleur())
-                        return null;
-                }
             }
-            return winner;
-        } catch (Exception e) {
-            throw e;
         }
+        return winner;
     }
 
     private Case[] getLigne(int n) throws Exception {
@@ -99,22 +113,18 @@ public class Plateau {
     }
 
     public Couleur verifierColonne(int n) throws Exception {
-        try {
-            Couleur winner = null;
-            for (Case c : getColonne(n)) {
-                if (c == null || c.plusGrandePiece() == null)
+        Couleur winner = null;
+        for (Case c : getColonne(n)) {
+            // il ne peut pas y avoir de gagnant si une case n'a pas de piece
+            if (c.plusGrandePiece() == null) return null;
+            else {
+                if (winner == null) // si pas de gagant encore set the color of the piece
+                    winner = c.plusGrandePiece().getCouleur();
+                else if (winner != c.plusGrandePiece().getCouleur()) // si couleur differente alors pas de gagnant
                     return null;
-                else {
-                    if (winner == null)
-                        winner = c.plusGrandePiece().getCouleur();
-                    else if (winner != c.plusGrandePiece().getCouleur())
-                        return null;
-                }
             }
-            return winner;
-        } catch (Exception e) {
-            throw e;
         }
+        return winner;
     }
 
     private Case[] getColonne(int n) throws Exception {
@@ -129,6 +139,7 @@ public class Plateau {
     }
 
     public Couleur verifierDiagonale(char ch) throws Exception {
+        // get diagonale choosed
         Case[] diagonale;
         switch (ch) {
             case 'a':
@@ -138,16 +149,18 @@ public class Plateau {
                 diagonale = getDiagonaleSecondaire();
                 break;
             default:
-                throw new Exception("Symbole colonne invalide ('a'=principale, 'b'=secondaire).");
+                throw new Exception("error : invalid entry (valid => a or b)");
         }
+        // verify diagonale
         Couleur winner = null;
         for (Case c : diagonale) {
-            if (c == null || c.plusGrandePiece() == null)
+            // il ne peut pas y avoir de gagnant si une case n'a pas de piece
+            if (c.plusGrandePiece() == null)
                 return null;
             else {
-                if (winner == null)
+                if (winner == null) // si pas de gagant encore set the color of the piece
                     winner = c.plusGrandePiece().getCouleur();
-                else if (winner != c.plusGrandePiece().getCouleur())
+                else if (winner != c.plusGrandePiece().getCouleur()) // si couleur differente alors pas de gagnant
                     return null;
             }
         }
@@ -175,12 +188,13 @@ public class Plateau {
         return "Plateau(cases=[" + Arrays.toString(cases[0]) + Arrays.toString(cases[1]) + Arrays.toString(cases[2]) + "], maisonJ1=" + maisonJ1 + ", maisonJ2=" + maisonJ2 + ")";
     }
 
+    @Override
     public Object clone() {
         Plateau p = null;
         try {
             p = new Plateau(getPlateau(), maisonJ1, maisonJ2);
         } catch (Exception e) {
-            e.printStackTrace(System.err);
+            IHM.getIHM().display(e);
         }
         return p;
     }

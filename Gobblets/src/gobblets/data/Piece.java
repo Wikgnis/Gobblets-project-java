@@ -1,8 +1,15 @@
 package gobblets.data;
 
-public class Piece {
+import java.io.Serializable;
+
+public class Piece implements Serializable{
+    /**
+     *
+     */
+    private static final long serialVersionUID = 1L;
     private Couleur couleur;
     private final Taille taille;
+
     public Piece(Taille t) {
         taille = t;
     }
@@ -19,10 +26,12 @@ public class Piece {
         couleur = c;
     }
 
+    @Override
     public String toString() {
         return "Piece(taille="+taille+", couleur="+couleur+")";
     }
 
+    @Override
     public Object clone() {
         Piece p = new Piece(taille);
         p.setCouleur(couleur);
@@ -44,6 +53,4 @@ public class Piece {
             return false;
         return true;
     }
-    
-    
 }

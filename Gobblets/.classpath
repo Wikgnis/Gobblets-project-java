@@ -9,4 +9,5 @@
 	<classpathentry kind="lib" path="C:/Program Files/Java/jdk-11.0.7/lib/jrt-fs.jar"/>
 	<classpathentry kind="lib" path="C:/Users/Windows/Desktop/jansi/jansi-1.4.jar"/>
 	<classpathentry kind="output" path="bin"/>
+	<classpathentry kind="lib" path="lib/jansi-1.17.jar"/>
 </classpath>

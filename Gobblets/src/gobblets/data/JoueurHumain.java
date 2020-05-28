@@ -3,18 +3,22 @@ package gobblets.data;
 import gobblets.IHM.Avertissement;
 import gobblets.IHM.Erreur;
 import gobblets.IHM.IHM;
-import gobblets.IHM.texte.SaisieConsole;
 import gobblets.interaction.*;
 import gobblets.logic.PiecePasdisponibleException;
 
 public class JoueurHumain extends Joueur {
+    /**
+     *
+     */
+    private static final long serialVersionUID = 1L;
+
     public JoueurHumain(String nom, Couleur couleur) {
         super(nom, couleur);
     }
 
     @Override
     public Action choisirAction(Plateau p) throws Exception {
-        IHM i = new SaisieConsole();
+        IHM i = IHM.getIHM();
         ActionType choix = i.saisirAction(this);
         switch (choix) {
             case PLACER: return creerActionPlacer(i, p);
@@ -33,7 +37,7 @@ public class JoueurHumain extends Joueur {
             Case destination = p.getPlateau()[coord[0]][coord[1]];
             return new Placement(t, destination);
         } catch (Exception e) {
-            System.out.println(e);
+            IHM.getIHM().display(e);
             return null;
         }
     }
@@ -51,7 +55,7 @@ public class JoueurHumain extends Joueur {
             Case destination = p.getPlateau()[coord[0]][coord[1]];
             return new Deplacement(origin, destination);
         } catch (Exception e) {
-            System.out.println(e);
+            IHM.getIHM().display(e);
             return null;
         }
     }
