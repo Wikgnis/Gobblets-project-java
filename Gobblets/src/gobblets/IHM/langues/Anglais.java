@@ -16,6 +16,7 @@ public class Anglais implements Dictionnaire {
     private HashMap<Erreur, String> erreurs;
     private HashMap<Avertissement, String> avertissements;
     private HashMap<Menu, String> menus;
+    private HashMap<Menu, String> texteMenu;
 
     public Anglais() {
         /* couleurs */
@@ -88,6 +89,10 @@ public class Anglais implements Dictionnaire {
         menus.put(Menu.MENU_QUITTER, "quit");
         menus.put(Menu.MENU_ACCEUIL, "home");
         menus.put(Menu.REPRENDRE, "resume");
+        
+        texteMenu = new HashMap<Menu, String>();
+        texteMenu.put(Menu.MENU_AIDE, "The goal of the game is to obtain by a line, a column, a diagonal of your color strategically.\n"+"You dispose of 2 pieces for each 3 kind of pieces, little, medium and large.\n"+"You can put a piece on another one while it is strictly superior.\n");
+        texteMenu.put(Menu.MENU_APROPOS, "Gobblet Gobblers is a family game created by Thierry Denoual.\n"+"It combines concentration and attention as well as memory, visual perception and problem solving.\n"+"It is a strategy game ideal for everyone, even for children but recommended for those over 5 years old.");
     }
 
     @Override
@@ -124,5 +129,11 @@ public class Anglais implements Dictionnaire {
     public String menu(Menu m) {
         return menus.get(m);
     }
+    
+	@Override
+	public String texteMenu(Menu m) {
+		return texteMenu.get(m);
+	}
+
 
 }
