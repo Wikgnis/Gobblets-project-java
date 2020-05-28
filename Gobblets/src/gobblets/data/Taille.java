@@ -9,9 +9,7 @@ public enum Taille {
     Taille(char c) {
         symbole = c;
     }
-    /**
-     * @return the symbole
-     */
+
     public char getSymbole() { return symbole; }
     public boolean recouvre(Taille t) { return t == null || getSymbole()<t.getSymbole(); }
     public boolean recouvre(Piece p) { return p == null || recouvre(p.getTaille()); }

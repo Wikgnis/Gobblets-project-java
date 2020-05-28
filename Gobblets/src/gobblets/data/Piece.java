@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 public class Piece implements Serializable{
     /**
-     *
+     * utilisé pour la sauvegarde d'une piece
      */
     private static final long serialVersionUID = 1L;
     private Couleur couleur;
