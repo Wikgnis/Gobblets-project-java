@@ -4,12 +4,13 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 import gobblets.IHM.Erreur;
+import gobblets.IHM.IHM;
 import gobblets.interaction.Action;
 import gobblets.logic.PiecePasdisponibleException;
 
 public abstract class Joueur implements Serializable{
     /**
-     *
+     * utilisé pour la sauvegarde d'un joueur
      */
     private static final long serialVersionUID = 1L;
     
@@ -38,7 +39,7 @@ public abstract class Joueur implements Serializable{
     }
 
     public void ajoutPiece(Piece p) throws Exception {
-        if (p == null) throw new Exception("error : null value");
+        if (p == null) throw new Exception(IHM.getIHM().getLanguage().erreur(Erreur.ARGUMENTINCORECT) + " " + p);
         if (p.getCouleur() != getCouleur()) throw new PiecePasdisponibleException(Erreur.PASTAPIECE);
         pieces.add(p);
     }
@@ -48,7 +49,7 @@ public abstract class Joueur implements Serializable{
     }
 
     public Piece enlevePiece(Taille t) throws Exception {
-        if (pieces == null) throw new Exception("error : pieces Joueur null");
+        if (pieces == null) throw new Exception(IHM.getIHM().getLanguage().erreur(Erreur.ARGUMENTINCORECT) + " " + t);
         if (aPieceDeTaille(t)) {
             for (Object o : pieces.toArray()) { // parcour des pieces du joueur
                 if (((Piece) o).getTaille() == t) // si mÃªme taille
@@ -59,8 +60,8 @@ public abstract class Joueur implements Serializable{
     }
 
     public boolean aPieceDeTaille(Taille t) throws Exception {
-        if (pieces == null) throw new Exception("error : pieces Joueur null");
-        if (t == null) throw new Exception("error : taille is null");
+        if (pieces == null) throw new Exception(IHM.getIHM().getLanguage().erreur(Erreur.ARGUMENTINCORECT) + " " + pieces);
+        if (t == null) throw new Exception(IHM.getIHM().getLanguage().erreur(Erreur.ARGUMENTINCORECT) + " " + t);
         if (pieces.size() != 0) {
             for (Object o : pieces.toArray()) {
                 if (((Piece) o).getTaille() == t)
@@ -75,5 +76,4 @@ public abstract class Joueur implements Serializable{
     }
 
     public abstract Action choisirAction(Plateau p) throws Exception;
-    public abstract Object clone();
 }
