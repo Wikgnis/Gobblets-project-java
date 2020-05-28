@@ -9,21 +9,37 @@ import gobblets.interaction.Placement;
 
 public class JoueurIA extends Joueur {
     /**
-     *
+     * utilisé pour la copie d'un joueur IA
      */
     private static final long serialVersionUID = 1L;
 
+    /**
+     * adverdaire de l'IA (utilisé dans l'algo min-max)
+     */
     private Joueur adversaire;
+    /**
+     * max depth de l'algorythme min max
+     */
     private static final int depthMax = 5;
 
     public JoueurIA(String nom, Couleur couleur) {
         super(nom, couleur);
     }
 
+    /**
+     * get l'adversaire de cette IA
+     * 
+     * @return l'advesaire de l'IA
+     */
     public Joueur getAdversaire() {
         return adversaire;
     }
 
+    /**
+     * set l'adversaire de l'IA
+     * 
+     * @param adversaire l'adversaire de l'IA
+     */
     public void setAdversaire(Joueur adversaire) {
         this.adversaire = adversaire;
     }
@@ -34,6 +50,11 @@ public class JoueurIA extends Joueur {
         return minMAxAlgo(p);
     }
 
+    /**
+     * clone les cases d'un plateau
+     * @param cases les cases du plateau
+     * @return la copie des cases
+     */
     private Case[][] clonePlateau(Case[][] cases) {
         Case[][] casesClone = new Case[cases.length][cases[0].length];
         for (int i = 0; i < casesClone.length; i++) {
@@ -44,13 +65,16 @@ public class JoueurIA extends Joueur {
         return casesClone;
     }
 
+    @Override
     public Object clone() {
         JoueurIA cloneObject = new JoueurIA(getNom(), getCouleur());
         cloneObject.setPieces(getPieces());
         return cloneObject;
     }
 
-    /** Algorythmes de choix */
+    /**
+     * classe qui sert a manipuler plus simplement les info d'un Joueur
+     */
     private class JoueurSimplifie {
         private ArrayList<Piece> pieces;
         private Couleur couleur;
@@ -74,7 +98,12 @@ public class JoueurIA extends Joueur {
         }
     }
 
-    /** Min Max */
+    /**
+     * Algorythme de debut de l'algorythme min max
+     * 
+     * @param p le plateau de Jeu
+     * @return l'Action choisie
+     */
     private Action minMAxAlgo(Plateau p) {
         /** Main elements used in algo */
         Action a = null; // used to decide the action
@@ -140,6 +169,16 @@ public class JoueurIA extends Joueur {
         return a;
     }
 
+    /**
+     * algorythme min max pour le gobblets gobblers
+     * 
+     * @param p les cases du plateau de jeu
+     * @param joueur joueur actuel
+     * @param adversaire adversaire du joueur actuel
+     * @param depth profondeur de l'algorythme actuellement
+     * @return la valeur du coup qui a été joué au tour précedent (en fonction des possibles actions des joueurs sur les tours qui suivent)
+     * @throws Exception si jamais l'agorythme se trouve confronter a une erreur
+     */
     private int minMax(Case[][] p, JoueurSimplifie joueur, JoueurSimplifie adversaire, int depth) throws Exception{
         /** init variables */
         int bestScore = 0;
@@ -210,10 +249,19 @@ public class JoueurIA extends Joueur {
         return bestScore;
     }
 
+    /**
+     * /!\ ne fonctionne pas mais sert a detecter des situations dans lesquels l'IA a plus de chances de gagner
+     * @return la couleur du joueur en position avantageuse
+     */
     private Couleur getNearVictorySituation() {
         return null;
     }
 
+    /**
+     * retourne, si il y a un gagnant, la couleur de ce dernier
+     * @param p les cases du plateau de jeu
+     * @return la couleur du gagnant sinon null
+     */
     private Couleur getVictoire(Case[][] p) {
         /** ligne colonne */
         for (int i = 0; i < p.length; i++) {
@@ -229,9 +277,15 @@ public class JoueurIA extends Joueur {
                 return p[0][i].plusGrandePiece().getCouleur();
         }
         /** diagonale */
+        // TODO diagonale
         return null;
     }
 
+    /**
+     * permet de savoir quels sont les pieces que l'on peut possiblement mettre sur cette case
+     * @param pieces pieces du joueur
+     * @return un ArrayList des pieces qui peuvent être posées
+     */
     private ArrayList<Piece> getPiecesPossibles(ArrayList<Piece> pieces) {
         ArrayList<Piece> possiblePieces = new ArrayList<Piece>(), piecesClone = ((ArrayList<Piece>) pieces.clone());
         Object last = null;
