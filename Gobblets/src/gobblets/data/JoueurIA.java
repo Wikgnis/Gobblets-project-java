@@ -277,7 +277,21 @@ public class JoueurIA extends Joueur {
                 return p[0][i].plusGrandePiece().getCouleur();
         }
         /** diagonale */
-        // TODO diagonale
+        // TODO test
+        try {
+            Couleur winner = p[0][0].plusGrandePiece().getCouleur();
+            for (int i = 1; i < p.length && winner != null; i++) {
+                if (p[i][i].plusGrandePiece().getCouleur() != winner) winner = null;
+            }
+            if (winner != null) return winner;
+        } catch (Exception e) {}
+        try {
+            Couleur winner = p[2][2].plusGrandePiece().getCouleur();
+            for (int i = 1; i < p.length && winner != null; i++) {
+                if (p[i][2-i].plusGrandePiece().getCouleur() != winner) winner = null;
+            }
+            if (winner != null) return winner;
+        } catch (Exception e) {}
         return null;
     }
 
