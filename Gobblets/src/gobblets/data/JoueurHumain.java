@@ -8,7 +8,7 @@ import gobblets.logic.PiecePasdisponibleException;
 
 public class JoueurHumain extends Joueur {
     /**
-     *
+     * utilisé pour la sauvegarde d'un joueur Humain
      */
     private static final long serialVersionUID = 1L;
 
@@ -60,6 +60,11 @@ public class JoueurHumain extends Joueur {
         }
     }
 
+    /**
+     * test si les coordonnées rentrés sont valides
+     * @param coord les coordonnées a tester
+     * @return un booléen indiquant si oui ou non les coordonnées sont valides
+     */
     private boolean checkCoord(int[] coord) {
         return coord[0] > 2 || coord[0] < 0 || coord[1] > 2 || coord[1] < 0;
     }
@@ -68,6 +73,7 @@ public class JoueurHumain extends Joueur {
         return new Termination();
     }
 
+    @Override
     public Object clone() {
         JoueurHumain cloneObject = new JoueurHumain(getNom(), getCouleur());
         cloneObject.setPieces(getPieces());
