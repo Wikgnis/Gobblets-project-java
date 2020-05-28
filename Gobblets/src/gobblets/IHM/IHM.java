@@ -15,7 +15,16 @@ public abstract class IHM {
     public abstract Taille saisirTaille() throws Exception;
     public abstract int[] saisirCoordonnees() throws Exception;
     public abstract void display(Plateau p, Joueur j);
+    /**
+     * Affiche l'exception sur l'IHM
+     * @param e l'erreur a afficher
+     */
     public abstract void display(Exception e);
+    /**
+     * Affiche le Menu passé en parametre
+     * @param m le menu a afficher
+     * @return le menu qui va lui suivre
+     */
     public abstract Menu display(Menu m);
     public abstract ActionType saisirAction(Joueur j) throws Exception;
     public abstract void finalize();

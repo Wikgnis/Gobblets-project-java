@@ -10,7 +10,7 @@ import gobblets.interaction.*;
 
 public class Jeu implements Serializable{
     /**
-     *
+     * sert a sauvegarder un Jeu
      */
     private static final long serialVersionUID = 1L;
 
@@ -98,8 +98,9 @@ public class Jeu implements Serializable{
     }
 
     /**
-     * @param current state of the game
-     * @return Etat which will be the current etat of the game at the end of the round
+     * permet de detecter les changement d'état du jeu
+     * @param current etat actuel du jeu
+     * @return l'etat qui va succeder à celui en parametre
      */
     private Etat updateEtat(Etat current) {
         try {
