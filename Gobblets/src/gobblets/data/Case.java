@@ -10,9 +10,10 @@ import gobblets.logic.PiecePasdisponibleException;
 
 public class Case implements Serializable {
     /**
-     *
+     * va servir à la sauvegarde d'une case
      */
     private static final long serialVersionUID = 1L;
+
     private Piece petite, moyenne, grande;
     public Case() {}
 
@@ -57,6 +58,7 @@ public class Case implements Serializable {
         else throw new CaseBloqueeException(Erreur.CASEBLOQUE);
     }
 
+    @Override
     public Object clone() {
         Case c = null;
         try {
@@ -71,6 +73,11 @@ public class Case implements Serializable {
         }
     }
 
+    /**
+     * va retourner toutes les pieces presentes sur la case
+     *
+     * @return un array contenant les pieces presentes sur la case
+     */
     public Piece[] getPieces() {
         ArrayList<Piece> pieces = new ArrayList<>();
         if (petite != null) pieces.add(petite);
