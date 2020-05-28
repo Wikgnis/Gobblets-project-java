@@ -496,10 +496,10 @@ public class SaisieConsole extends IHM {
      * @return le menu qui va suivre celui-ci
      */
     private Menu displayMenuLangue() {
-        String[] textMenu = {"FranÃ§ais", "English", "Deutsche", getLanguage().menu(Menu.MENU_QUITTER)};
+        String[] textMenu = {"Français", "English", "Deutsche", getLanguage().menu(Menu.MENU_QUITTER)};
         for (int i = 0; i < textMenu.length; i++) {
             System.out.print(i + 1 + " - " + textMenu[i]);
-            if (i == 0 && getLanguage() instanceof Francais) System.out.print(" <Actuellement utilisÃ©e>");
+            if (i == 0 && getLanguage() instanceof Francais) System.out.print(" <Actuellement utilisée>");
             if (i == 1 && getLanguage() instanceof Anglais) System.out.print(" <Used Currently>");
             if (i == 2 && getLanguage() instanceof Allemand) System.out.print(" <Aktuell in Verwendung>");
             System.out.println();
