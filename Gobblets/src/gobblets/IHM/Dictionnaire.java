@@ -13,5 +13,5 @@ public interface Dictionnaire {
     /**
      * texte des menus
      */
-    public String texteMenu(Menu m)
+    public String texteMenu(Menu m);
 }

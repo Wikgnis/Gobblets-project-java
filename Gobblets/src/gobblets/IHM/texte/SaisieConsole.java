@@ -471,20 +471,20 @@ public class SaisieConsole extends IHM {
 
     private Menu displayMenuAide() {
         // TODO texte
-        System.out.println("need text here");
+        System.out.println(getLanguage().texteMenu(Menu.MENU_AIDE));
         System.out.println(getLanguage().avertissement(Avertissement.APPUYERSURENTREE));
         sc.nextLine();
         return Menu.MENU_ACCEUIL;
     }
 
     /**
-     * affiche le menu a prorpos
+     * affiche le menu a propos
      * 
      * @return le menu qui va suivre celui-ci
      */
     private Menu displayMenuAPropos() {
         // TODO texte
-        System.out.println("need text here");
+        System.out.println(getLanguage().texteMenu(Menu.MENU_APROPOS));
         System.out.println(getLanguage().avertissement(Avertissement.APPUYERSURENTREE));
         sc.nextLine();
         return Menu.MENU_ACCEUIL;

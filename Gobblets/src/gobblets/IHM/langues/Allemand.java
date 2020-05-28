@@ -16,6 +16,7 @@ public class Allemand implements Dictionnaire {
     private HashMap<Erreur,String> erreurs;
     private HashMap<Avertissement, String> avertissements;
     private HashMap<Menu, String> menus;
+    private HashMap<Menu, String> texteMenu;
 
     public Allemand() {
         /* couleurs */
@@ -93,6 +94,10 @@ public class Allemand implements Dictionnaire {
         menus.put(Menu.MENU_QUITTER, "Verlassen");
         menus.put(Menu.MENU_ACCEUIL, "Zuhause");
         menus.put(Menu.REPRENDRE, "Fortsetzen");
+        
+        texteMenu = new HashMap<Menu, String>();
+        texteMenu.put(Menu.MENU_AIDE, "Das Ziel des Spiels ist es, strategisch eine Linie, eine Spalte oder eine Diagonale Ihrer Farbe zu erhalten.\n"+"Sie haben 2 Teile von 3 Typen, klein, mittel und groß.\n"+"Sie können ein Stück auf ein anderes legen, solange es streng größer als dieses ist.\n");
+        texteMenu.put(Menu.MENU_APROPOS, "Gobblet Gobblers ist ein Familienspiel von Thierry Denoual.\n"+"Es kombiniert Konzentration und Aufmerksamkeit sowie Gedächtnis, visuelle Wahrnehmung und Problemlösung.\n"+"Es ist ein Strategiespiel, das für alles ideal ist die Welt, auch für Kinder, aber empfohlen für diejenigen über 5 Jahre.");
     }
 
     @Override
@@ -129,5 +134,10 @@ public class Allemand implements Dictionnaire {
     public String menu(Menu m) {
         return menus.get(m);
     }
+
+	@Override
+	public String texteMenu(Menu m) {
+		return texteMenu.get(m);
+	}
 
 }
