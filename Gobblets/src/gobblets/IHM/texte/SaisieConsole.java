@@ -40,10 +40,8 @@ public class SaisieConsole extends IHM {
             switch (in) {
                 case "1": j = saisieJoueurHumain();
                     break;
-
                 case "2": j = saisieJoueurIA();
                     break;
-
                 default: throw new Exception(getLanguage().erreur(Erreur.ARGUMENTINCORECT) + " " + (in.equals(" ") ? "<space>" : in.equals("") ? "<enter>" : in));
             }
         } catch (Exception e) {
@@ -74,40 +72,23 @@ public class SaisieConsole extends IHM {
         /** choix */
         String in = sc.nextLine();
         switch (in) {
-            case "1":
-                couleur = Couleur.NOIR;
+            case "1": couleur = Couleur.NOIR;
                 break;
-
-            case "2":
-                couleur = Couleur.BLEU;
+            case "2": couleur = Couleur.BLEU;
                 break;
-
-            case "3":
-                couleur = Couleur.CYAN;
+            case "3": couleur = Couleur.CYAN;
                 break;
-
-            case "4":
-                couleur = Couleur.VERT;
+            case "4": couleur = Couleur.VERT;
                 break;
-
-            case "5":
-                couleur = Couleur.MAGENTA;
+            case "5": couleur = Couleur.MAGENTA;
                 break;
-
-            case "6":
-                couleur = Couleur.ROUGE;
+            case "6": couleur = Couleur.ROUGE;
                 break;
-
-            case "7":
-                couleur = Couleur.BLANC;
+            case "7": couleur = Couleur.BLANC;
                 break;
-
-            case "8":
-                couleur = Couleur.JAUNE;
+            case "8": couleur = Couleur.JAUNE;
                 break;
-
-            default:
-                throw new Exception(getLanguage().erreur(Erreur.ARGUMENTINCORECT) + " " + in);
+            default: throw new Exception(getLanguage().erreur(Erreur.ARGUMENTINCORECT) + " " + in);
         }
         return new JoueurIA(nom, couleur);
     }
@@ -131,40 +112,23 @@ public class SaisieConsole extends IHM {
         /** choix */
         String in = sc.nextLine();
         switch (in) {
-            case "1":
-                couleur = Couleur.NOIR;
+            case "1": couleur = Couleur.NOIR;
                 break;
-
-            case "2":
-                couleur = Couleur.BLEU;
+            case "2": couleur = Couleur.BLEU;
                 break;
-
-            case "3":
-                couleur = Couleur.CYAN;
+            case "3": couleur = Couleur.CYAN;
                 break;
-
-            case "4":
-                couleur = Couleur.VERT;
+            case "4": couleur = Couleur.VERT;
                 break;
-
-            case "5":
-                couleur = Couleur.MAGENTA;
+            case "5": couleur = Couleur.MAGENTA;
                 break;
-
-            case "6":
-                couleur = Couleur.ROUGE;
+            case "6": couleur = Couleur.ROUGE;
                 break;
-
-            case "7":
-                couleur = Couleur.BLANC;
+            case "7": couleur = Couleur.BLANC;
                 break;
-
-            case "8":
-                couleur = Couleur.JAUNE;
+            case "8": couleur = Couleur.JAUNE;
                 break;
-
-            default:
-                throw new Exception(getLanguage().erreur(Erreur.ARGUMENTINCORECT) + " " + in);
+            default: throw new Exception(getLanguage().erreur(Erreur.ARGUMENTINCORECT) + " " + in);
         }
         return new JoueurHumain(nom, couleur);
     }
@@ -280,8 +244,7 @@ public class SaisieConsole extends IHM {
             in = sc.nextLine();
             if (in.equals("y")) {
                 return true;
-            }
-            else if (in.equals("n")) {
+            } else if (in.equals("n")) {
                 return false;
             }
             display(new Exception(getLanguage().erreur(Erreur.ARGUMENTINCORECT) + " " + in));
@@ -296,7 +259,8 @@ public class SaisieConsole extends IHM {
     @Override
     public void display(Exception e) {
         if (e instanceof CaseBloqueeException) {
-            System.out.println(AnsiRenderer.render("@|bold,red " + getLanguage().erreur(((CaseBloqueeException) e).getErreur()) + "|@"));
+            System.out.println(AnsiRenderer
+                    .render("@|bold,red " + getLanguage().erreur(((CaseBloqueeException) e).getErreur()) + "|@"));
         } else if (e instanceof PiecePasdisponibleException) {
             System.out.println(AnsiRenderer.render("@|bold,red " + getLanguage().erreur(((PiecePasdisponibleException) e).getErreur()) + "|@"));
         } else
@@ -306,6 +270,7 @@ public class SaisieConsole extends IHM {
     @Override
     public Menu display(Menu m) {
         try {
+            System.out.println(Ansi.ansi().eraseScreen());
             System.out.println(generateColoredBGString(getLanguage().menu(m), Couleur.MAGENTA));
         } catch (Exception e) {
             display(e);
@@ -314,7 +279,7 @@ public class SaisieConsole extends IHM {
             case MENU_ACCEUIL:
                 return displayMenuAcceuil();
             case MENU_AIDE:
-                return displatMenuAide();
+                return displayMenuAide();
             case MENU_APROPOS:
                 return displayMenuAPropos();
             case MENU_ENREGISTRER:
@@ -331,17 +296,19 @@ public class SaisieConsole extends IHM {
     }
 
     private Menu displayMenuAcceuil() {
-        Menu[] choices = {Menu.MENU_NOUVEAU, Menu.MENU_OUVRIR, Menu.MENU_LANGUE, Menu.MENU_APROPOS, Menu.MENU_AIDE, Menu.MENU_QUITTER};
+        Menu[] choices = { Menu.MENU_NOUVEAU, Menu.MENU_OUVRIR, Menu.MENU_LANGUE, Menu.MENU_APROPOS, Menu.MENU_AIDE,
+                Menu.MENU_QUITTER };
         for (int i = 0; i < choices.length; i++) {
-            System.out.println(i+1 + " - " + getLanguage().menu(choices[i]));
+            System.out.println(i + 1 + " - " + getLanguage().menu(choices[i]));
         }
         String in = sc.nextLine();
         try {
             Integer inValue = Integer.parseInt(in);
             if (inValue > 0 && inValue <= choices.length) {
-                return choices[inValue-1];
+                return choices[inValue - 1];
             }
-        } catch (Exception e) {}
+        } catch (Exception e) {
+        }
         return Menu.MENU_ACCEUIL;
     }
 
@@ -360,8 +327,7 @@ public class SaisieConsole extends IHM {
             System.out.println(getLanguage().avertissement(Avertissement.APPUYERSURENTREE));
             sc.nextLine();
             return Menu.MENU_ACCEUIL;
-        }
-        else {
+        } else {
             for (int i = 0; i < saves.length; i++) {
                 System.out.println(i + 1 + " - " + saves[i].getName());
             }
@@ -376,8 +342,13 @@ public class SaisieConsole extends IHM {
                     return null;
                 }
             } catch (Exception e) {
+                display(new Exception(getLanguage().erreur(Erreur.ARGUMENTINCORECT) + " " + e.getMessage()));
+                try {
+                    System.out.println(generateColoredBGString(getLanguage().menu(Menu.MENU_OUVRIR), Couleur.MAGENTA));
+                } catch (Exception e1) {
+                    display(e1);
+                }
             }
-            System.out.println(Ansi.ansi().eraseScreen());
             return displayMenuOuvrir();
         }
     }
@@ -432,7 +403,7 @@ public class SaisieConsole extends IHM {
         return next;
     }
 
-    private Menu displatMenuAide() {
+    private Menu displayMenuAide() {
         // TODO texte
         System.out.println("need text here");
         System.out.println(getLanguage().avertissement(Avertissement.APPUYERSURENTREE));

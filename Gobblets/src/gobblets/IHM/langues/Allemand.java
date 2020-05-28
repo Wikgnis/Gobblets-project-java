@@ -28,11 +28,13 @@ public class Allemand implements Dictionnaire {
         couleurs.put(Couleur.ROUGE, "Rot");
         couleurs.put(Couleur.BLANC, "Weiß");
         couleurs.put(Couleur.JAUNE, "Gelb");
+
         /* tailles */
         tailles = new HashMap<Taille, String>();
         tailles.put(Taille.GRANDE, "Groß");
         tailles.put(Taille.MOYENNE, "Durchschnittlich");
         tailles.put(Taille.PETITE, "Klein");
+
         /* etats */
         etats = new HashMap<Etat, String>();
         etats.put(Etat.JEUENCOURS, "Gerade stattfindendes Spiel");
@@ -40,11 +42,13 @@ public class Allemand implements Dictionnaire {
         etats.put(Etat.JOUEUR1GAGNE, "Spieler 1 hat gewonnen !");
         etats.put(Etat.JOUEUR2GAGNE, "Spieler 2 hat gewonnen !");
         etats.put(Etat.MATCHNUL, "Zeichnen");
+
         /* actions */
         actions = new HashMap<ActionType, String>();
         actions.put(ActionType.DEPLACER, "Bewegung");
         actions.put(ActionType.PLACER, "Hinstellen");
         actions.put(ActionType.QUITTER, "Verlassen");
+
         /* erreurs */
         erreurs = new HashMap<Erreur, String>();
         erreurs.put(Erreur.ARGUMENTINCORECT, "Falsches Argument");
@@ -53,6 +57,7 @@ public class Allemand implements Dictionnaire {
         erreurs.put(Erreur.ORIGINVIDE, "Leerer Ursprung");
         erreurs.put(Erreur.PASDEPIECEDISPONIBLE, "Kein Teil verfügbar");
         erreurs.put(Erreur.PASTAPIECE, "Nicht dein Teil");
+
         /* avertissements */
         avertissements = new HashMap<Avertissement, String>();
         avertissements.put(Avertissement.CHOIXACTION, "Wählen Sie Ihre Aktion");
