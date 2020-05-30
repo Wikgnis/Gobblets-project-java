@@ -1,57 +1,54 @@
 package app;
 
+// IHM
+import gobblets.IHM.*;
+// Saisie console
+import gobblets.IHM.texte.SaisieConsole;
+// Gobblets
+import gobblets.data.*;
+import gobblets.logic.Jeu;
+// save Gobblets
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
-import gobblets.IHM.*;
-import gobblets.IHM.texte.SaisieConsole;
-import gobblets.data.*;
-import gobblets.logic.Jeu;
+// FX
+import javafx.application.Application;
+import javafx.scene.Scene;
+import javafx.scene.control.Label;
+import javafx.scene.layout.StackPane;
+import javafx.stage.Stage;
 
 /**
  * @author LEBOCQ Titouan, SAVARY Mathieu
  * @version JAVA SE 11
- * @version 1.0
+ * @version 2.0 (Fx implementation)
  */
-public class App {
-    public static void main(String[] args) throws Exception {
-        new App();
+public class App extends Application {
+    public static void main(String[] args) {
+        IHM saisie;
+        saisie = new SaisieConsole();
+        /** setup global IHM */
+        System.out.println("Utiliser interface java-FX");
+        boolean javaFx = ((SaisieConsole) saisie).valider();
+        if (javaFx) {
+            launch();
+        } else {
+            IHM.setIHM(saisie);
+            try {
+                new App();
+            } catch (Exception e) {
+                IHM.getIHM().display(e);
+            }
+        }
     }
 
     /**
      * l'instance du jeu actuellement utilisé par l'Application
      */
     private static Jeu gobblets = null;
-
-    /**
-     * constructeur de la classe App (va gerer le choix des menu ainsi que le jeu)
-     */
-    public App() {
-        /** setup ihm */
-        IHM saisie = new SaisieConsole();
-        IHM.setIHM(saisie);
-        /** Menus */
-        Menu current = Menu.MENU_ACCEUIL;
-        while (current != Menu.MENU_QUITTER) {
-            if (current == null) {
-                // pas de nouveau menu donc retour au jeu (=reprendre jeu)
-                current = partie(gobblets);
-            } else {
-                // affichage du menu actuel
-                current = IHM.getIHM().display(current);
-                if (current == Menu.MENU_NOUVEAU) current = lancerPartie(); // si le joueur a choisi le menu_nouveau : creation d'une nouvelle partie
-            }
-        }
-        /** end */
-        /** end saisie console */
-        // cette partie sert à repasser la console dans laquelle s'execute le code dans
-        // son etat initial
-        // afin d'éviter d'éventuels problèmes d'affichages dans cette meme console
-        if (IHM.getIHM() instanceof SaisieConsole) IHM.getIHM().finalize();
-    }
 
     /**
      * crée une nouvelle instance du jeu et lance la partie @see lancerPartie(Jeu
@@ -94,14 +91,16 @@ public class App {
         Menu returnMenu;
         if (gobblets.getEtat() == Etat.JEUQUITTE) {
             returnMenu = IHM.getIHM().display(Menu.MENU_QUITTER);
-            if (returnMenu == null) gobblets.setEtat(Etat.JEUENCOURS);
-        }
-        else returnMenu = Menu.MENU_ACCEUIL;
+            if (returnMenu == null)
+                gobblets.setEtat(Etat.JEUENCOURS);
+        } else
+            returnMenu = Menu.MENU_ACCEUIL;
         return returnMenu;
     }
 
     /**
-     * va sauvegarder l'actuelle instance de gobblets dans le fichier donné en argument
+     * va sauvegarder l'actuelle instance de gobblets dans le fichier donné en
+     * argument
      * 
      * @param destination destination de la sauvegarde de la partie
      */
@@ -119,7 +118,8 @@ public class App {
     }
 
     /**
-     * va charger une partie de gobblets a partir du fichier sauvegarde donné en argumennt
+     * va charger une partie de gobblets a partir du fichier sauvegarde donné en
+     * argumennt
      * 
      * @param sauvegarde fichier source de la sauvegarde
      */
@@ -128,15 +128,56 @@ public class App {
             FileInputStream in = new FileInputStream(sauvegarde);
             ObjectInputStream ois = new ObjectInputStream(in);
             Object o = ois.readObject();
-            if (o instanceof Jeu) gobblets = (Jeu)o;
+            if (o instanceof Jeu)
+                gobblets = (Jeu) o;
             else {
                 ois.close();
-                throw new Exception(IHM.getIHM().getLanguage().erreur(Erreur.ARGUMENTINCORECT) + " " + sauvegarde.getAbsolutePath());
+                throw new Exception(IHM.getIHM().getLanguage().erreur(Erreur.ARGUMENTINCORECT) + " "
+                        + sauvegarde.getAbsolutePath());
             }
             ois.close();
             in.close();
         } catch (Exception e) {
             IHM.getIHM().display(e);
         }
+    }
+
+    /**
+     * constructeur de la classe App (va gerer le choix des menu ainsi que le jeu)
+     * 
+     * @throws Exception
+     */
+    public App() throws Exception {
+        /** Menus */
+        Menu current = Menu.MENU_ACCEUIL;
+        while (current != Menu.MENU_QUITTER) {
+            if (current == null) {
+                // pas de nouveau menu donc retour au jeu (=reprendre jeu)
+                current = partie(gobblets);
+            } else {
+                // affichage du menu actuel
+                current = IHM.getIHM().display(current);
+                if (current == Menu.MENU_NOUVEAU)
+                    current = lancerPartie(); // si le joueur a choisi le menu_nouveau : creation d'une nouvelle
+                                              // partie
+            }
+        }
+        /** end */
+        /** end saisie console */
+        // cette partie sert à repasser la console dans laquelle s'execute le code dans
+        // son etat initial
+        // afin d'éviter d'éventuels problèmes d'affichages dans cette meme console
+        if (IHM.getIHM() instanceof SaisieConsole)
+            IHM.getIHM().finalize();
+    }
+
+    @Override
+    public void start(Stage stage) {
+        String javaVersion = System.getProperty("java.version");
+        String javafxVersion = System.getProperty("javafx.version");
+        Label l = new Label("Hello, JavaFX " + javafxVersion + ", running on Java " + javaVersion + ".");
+        Scene scene = new Scene(new StackPane(l), 640, 480);
+        stage.setScene(scene);
+        stage.show();
     }
 }
