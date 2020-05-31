@@ -28,21 +28,7 @@ import javafx.stage.Stage;
  */
 public class App extends Application {
     public static void main(String[] args) {
-        IHM saisie;
-        saisie = new SaisieConsole();
-        /** setup global IHM */
-        System.out.println("Utiliser interface java-FX");
-        boolean javaFx = ((SaisieConsole) saisie).valider();
-        if (javaFx) {
-            launch();
-        } else {
-            IHM.setIHM(saisie);
-            try {
-                new App();
-            } catch (Exception e) {
-                IHM.getIHM().display(e);
-            }
-        }
+        Application.launch(args);
     }
 
     /**
@@ -142,12 +128,26 @@ public class App extends Application {
         }
     }
 
-    /**
-     * constructeur de la classe App (va gerer le choix des menu ainsi que le jeu)
-     * 
-     * @throws Exception
-     */
-    public App() throws Exception {
+    @Override
+    public void start(Stage stage) {
+        IHM saisie;
+        saisie = new SaisieConsole();
+        /** setup global IHM */
+        System.out.println("Utiliser interface java-FX");
+        boolean javaFx = ((SaisieConsole) saisie).valider();
+        if (javaFx) {
+            String javaVersion = System.getProperty("java.version");
+            String javafxVersion = System.getProperty("javafx.version");
+            Label l = new Label("Hello, JavaFX " + javafxVersion + ", running on Java " + javaVersion + ".");
+            Scene scene = new Scene(new StackPane(l), 640, 480);
+            stage.setScene(scene);
+            stage.show();        } else {
+            IHM.setIHM(saisie);
+            SaisieConsole();
+        }
+    }
+
+    public void SaisieConsole() {
         /** Menus */
         Menu current = Menu.MENU_ACCEUIL;
         while (current != Menu.MENU_QUITTER) {
@@ -169,15 +169,5 @@ public class App extends Application {
         // afin d'éviter d'éventuels problèmes d'affichages dans cette meme console
         if (IHM.getIHM() instanceof SaisieConsole)
             IHM.getIHM().finalize();
-    }
-
-    @Override
-    public void start(Stage stage) {
-        String javaVersion = System.getProperty("java.version");
-        String javafxVersion = System.getProperty("javafx.version");
-        Label l = new Label("Hello, JavaFX " + javafxVersion + ", running on Java " + javaVersion + ".");
-        Scene scene = new Scene(new StackPane(l), 640, 480);
-        stage.setScene(scene);
-        stage.show();
     }
 }
