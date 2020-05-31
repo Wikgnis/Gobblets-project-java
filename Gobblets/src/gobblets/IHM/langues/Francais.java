@@ -38,8 +38,8 @@ public class Francais implements Dictionnaire {
         etats = new HashMap<Etat, String>();
         etats.put(Etat.JEUENCOURS, "Jeu en cours");
         etats.put(Etat.JEUQUITTE, "Jeu quittÃ©");
-        etats.put(Etat.JOUEUR1GAGNE, "Joueur 1 Ã  gagnÃ© !");
-        etats.put(Etat.JOUEUR2GAGNE, "Joueur 2 Ã  gagnÃ© !");
+        etats.put(Etat.JOUEUR1GAGNE, "Joueur 1 Ã  gagné !");
+        etats.put(Etat.JOUEUR2GAGNE, "Joueur 2 Ã  gagné !");
         etats.put(Etat.MATCHNUL, "Match nul");
         /* actions */
         actions = new HashMap<ActionType, String>();
@@ -49,11 +49,11 @@ public class Francais implements Dictionnaire {
         /* erreurs */
         erreurs = new HashMap<Erreur, String>();
         erreurs.put(Erreur.ARGUMENTINCORECT, "Argument incorrect");
-        erreurs.put(Erreur.CASEBLOQUE, "Case BloquÃ©e");
+        erreurs.put(Erreur.CASEBLOQUE, "Case Bloquée");
         erreurs.put(Erreur.DIAGONALEINCORECTE, "Diagonale incorrecte");
         erreurs.put(Erreur.ORIGINVIDE, "Origine vide");
-        erreurs.put(Erreur.PASDEPIECEDISPONIBLE, "Pas de piÃ¨ce disponible");
-        erreurs.put(Erreur.PASTAPIECE, "Pas ta piÃ¨ce");
+        erreurs.put(Erreur.PASDEPIECEDISPONIBLE, "Pas de pièce disponible");
+        erreurs.put(Erreur.PASTAPIECE, "Pas ta pièce");
         /* avertissements */
         avertissements = new HashMap<Avertissement, String>();
         avertissements.put(Avertissement.CHOIXACTION, "Choisir votre action");
@@ -63,19 +63,19 @@ public class Francais implements Dictionnaire {
         avertissements.put(Avertissement.COULEURJOUEUR, "Couleur joueur");
         avertissements.put(Avertissement.NOMJOUEUR, "Nom joueur");
         avertissements.put(Avertissement.TONTOUR, "Tour de");
-        avertissements.put(Avertissement.SAISIECOORDONNEES, "Saisie coordonnÃ©es");
-        avertissements.put(Avertissement.SAISIECOORDONNEE1, "PremiÃ¨re coordonnÃ©e");
-        avertissements.put(Avertissement.SAISIECOORDONNEE2, "Seconde coordonnÃ©e");
+        avertissements.put(Avertissement.SAISIECOORDONNEES, "Saisie coordonnées");
+        avertissements.put(Avertissement.SAISIECOORDONNEE1, "Première coordonnée");
+        avertissements.put(Avertissement.SAISIECOORDONNEE2, "Seconde coordonnée");
         avertissements.put(Avertissement.MAISON, "Maison");
         avertissements.put(Avertissement.CHOIXTYPEJOUEUR, "Quel type de joueur ?");
         avertissements.put(Avertissement.ANNULATIONSAISIE, "Annulation saisie");
         avertissements.put(Avertissement.SAISIEJOUEUR, "Saisie Joueur");
         avertissements.put(Avertissement.CONFIRMER, "Confirmer");
-        avertissements.put(Avertissement.AUCUNESAUVEGARDE, "Pas encore de sauvegarde dÃ©solÃ©.");
+        avertissements.put(Avertissement.AUCUNESAUVEGARDE, "Pas encore de sauvegarde désolé.");
         avertissements.put(Avertissement.APPUYERSURENTREE, "Appuyez sur <Enter>");
         avertissements.put(Avertissement.ENTRERLENOMDELASAUVEGARDE, "Nom de la sauvegarde");
         avertissements.put(Avertissement.CONTINUER, "CONTINUER");
-        avertissements.put(Avertissement.FICHIERDEJAEXISTANT, "Le fichier existe deja");
+        avertissements.put(Avertissement.FICHIERDEJAEXISTANT, "Le fichier existe déjà");
         avertissements.put(Avertissement.SUPPRIMER, "Supprimer");
         /** menus */
         menus = new HashMap<Menu, String>();
@@ -87,7 +87,7 @@ public class Francais implements Dictionnaire {
         menus.put(Menu.MENU_NOUVEAU, "Nouvelle partie");
         menus.put(Menu.MENU_OUVRIR, "Ouvrir une partie");
         menus.put(Menu.MENU_QUITTER, "Quitter");
-        menus.put(Menu.MENU_ACCEUIL, "Acceuil");
+        menus.put(Menu.MENU_ACCEUIL, "Accueil");
         menus.put(Menu.REPRENDRE, "Reprendre");
         
         texteMenu = new HashMap<Menu, String>();
