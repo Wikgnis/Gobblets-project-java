@@ -19,15 +19,8 @@ import java.io.ObjectOutputStream;
 
 // FX
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.MenuBar;
-import javafx.scene.image.ImageView;
-import javafx.scene.text.Text;
 
 /**
  * @author LEBOCQ Titouan, SAVARY Mathieu
@@ -136,13 +129,25 @@ public class App extends Application {
         }
     }
 
-    public void changeScene(Menu m) {
+    public void changeScene(Menu m) throws IOException {
         switch (m) {
             case MENU_ACCEUIL:
+                if (gobblets == null) jeu = null;
+                accueil.update();
                 current.setScene(acceuilScene);
                 break;
         
             case MENU_NOUVEAU:
+                File project = new File(".");
+                String pathFXML = project.getCanonicalPath() + File.separator + "ressources" + File.separator + "fxml";
+                jeu = null;
+                gobblets = null;
+                jeu = new JeuFx(pathFXML, this);
+                jeuScene = new Scene(jeu);
+                current.setScene(jeuScene);
+                break;
+
+            case REPRENDRE:
                 current.setScene(jeuScene);
                 break;
 
@@ -170,9 +175,7 @@ public class App extends Application {
             // accueil
             accueil = new Accueil(pathFXML, this);
             acceuilScene = new Scene(accueil);
-            // jeu
-            jeu = new JeuFx(pathFXML, this);
-            jeuScene = new Scene(jeu);
+            accueil.update();
             // stage
             stage.setTitle("Gobblets");
             stage.setScene(acceuilScene);
@@ -205,5 +208,53 @@ public class App extends Application {
         // afin d'éviter d'éventuels problèmes d'affichages dans cette meme console
         if (IHM.getIHM() instanceof SaisieConsole)
             IHM.getIHM().finalize();
+    }
+
+    public static Jeu getGobblets() {
+        return gobblets;
+    }
+
+    public static void setGobblets(Jeu gobblets) {
+        App.gobblets = gobblets;
+    }
+
+    public Accueil getAccueil() {
+        return accueil;
+    }
+
+    public void setAccueil(Accueil accueil) {
+        this.accueil = accueil;
+    }
+
+    public JeuFx getJeu() {
+        return jeu;
+    }
+
+    public void setJeu(JeuFx jeu) {
+        this.jeu = jeu;
+    }
+
+    public Scene getAcceuilScene() {
+        return acceuilScene;
+    }
+
+    public void setAcceuilScene(Scene acceuilScene) {
+        this.acceuilScene = acceuilScene;
+    }
+
+    public Scene getJeuScene() {
+        return jeuScene;
+    }
+
+    public void setJeuScene(Scene jeuScene) {
+        this.jeuScene = jeuScene;
+    }
+
+    public Stage getCurrent() {
+        return current;
+    }
+
+    public void setCurrent(Stage current) {
+        this.current = current;
     }
 }

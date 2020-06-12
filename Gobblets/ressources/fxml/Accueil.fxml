@@ -73,8 +73,8 @@
             </Menu>
         </menus>
       </MenuBar>
-      <Button id="jouer" fx:id="jouer" layoutX="256.0" layoutY="446.0" mnemonicParsing="false" onAction="#changeScene" prefHeight="44.0" prefWidth="349.0" text="Jouer" />
-      <Button id="Quitter" fx:id="quitter" layoutX="256.0" layoutY="503.0" mnemonicParsing="false" onAction="#quitter" prefHeight="44.0" prefWidth="349.0" text="Quitter" />
+      <Button id="jouer" fx:id="jouer" layoutX="256.0" layoutY="479.0" mnemonicParsing="false" onAction="#changeScene" prefHeight="44.0" prefWidth="349.0" text="Jouer" />
+      <Button id="Quitter" fx:id="quitter" layoutX="256.0" layoutY="646.0" mnemonicParsing="false" onAction="#quitter" prefHeight="44.0" prefWidth="349.0" text="Quitter" />
       <ImageView fx:id="logo" fitHeight="248.0" fitWidth="252.0" layoutX="126.0" layoutY="91.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@images/logo.png" />
@@ -85,5 +85,7 @@
             <Font name="Arial" size="96.0" />
          </font>
       </Text>
+      <Button id="jouer" fx:id="reprendre" layoutX="256.0" layoutY="423.0" mnemonicParsing="false" onAction="#reprendre" prefHeight="44.0" prefWidth="349.0" text="Reprendre" />
+      <Button id="Quitter" layoutX="256.0" layoutY="534.0" mnemonicParsing="false" onAction="#quitter" prefHeight="44.0" prefWidth="349.0" text="Charger" />
    </children>
 </fx:root>

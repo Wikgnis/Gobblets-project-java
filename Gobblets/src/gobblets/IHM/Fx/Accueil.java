@@ -31,7 +31,7 @@ public class Accueil extends AnchorPane {
     @FXML
     private MenuBar menuTop;
     @FXML
-    private Button jouer, quitter;
+    private Button jouer, quitter, reprendre;
     @FXML
     private ImageView logo;
     @FXML
@@ -86,7 +86,17 @@ public class Accueil extends AnchorPane {
     }
 
     @FXML
-    protected void changeScene() {
+    protected void changeScene() throws IOException {
         master.changeScene(Menu.MENU_NOUVEAU);
+    }
+
+    @FXML
+    protected void reprendre() throws IOException {
+        master.changeScene(Menu.REPRENDRE);
+    }
+
+    public void update() {
+        if (master.getJeu() == null) reprendre.setVisible(false);
+        else reprendre.setVisible(true);
     }
 }

@@ -5,6 +5,7 @@ import java.util.Random;
 
 import gobblets.IHM.Erreur;
 import gobblets.IHM.IHM;
+import gobblets.IHM.customException;
 import gobblets.data.*;
 import gobblets.interaction.*;
 
@@ -17,6 +18,38 @@ public class Jeu implements Serializable{
     private Plateau plateau;
     private Joueur j1 = null, j2 = null, joueurActif = null;
     private Etat etat;
+
+    public Jeu(Joueur j1, Joueur j2) throws customException {
+        if (j1 == null) throw new customException(Erreur.ARGUMENTINCORECT, "j1 == null");
+        if (j2 == null) throw new customException(Erreur.ARGUMENTINCORECT, "j2 == null");
+        if (j1.getCouleur() == null && j2.getCouleur() == null) throw new customException(Erreur.ARGUMENTINCORECT, "j1 && j2");
+        if (j1.getCouleur() == null) throw new customException(Erreur.ARGUMENTINCORECT, "j1");
+        if (j2.getCouleur() == null) throw new customException(Erreur.ARGUMENTINCORECT, "j2");
+        if (j1.equals(j2)) throw new customException(Erreur.ARGUMENTINCORECT, "j1 == j2");
+        this.j1 = j1;
+        this.j2 = j2;
+        plateau = Plateau.initPlateau();
+        // set Pieces J1
+        j1.setPieces(plateau.getMaisonJ1());
+        // set color Pieces
+        for (Object o : j1.getPieces().toArray()) {
+            ((Piece) o).setCouleur(j1.getCouleur());
+        }
+        etat = Etat.JEUENCOURS;
+        // set maison J2
+        j2.setPieces(plateau.getMaisonJ2());
+        // set color pieces
+        for (Object o : j2.getPieces().toArray()) {
+            ((Piece) o).setCouleur(j2.getCouleur());
+        }
+        /** IA setup */
+        if (j1 instanceof JoueurIA) {
+            ((JoueurIA) j1).setAdversaire(j2);
+        }
+        if (j2 instanceof JoueurIA) {
+            ((JoueurIA) j2).setAdversaire(j1);
+        }
+    }
 
     public Jeu() {
         plateau = Plateau.initPlateau();
