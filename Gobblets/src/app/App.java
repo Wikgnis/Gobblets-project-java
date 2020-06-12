@@ -3,6 +3,7 @@ package app;
 // IHM
 import gobblets.IHM.*;
 import gobblets.IHM.Fx.Accueil;
+import gobblets.IHM.Fx.JeuFx;
 // Saisie console
 import gobblets.IHM.texte.SaisieConsole;
 // Gobblets
@@ -135,8 +136,29 @@ public class App extends Application {
         }
     }
 
+    public void changeScene(Menu m) {
+        switch (m) {
+            case MENU_ACCEUIL:
+                current.setScene(acceuilScene);
+                break;
+        
+            case MENU_NOUVEAU:
+                current.setScene(jeuScene);
+                break;
+
+            default:
+                break;
+        }
+    }
+
+    private Accueil accueil;
+    private JeuFx jeu;
+    private Scene acceuilScene, jeuScene;
+    private Stage current;
+
     @Override
     public void start(Stage stage) throws IOException {
+        current = stage;
         IHM saisie;
         saisie = new SaisieConsole();
         /** setup global IHM */
@@ -146,9 +168,12 @@ public class App extends Application {
             File project = new File(".");
             String pathFXML = project.getCanonicalPath() + File.separator + "ressources" + File.separator + "fxml";
             // accueil
-            Accueil accueil = new Accueil(pathFXML);
-            Scene acceuilScene = new Scene(accueil);
-            //Scene jeuScene = new Scene(p);
+            accueil = new Accueil(pathFXML, this);
+            acceuilScene = new Scene(accueil);
+            // jeu
+            jeu = new JeuFx(pathFXML, this);
+            jeuScene = new Scene(jeu);
+            // stage
             stage.setTitle("Gobblets");
             stage.setScene(acceuilScene);
             stage.show();

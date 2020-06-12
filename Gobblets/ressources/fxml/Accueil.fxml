@@ -13,7 +13,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<fx:root type="javafx.scene.layout.AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="800.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<fx:root maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="800.0" style="-fx-background-color: white;" type="javafx.scene.layout.AnchorPane" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <MenuBar id="aPropos" fx:id="menuTop" layoutX="307.0" layoutY="2.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <menus>
@@ -38,7 +38,7 @@
                      <graphic>
                         <VBox>
                            <children>
-                              <RadioButton mnemonicParsing="false" text="English">
+                              <RadioButton fx:id="en" mnemonicParsing="false" text="English">
                                  <graphic>
                                     <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
@@ -47,7 +47,7 @@
                                     </ImageView>
                                  </graphic>
                               </RadioButton>
-                              <RadioButton mnemonicParsing="false" text="Deutsch">
+                              <RadioButton fx:id="de" mnemonicParsing="false" text="Deutsch">
                                  <graphic>
                                     <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
@@ -56,7 +56,7 @@
                                     </ImageView>
                                  </graphic>
                               </RadioButton>
-                              <RadioButton mnemonicParsing="false" text="Français">
+                              <RadioButton fx:id="fr" mnemonicParsing="false" text="Français">
                                  <graphic>
                                     <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
@@ -73,8 +73,8 @@
             </Menu>
         </menus>
       </MenuBar>
-      <Button id="jouer" fx:id="jouer" layoutX="256.0" layoutY="446.0" mnemonicParsing="false" prefHeight="44.0" prefWidth="349.0" text="Jouer" />
-      <Button id="Quitter" fx:id="quitter" layoutX="256.0" layoutY="503.0" mnemonicParsing="false" prefHeight="44.0" prefWidth="349.0" text="Quitter" />
+      <Button id="jouer" fx:id="jouer" layoutX="256.0" layoutY="446.0" mnemonicParsing="false" onAction="#changeScene" prefHeight="44.0" prefWidth="349.0" text="Jouer" />
+      <Button id="Quitter" fx:id="quitter" layoutX="256.0" layoutY="503.0" mnemonicParsing="false" onAction="#quitter" prefHeight="44.0" prefWidth="349.0" text="Quitter" />
       <ImageView fx:id="logo" fitHeight="248.0" fitWidth="252.0" layoutX="126.0" layoutY="91.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@images/logo.png" />
