@@ -2,6 +2,7 @@ package app;
 
 // IHM
 import gobblets.IHM.*;
+import gobblets.IHM.Fx.Accueil;
 // Saisie console
 import gobblets.IHM.texte.SaisieConsole;
 // Gobblets
@@ -11,15 +12,21 @@ import gobblets.logic.Jeu;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
 // FX
 import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
-import javafx.scene.layout.StackPane;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import javafx.fxml.FXML;
+import javafx.scene.control.Button;
+import javafx.scene.control.MenuBar;
+import javafx.scene.image.ImageView;
+import javafx.scene.text.Text;
 
 /**
  * @author LEBOCQ Titouan, SAVARY Mathieu
@@ -28,7 +35,7 @@ import javafx.stage.Stage;
  */
 public class App extends Application {
     public static void main(String[] args) {
-        Application.launch(args);
+        launch(args);
     }
 
     /**
@@ -129,25 +136,29 @@ public class App extends Application {
     }
 
     @Override
-    public void start(Stage stage) {
+    public void start(Stage stage) throws IOException {
         IHM saisie;
         saisie = new SaisieConsole();
         /** setup global IHM */
         System.out.println("Utiliser interface java-FX");
         boolean javaFx = ((SaisieConsole) saisie).valider();
         if (javaFx) {
-            String javaVersion = System.getProperty("java.version");
-            String javafxVersion = System.getProperty("javafx.version");
-            Label l = new Label("Hello, JavaFX " + javafxVersion + ", running on Java " + javaVersion + ".");
-            Scene scene = new Scene(new StackPane(l), 640, 480);
-            stage.setScene(scene);
-            stage.show();        } else {
+            File project = new File(".");
+            String pathFXML = project.getCanonicalPath() + File.separator + "ressources" + File.separator + "fxml";
+            // accueil
+            Accueil accueil = new Accueil(pathFXML);
+            Scene acceuilScene = new Scene(accueil);
+            //Scene jeuScene = new Scene(p);
+            stage.setTitle("Gobblets");
+            stage.setScene(acceuilScene);
+            stage.show();
+        } else {
             IHM.setIHM(saisie);
             SaisieConsole();
         }
     }
 
-    public void SaisieConsole() {
+    private void SaisieConsole() {
         /** Menus */
         Menu current = Menu.MENU_ACCEUIL;
         while (current != Menu.MENU_QUITTER) {
