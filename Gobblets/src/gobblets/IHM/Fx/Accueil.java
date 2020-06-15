@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 import app.App;
@@ -17,17 +18,22 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 public class Accueil extends AnchorPane {
 
     @FXML
-    private AnchorPane main;
+    private AnchorPane main, load;
+    @FXML
+    private ChoiceBox loadChoice;
     @FXML
     private MenuBar menuTop;
     @FXML
@@ -42,7 +48,7 @@ public class Accueil extends AnchorPane {
     private App master;
     private Dictionnaire langue;
 
-    public Accueil(String pathFXML, App master) throws MalformedURLException {
+    public Accueil(String pathFXML, App master) throws IOException {
         this.master = master;
         langue = new Francais();
         File accueilFile = new File(pathFXML + File.separator + "Accueil.fxml");
@@ -56,6 +62,7 @@ public class Accueil extends AnchorPane {
         }
         // langue radio button
         setupLangue();
+        update();
     }
 
     private void setupLangue() {
@@ -78,6 +85,25 @@ public class Accueil extends AnchorPane {
                 this.langue = new Allemand();
             }
         });
+
+    }
+
+    @FXML
+    protected void load() {
+        load.setVisible(true);
+    }
+
+    @FXML
+    protected void retour() {
+        load.setVisible(false);
+    }
+
+    @FXML
+    protected void loadGame() throws IOException {
+        File save = (File)loadChoice.getValue();
+        if (save != null) {
+            master.changeScene(save);
+        }
     }
 
     @FXML
@@ -95,8 +121,17 @@ public class Accueil extends AnchorPane {
         master.changeScene(Menu.REPRENDRE);
     }
 
-    public void update() {
+    public void update() throws IOException {
         if (master.getJeu() == null) reprendre.setVisible(false);
         else reprendre.setVisible(true);
+        File projet = new File(".");
+        File ressources = new File(projet.getCanonicalPath() + File.separator + "ressources");
+        ArrayList<File> savesAL = new ArrayList<File>();
+        for (File file : ressources.listFiles()) {
+            if (file.getName().contains(".save"))
+                savesAL.add(file);
+        }
+        ObservableList<Object> saves = FXCollections.observableArrayList(savesAL);
+        loadChoice.getItems().setAll(saves);
     }
 }

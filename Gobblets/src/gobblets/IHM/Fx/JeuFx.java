@@ -98,6 +98,34 @@ public class JeuFx extends AnchorPane {
         plateau[2][2] = c9;
     }
 
+    public JeuFx(String pathFXML, App master, Jeu jeu) throws MalformedURLException {
+        this.jeu = jeu;
+        this.master = master;
+        langue = new Francais();
+        File accueilFile = new File(pathFXML + File.separator + "Jeu.fxml");
+        FXMLLoader fxmlLoader = new FXMLLoader(accueilFile.toURI().toURL());
+        fxmlLoader.setRoot(this);
+        fxmlLoader.setController(this);
+        try {
+            fxmlLoader.load();
+        } catch (IOException exception) {
+            throw new RuntimeException(exception);
+        }
+        setupLangue();
+        // plateau
+        plateau = new HBox[3][3];
+        plateau[0][0] = c1;
+        plateau[0][1] = c2;
+        plateau[0][2] = c3;
+        plateau[1][0] = c4;
+        plateau[1][1] = c5;
+        plateau[1][2] = c6;
+        plateau[2][0] = c7;
+        plateau[2][1] = c8;
+        plateau[2][2] = c9;
+        start.setVisible(false);
+    }
+
     private void setupLangue() {
         ToggleGroup langue = new ToggleGroup();
         fr.setToggleGroup(langue);

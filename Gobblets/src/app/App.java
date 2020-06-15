@@ -16,6 +16,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.net.MalformedURLException;
 
 // FX
 import javafx.application.Application;
@@ -130,16 +131,19 @@ public class App extends Application {
     }
 
     public void changeScene(Menu m) throws IOException {
+        File projet;
+        String pathFXML;
         switch (m) {
             case MENU_ACCEUIL:
-                if (gobblets == null) jeu = null;
+                if (gobblets == null)
+                    jeu = null;
                 accueil.update();
                 current.setScene(acceuilScene);
                 break;
-        
+
             case MENU_NOUVEAU:
-                File project = new File(".");
-                String pathFXML = project.getCanonicalPath() + File.separator + "ressources" + File.separator + "fxml";
+                projet = new File(".");
+                pathFXML = projet.getCanonicalPath() + File.separator + "ressources" + File.separator + "fxml";
                 jeu = null;
                 gobblets = null;
                 jeu = new JeuFx(pathFXML, this);
@@ -154,6 +158,15 @@ public class App extends Application {
             default:
                 break;
         }
+    }
+
+    public void changeScene(File save) throws IOException {
+        App.charger(save);
+        File projet = new File(".");
+        String pathFXML = projet.getCanonicalPath() + File.separator + "ressources" + File.separator + "fxml";
+        jeu = new JeuFx(pathFXML, this, this.gobblets);
+        jeuScene = new Scene(jeu);
+        current.setScene(jeuScene);
     }
 
     private Accueil accueil;

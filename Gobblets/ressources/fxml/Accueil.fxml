@@ -2,6 +2,7 @@
 
 <?import javafx.geometry.Rectangle2D?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
@@ -86,6 +87,18 @@
          </font>
       </Text>
       <Button id="jouer" fx:id="reprendre" layoutX="256.0" layoutY="423.0" mnemonicParsing="false" onAction="#reprendre" prefHeight="44.0" prefWidth="349.0" text="Reprendre" />
-      <Button id="Quitter" layoutX="256.0" layoutY="534.0" mnemonicParsing="false" onAction="#quitter" prefHeight="44.0" prefWidth="349.0" text="Charger" />
+      <Button id="Quitter" layoutX="256.0" layoutY="534.0" mnemonicParsing="false" onAction="#load" prefHeight="44.0" prefWidth="349.0" text="Charger" />
+      <AnchorPane fx:id="load" layoutX="40.0" layoutY="389.0" prefHeight="362.0" prefWidth="732.0" style="-fx-background-color: white;" visible="false">
+         <children>
+            <Text layoutX="279.0" layoutY="130.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Charger">
+               <font>
+                  <Font name="System Bold" size="47.0" />
+               </font>
+            </Text>
+            <ChoiceBox fx:id="loadChoice" layoutX="33.0" layoutY="169.0" prefHeight="25.0" prefWidth="666.0" />
+            <Button mnemonicParsing="false" onAction="#retour" text="Retour" />
+            <Button layoutX="337.0" layoutY="234.0" mnemonicParsing="false" onAction="#loadGame" text="Charger" />
+         </children>
+      </AnchorPane>
    </children>
 </fx:root>

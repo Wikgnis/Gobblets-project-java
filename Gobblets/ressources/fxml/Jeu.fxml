@@ -236,7 +236,7 @@
       <AnchorPane fx:id="savePanel" layoutX="473.0" layoutY="50.0" prefHeight="94.0" prefWidth="292.0" style="-fx-background-color: WHITE;" visible="false">
          <children>
             <Text layoutX="76.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Entrez un nom de sauvegarde" />
-            <TextField fx:id="S" layoutX="18.0" layoutY="33.0" prefHeight="25.0" prefWidth="268.0" />
+            <TextField fx:id="saveText" layoutX="18.0" layoutY="33.0" prefHeight="25.0" prefWidth="268.0" />
             <Button layoutX="120.0" layoutY="64.0" mnemonicParsing="false" onAction="#validerSave" text="Valider" />
          </children>
       </AnchorPane>
