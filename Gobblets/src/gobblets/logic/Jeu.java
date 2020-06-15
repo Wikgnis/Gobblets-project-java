@@ -49,6 +49,9 @@ public class Jeu implements Serializable{
         if (j2 instanceof JoueurIA) {
             ((JoueurIA) j2).setAdversaire(j1);
         }
+        /* set starting player */
+        Random r = new Random();
+        joueurActif = r.nextBoolean() ? j1 : j2;
     }
 
     public Jeu() {
@@ -135,7 +138,7 @@ public class Jeu implements Serializable{
      * @param current etat actuel du jeu
      * @return l'etat qui va succeder à celui en parametre
      */
-    private Etat updateEtat(Etat current) {
+    public Etat updateEtat(Etat current) {
         try {
             for (int i = 0; i < 3; i++) { // parcour ligne et colonnes
                 if ( plateau.verifierLigne(i) != null) {
