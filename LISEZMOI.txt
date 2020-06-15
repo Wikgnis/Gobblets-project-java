@@ -1,0 +1,4 @@
+LEBOCQ Titouan
+SAVARY Mathieu
+
+Remarque : notre projet ne met pas en place les dictionnaire. Seulement les menu de choix de langues sont fonctionnels. les fonctions de languages ne sont juste pas implementées.
